@@ -1,39 +1,26 @@
 <template>
-  <div id="app">
-    <component :is="currentComponent" @loginSuccess="handleLoginSuccess" />
-  </div>
+  <img alt="Vue logo" src="./assets/logo.png">
+  <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-import LoginPage from './components/LoginPage.vue';
+import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    LoginPage,
-  },
-  data() {
-    return {
-      showLoginPage: true,
-    };
-  },
-  computed: {
-    currentComponent() {
-      return this.showLoginPage ? 'LoginPage' : 'HelloWorld';
-    },
-  },
-  methods: {
-    handleLoginSuccess() {
-      // Lógica para lidar com o sucesso do login
-      console.log('Login bem-sucedido. Redirecionando...');
-      this.showLoginPage = false;
-    },
-  },
-};
+    HelloWorld
+  }
+}
 </script>
 
 <style>
-/* Seus estilos aqui */
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>
