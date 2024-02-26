@@ -43,5 +43,15 @@ export default {
 </script>
 
 <style>
-/* Seus estilos aqui */
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  background-color: #393939;
+  display: flex;
+  height: 100vh;
+}
 </style>
