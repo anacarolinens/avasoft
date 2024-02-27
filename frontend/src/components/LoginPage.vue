@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <h1>AVASOFT</h1>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Kode+Mono:wght@400..700&family=Nanum+Gothic&display=swap">
+
+    <h1>AVA<span>SOFT</span></h1>
 
     <form action="" id="login-form">
 
@@ -13,8 +16,8 @@
 
       </div>
 
-      <button role="button" class="button-login" @click="handleLogin">LOGIN</button>
-
+      <!-- <button role="button" class="button-login" @click="handleLogin">LOGIN</button> -->
+      <RouterLink to="/HomePage" role="button" class="button-login" @click="handleLogin">LOGIN</RouterLink>
     </form>
 
     <img src="../assets/vitruvianwoman.png" alt="">
@@ -45,18 +48,27 @@ export default {
 </script>
   
 <style scoped>
+
 .container {
   display: flex;
   flex-direction: column;
   margin-left: 5em;
   height: 100vh;
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 h1 {
+  
   color: #ffffff;
   font-size: 4em;
   align-self: center;
   margin-top: 1em;
+}
+
+span {
+  color: #ff8818;
 }
 
 img {
@@ -78,6 +90,7 @@ img {
 #label-pass {
   width: 100%;
   margin-left: 1em;
+  margin-bottom: 10px;
 }
 
 .name-pass {
@@ -112,7 +125,7 @@ img {
 
 
 .button-login {
-  margin-top: 3em;
+  margin-top: 2em;
   align-items: center;
   appearance: none;
   background-color: #ff8818;
@@ -129,7 +142,7 @@ img {
   line-height: 1;
   list-style: none;
   overflow: hidden;
-  margin-left: 52px;
+  margin-left: 60px;
   position: relative;
   text-align: left;
   text-decoration: none;

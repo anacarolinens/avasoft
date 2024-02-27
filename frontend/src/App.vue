@@ -1,7 +1,8 @@
 <!-- App.vue -->
 <template>
   <div id="app">
-    <component :is="currentComponent" @loginSuccess="handleLoginSuccess" @logout="handleLogout" />
+    <router-view></router-view>
+    <component :is="currentComponent" @loginSuccess="handleLoginSuccess" @logout="handleLogout"/>
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 import HelloWorld from './components/HelloWorld.vue';
 import LoginPage from './components/LoginPage.vue';
 import HomePage from './components/HomePage.vue';
+import RegisterPatient from './components/RegisterPatient.vue';
 
 export default {
   name: 'App',
@@ -16,10 +18,11 @@ export default {
     HelloWorld,
     LoginPage,
     HomePage,
+    RegisterPatient
   },
   data() {
     return {
-      showLoginPage: true,
+      showLoginPage: false,
     };
   },
   computed: {
@@ -43,15 +46,18 @@ export default {
 </script>
 
 <style>
+
+html, body {
+  height: 100%;
+  margin: 0; /* Remover margens padrão para garantir que não haja espaçamento adicional */
+  padding: 0; /* Remover padding padrão */
+}
+
 body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #ffffff;
-  margin: 0;
-  padding: 0;
   background-color: #393939;
-  display: flex;
-  height: 100vh;
 }
 </style>

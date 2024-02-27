@@ -1,42 +1,46 @@
-<!-- HomePage.vue -->
+<!-- RegisterPatient.vue -->
 <template>
+  <router-view></router-view>
+
   <div class="container">
+
     <header>
-      <h1>Bem-vindo, <span>Usuário</span>!</h1>
+      <h1>Bem-vindo, <span>paciente</span>!</h1>
+
+    <router-link to="/home">home</router-link>
+
     </header>
 
     <div class="sidebar">
 
-      <router-link to="/RegisterPatient">registar paciente</router-link>
-      
       <button @click="handleLogout">Sair</button>
 
-
     </div>
+
   </div>
 </template>
-
+  
 <script>
 
 export default {
-
   methods: {
-    // handleLogout() {
-    //   // Lógica de logout aqui
-    //   // Emitir evento para notificar componente pai (App.vue) sobre o logout
-    //   this.$emit('logout');
-    // },
+    handleLogout() {
+      // Lógica de logout aqui
+
+      // Emitir evento para notificar componente pai (App.vue) sobre o logout
+      this.$emit('logout');
+    },
   },
 };
 </script>
-
+  
 <style scoped>
 div {
   box-sizing: border-box;
 }
 
 header {
-  background-color: #ff8818;
+  background-color: #52ff18;
   width: 100%;
 }
 
@@ -69,7 +73,6 @@ header {
 #links-sidebar:hover {
   text-decoration: underline;
   color: #ffbb4c;
-  cursor: pointer;
 }
 
 button {
@@ -82,3 +85,4 @@ button {
   /* Faz o botão ficar no final da sidebar */
 }
 </style>
+  
