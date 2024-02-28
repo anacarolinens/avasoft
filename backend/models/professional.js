@@ -36,7 +36,7 @@ const Professional = database.define('profissional', {
     allowNull: false,
     references: {         
       model: User,        
-      key: 'id_user'    
+      key: 'id'    
     }
   }
 });
