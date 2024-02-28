@@ -1,44 +1,42 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const db = require("../models");
+const sequelize = require("../database/db");
+const User = require("../models/user");
+const Professional = require("../models/professional");
+
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Define uma porta padrão se a variável de ambiente não estiver definida
 
-// Middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Defina suas rotas aqui
-// Exemplo de rota:
-app.get('/', (req, res) => {
-  res.send('Olá, mundo!');
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "OPTIONS, GET, POST, PUT, DELETE"
+    );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
 });
 
-// Sincronização do modelo do Sequelize com o banco de dados
-db.sequelize.sync()
-  .then(() => {
-    startServer();
+//CRUD routes
+app.use("/users", require("../routes/userRoute"));
+app.use("/professionals", require("../routes/professionalRoute"));
+
+//error handling
+app.use((error, req, res, next) => {
+  const status = error.statusCode || 500;
+  const message = error.message;
+  res.status(status).json({ message: message });
+});
+
+//sync database and start server
+sequelize
+  .sync()
+  .then(result => {
+    console.log('Database connected')
+    app.listen(process.env.PORT || 3000);
   })
-  .catch(err => {
-    console.error('Erro ao sincronizar o modelo do Sequelize:', err);
-  });
-
-// Função para iniciar o servidor
-function startServer() {
-  app.listen(PORT, () => {
-    console.log(`Servidor está rodando na porta ${PORT}`);
-  });
-
-  // Tratamento de erros do servidor
-  app.on('error', onError);
-}
-
-// Tratamento de erros do servidor
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  const bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT;
-}
+  .catch((err) => console.log(err));
