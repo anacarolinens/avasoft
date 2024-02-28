@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const sequelize = require("../database/db");
 const User = require("../models/user");
+const Professional = require("../models/professional");
 
 require("dotenv").config();
 
@@ -22,7 +23,7 @@ app.use((req, res, next) => {
 
 //CRUD routes
 app.use("/users", require("../routes/userRoute"));
-
+app.use("/professionals", require("../routes/professionalRoute"));
 
 //error handling
 app.use((error, req, res, next) => {
