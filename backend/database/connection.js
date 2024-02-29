@@ -1,6 +1,8 @@
-const mysql = require('mysql2')
-require('dotenv').config({ path:'./.env'})
+const { Pool } = require('pg');
+require('dotenv').config({ path: './.env' });
 
-const connection = mysql.createConnection(process.env.DB_URL);
+const pool = new Pool({
+  connectionString: process.env.PG_URL,
+});
 
-module.exports = connection
+module.exports = pool;
