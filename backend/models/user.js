@@ -1,8 +1,9 @@
 const Sequelize = require('sequelize')
 const database = require('../database/db')
+const  USER_ROLES =  require('./userRoles')
 
 const User = database.define('user', {
-  id: {
+  id_user: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
@@ -29,7 +30,12 @@ const User = database.define('user', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  street: {
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+    street: {
       type: Sequelize.STRING,
       allowNull: false,
   },
@@ -56,6 +62,27 @@ const User = database.define('user', {
   cep: {
       type: Sequelize.STRING,
       allowNull: false,
+  },
+  role: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isIn: [USER_ROLES]
+    }
+  },
+  userName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  }, 
+  resetPasswordToken: {
+    type: Sequelize.STRING,
+    allowNull: true
   },
 
 });
