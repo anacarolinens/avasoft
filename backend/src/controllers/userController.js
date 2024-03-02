@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const sequelize = require('../database/db');
 
 //Crud all users
 exports.getAllUsers = async (req, res, next) => {
@@ -30,7 +31,7 @@ exports.getUserById = async (req, res, next) => {
 
 // Create user and generate token
 exports.createUser = async (req, res, next) => {
-    const { name, email, password, confirmPassword, role } = req.body;
+    const { fullName, email, password, confirmPassword, role } = req.body;
 
     // Check if passwords match
     if (password !== confirmPassword) {
@@ -44,9 +45,9 @@ exports.createUser = async (req, res, next) => {
 
         // Create the user in the database with the hashed password
         const user = await User.create({
-            name: name,
+            fullName: fullName,
             email: email,
-            password: hashedPassword, // Store the hash of the password
+            password: hashedPassword,
             role: role
         });
 
@@ -111,7 +112,7 @@ exports.loginUser = async (req, res, next) => {
 //Update user
 exports.updateUser = async (req, res, next) => {
     const userId = req.params.id;
-    const updatedname = req.body.name;
+    const updatedFullName = req.body.fullName;
     const updatedemail = req.body.email;
     const updatedpassword = req.body.password;
     User.findByPk(userId)
@@ -121,7 +122,7 @@ exports.updateUser = async (req, res, next) => {
                 message: 'User Not Found',
             });
         }
-        user.name = updatedname;
+        user.fullName = updatedFullName;
         user.email = updatedemail;
         user.password = updatedpassword;
         return user.save();
