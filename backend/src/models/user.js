@@ -1,10 +1,7 @@
 const Sequelize = require('sequelize')
 const database = require('../database/db')
-<<<<<<< Updated upstream
-const  USER_ROLES =  require('./userRoles')
-=======
 const  USER_ROLES =  require('../models/userRules')
->>>>>>> Stashed changes
+
 
 const User = database.define('user', {
   id_user: {
