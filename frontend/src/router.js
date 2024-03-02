@@ -1,7 +1,11 @@
+
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from './components/HomePage.vue';
 import LoginPage from './components/LoginPage.vue';
 import RegisterPatient from './components/RegisterPatient.vue';
+
+
+
 
 const routes = [
     {
@@ -10,7 +14,7 @@ const routes = [
         name: 'LoginPage'
     },
     {
-        path: '/home',
+        path: '/HomePage',
         component: HomePage,
         name: 'HomePage'
     },
@@ -22,7 +26,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
+    history: createWebHistory(),
     routes
 });
 

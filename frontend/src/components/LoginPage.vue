@@ -17,7 +17,7 @@
       </div>
 
       <!-- <button role="button" class="button-login" @click="handleLogin">LOGIN</button> -->
-      <RouterLink to="/HomePage" role="button" class="button-login" @click="handleLogin">LOGIN</RouterLink>
+      <RouterLink to="/HomePage" role="button" class="button-login">LOGIN</RouterLink>
     </form>
 
     <img src="../assets/vitruvianwoman.png" alt="">
@@ -37,12 +37,7 @@ export default {
   },
 
   methods: {
-    handleLogin() {
-      // Lógica de login aqui
 
-      // Emite o evento loginSuccess para notificar o componente pai (App.vue) sobre o sucesso do login
-      this.$emit('loginSuccess');
-    }
   }
 }
 </script>
@@ -63,7 +58,7 @@ h1 {
   
   color: #ffffff;
   font-size: 4em;
-  align-self: center;
+  
   margin-top: 1em;
 }
 

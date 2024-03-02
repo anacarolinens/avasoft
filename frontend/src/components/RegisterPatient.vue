@@ -1,22 +1,59 @@
-<!-- RegisterPatient.vue -->
 <template>
-  <router-view></router-view>
-
-  <div class="container">
-
+  <div class="container-patient">
     <header>
       <h1>Bem-vindo, <span>paciente</span>!</h1>
-
-    <router-link to="/home">home</router-link>
-
+      <router-link to="/HomePage">home</router-link>
     </header>
 
-    <div class="sidebar">
+    <div class="content-wrapper">
+      <div class="sidebar">
+        <router-link to="/">Sair</router-link>
+      </div>
 
-      <button @click="handleLogout">Sair</button>
+      <div class="section-form">
+        <form>
+          <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome">
+          </div>
 
+          <div class="form-group">
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf">
+          </div>
+
+          <div class="form-group">
+            <label for="datanasc">Data de Nascimento:</label>
+            <input type="date" id="datanasc" name="datanasc">
+          </div>
+
+          <div class="form-group">
+            <label for="sexo">Sexo:</label>
+            <select id="sexo" name="sexo">
+              <option value="masculino">Masculino</option>
+              <option value="feminino">Feminino</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="contato">Contato:</label>
+            <input type="text" id="contato" name="contato">
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email">
+          </div>
+
+          <div class="form-group">
+            <label for="endereco">Endereço:</label>
+            <textarea id="endereco" name="endereco"></textarea>
+          </div>
+
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
     </div>
-
   </div>
 </template>
   
@@ -24,12 +61,7 @@
 
 export default {
   methods: {
-    handleLogout() {
-      // Lógica de logout aqui
 
-      // Emitir evento para notificar componente pai (App.vue) sobre o logout
-      this.$emit('logout');
-    },
   },
 };
 </script>
@@ -84,5 +116,19 @@ button {
   margin-top: auto;
   /* Faz o botão ficar no final da sidebar */
 }
+
+.content-wrapper {
+  display: flex;
+}
+
+.section-form {
+  width: 80%; /* Ajuste conforme necessário */
+  padding: 1em;
+}
+
+.form-group {
+  margin-bottom: 1em;
+}
+
 </style>
   

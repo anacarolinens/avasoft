@@ -1,6 +1,8 @@
 <!-- HomePage.vue -->
 <template>
+ 
   <div class="container">
+    
     <header>
       <h1>Bem-vindo, <span>Usuário</span>!</h1>
     </header>
@@ -9,8 +11,7 @@
 
       <router-link to="/RegisterPatient">registar paciente</router-link>
       
-      <button @click="handleLogout">Sair</button>
-
+      <router-link to="/">Sair</router-link>
 
     </div>
   </div>
@@ -21,11 +22,7 @@
 export default {
 
   methods: {
-    // handleLogout() {
-    //   // Lógica de logout aqui
-    //   // Emitir evento para notificar componente pai (App.vue) sobre o logout
-    //   this.$emit('logout');
-    // },
+ 
   },
 };
 </script>
