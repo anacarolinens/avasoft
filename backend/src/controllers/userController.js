@@ -31,8 +31,6 @@ exports.getUserById = async (req, res, next) => {
 // Create user and generate token
 exports.createUser = async (req, res, next) => {
     const { fullName, cpf, dataNasc, gender, phone, email, street, number, complement, district, city, state, cep, role, userName, password, confirmPassword } = req.body;
-
-
     // Check if passwords match
     if (password !== confirmPassword) {
         return res.status(400).json({ message: 'Passwords do not match' });
@@ -129,6 +127,7 @@ exports.updateUser = async (req, res, next) => {
 
         // Verifica se o usuário existe
         const user = await User.findByPk(userId);
+
         if (!user) {
             return res.status(404).json({ message: 'User Not Found' });
         }
