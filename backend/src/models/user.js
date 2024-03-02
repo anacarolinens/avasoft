@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const database = require('../database/db')
-const  USER_ROLES =  require('./userRoles')
+const  USER_ROLES =  require('../models/userRules')
 
 const User = database.define('user', {
   id_user: {
@@ -35,12 +35,12 @@ const User = database.define('user', {
     allowNull: false,
     unique: true
   },
-    street: {
+  street: {
       type: Sequelize.STRING,
       allowNull: false,
   },
   number: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       allowNull: false,
   },
   complement: {
