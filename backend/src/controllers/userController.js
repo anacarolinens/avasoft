@@ -84,11 +84,11 @@ exports.createUser = async (req, res, next) => {
 
 //Login user
 exports.loginUser = async (req, res, next) => {
-    const { email, password } = req.body;
+    const { userName, password } = req.body;
 
     try {
         // Find the user in the database
-        const user = await User.findOne({ where: { email: email } });
+        const user = await User.findOne({ where: { userName: userName } });
 
         if (!user) {
             return res.status(404).json({ message: 'User Not Found' });
@@ -103,7 +103,7 @@ exports.loginUser = async (req, res, next) => {
 
         // Generate authentication token
         const token = jwt.sign(
-            { userId: user.id, email: user.email },
+            { userId: user.id, userName: user.userName },
             process.env.JWT_SECRET, // Secret key from .env file
             { expiresIn: '1h' } // Token expiration time
         );
@@ -123,32 +123,31 @@ exports.loginUser = async (req, res, next) => {
 
 //Update user
 exports.updateUser = async (req, res, next) => {
-    const userId = req.params.id;
-    const updatedname = req.body.name;
-    const updatedemail = req.body.email;
-    const updatedpassword = req.body.password;
-    User.findByPk(userId)
-    .then(user => {
+    try {
+        const userId = req.params.id;
+        const updatedUserData = req.body;
+
+        // Verifica se o usuário existe
+        const user = await User.findByPk(userId);
         if (!user) {
-            return res.status(404).json({
-                message: 'User Not Found',
-            });
+            return res.status(404).json({ message: 'User Not Found' });
         }
-        user.name = updatedname;
-        user.email = updatedemail;
-        user.password = updatedpassword;
-        return user.save();
-    })
-    .then(user => {
+
+        // Atualiza os dados do usuário
+        Object.assign(user, updatedUserData);
+        await user.save();
+
         res.status(200).json({ 
             message: 'User updated successfully!',
-            user: user });
-    })
-    .catch(err => {
+            user: user 
+        });
+    } catch (error) {
         res.status(500).json({ 
-            message: 'Error -> ' + err });
-    });
-}
+            message: 'Error updating user -> ' + error 
+        });
+    }
+};
+
 
 //Delete user
 exports.deleteUser = async (req, res, next) => {
