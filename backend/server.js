@@ -1,42 +1,57 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const sequelize = require("./src/database/db")
-const User = require("./src/models/user");
-const Professional = require("./src/models/professional");
-
+const app = require("./app");
+const http = require("http");
+const debug = require("debug")("nodestr:server");
 require("dotenv").config();
 
-const app = express();
+const port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const server = http.createServer(app);
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "OPTIONS, GET, POST, PUT, DELETE"
-    );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
 
-//CRUD routes
-app.use("/users", require("./src/routes/userRoute"));
-app.use("/professionals", require("./src/routes/professionalRoute"));
+function normalizePort(value) {
+  const port = parseInt(value, 10);
 
-//error handling
-app.use((error, req, res, next) => {
-  const status = error.statusCode || 500;
-  const message = error.message;
-  res.status(status).json({ message: message });
-});
+  if (isNaN(port)) {
+    return value;
+  }
 
-//sync database and start server
-sequelize
-  .sync()
-  .then(result => {
-    console.log('Database connected')
-    app.listen(process.env.PORT || 3000);
-  })
-  .catch((err) => console.log(err));
+  if (port >= 0) {
+    return port;
+  }
+  return false;
+}
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  const bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+function onListening() {
+  const addr = server.address();
+  const bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}

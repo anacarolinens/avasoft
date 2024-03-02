@@ -1,7 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const sequelize = require('../database/db');
 
 //Crud all users
 exports.getAllUsers = async (req, res, next) => {
@@ -31,7 +30,7 @@ exports.getUserById = async (req, res, next) => {
 
 // Create user and generate token
 exports.createUser = async (req, res, next) => {
-    const { fullName, email, password, confirmPassword, role } = req.body;
+    const { fullName, cpf, dataNasc, gender, phone, email, street, number, complement, district, city, state, cep, role, userName, password, confirmPassword } = req.body;
 
     // Check if passwords match
     if (password !== confirmPassword) {
@@ -47,8 +46,16 @@ exports.createUser = async (req, res, next) => {
         const user = await User.create({
             fullName: fullName,
             email: email,
-            password: hashedPassword,
-            role: role
+            street: street,
+            number: number,
+            complement: complement,
+            district: district,
+            city: city,
+            state: state,
+            cep: cep,
+            role: role,
+            userName: userName,
+            password: hashedPassword
         });
 
         // Generate authentication token

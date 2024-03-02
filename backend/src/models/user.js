@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const database = require('../database/db')
-const  USER_ROLES =  require('../routes/userRoute')
+const  USER_ROLES =  require('../models/userRules')
 
 const User = database.define('user', {
   id_user: {
