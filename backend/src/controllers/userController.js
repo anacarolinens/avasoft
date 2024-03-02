@@ -1,10 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 //Crud all users
 exports.getAllUsers = async (req, res, next) => {
@@ -34,11 +30,8 @@ exports.getUserById = async (req, res, next) => {
 
 // Create user and generate token
 exports.createUser = async (req, res, next) => {
-<<<<<<< Updated upstream
-    const { name, email, password, confirmPassword, role } = req.body;
-=======
     const { fullName, cpf, dataNasc, gender, phone, email, street, number, complement, district, city, state, cep, role, userName, password, confirmPassword } = req.body;
->>>>>>> Stashed changes
+
 
     // Check if passwords match
     if (password !== confirmPassword) {
@@ -52,12 +45,6 @@ exports.createUser = async (req, res, next) => {
 
         // Create the user in the database with the hashed password
         const user = await User.create({
-<<<<<<< Updated upstream
-            name: name,
-            email: email,
-            password: hashedPassword, // Store the hash of the password
-            role: role
-=======
             fullName: fullName,
             cpf: cpf,
             dataNasc: dataNasc,
@@ -74,7 +61,6 @@ exports.createUser = async (req, res, next) => {
             role: role,
             userName: userName,
             password: hashedPassword
->>>>>>> Stashed changes
         });
 
         // Generate authentication token
