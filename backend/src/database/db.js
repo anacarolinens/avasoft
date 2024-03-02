@@ -14,10 +14,19 @@ const db = new Sequelize(
 // Verifica a autenticação com o banco de dados
 db.authenticate()
     .then(() => {
-        console.log("Conectado ao banco de dados!");
+        console.log("Connected to database!");
     })
     .catch((error) => {
-        console.error("Conexão com o banco de dados falhou: ", error);
+        console.error("Database connection failed:", error);
     });
+
+// Sincronize os modelos com o banco de dados
+db.sync()
+  .then(() => {
+    console.log('Tabelas sincronizadas com o banco de dados.');
+  })
+  .catch((error) => {
+    console.error('Erro ao sincronizar tabelas com o banco de dados:', error);
+  });
 
 module.exports = db;
