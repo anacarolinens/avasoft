@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const database = require('../database/db');
-const User = require('./user');
+const User = require('../models/user');
 
 
 const Professional = database.define('profissional', {
