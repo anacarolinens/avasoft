@@ -3,19 +3,19 @@ const database = require('../database/db');
 const User = require('./user');
 
 
-const Professional = database.define('profissional', {
+const Paciente = database.define('paciente', {
   id_professional: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
   },
-  registry_professional: {
-    type: Sequelize.STRING,
+  peso_inicial: {
+    type: Sequelize.FLOAT,
     allowNull: false
   },
-  experience: {
-    type: Sequelize.INTEGER,
+  altura_inicial: {
+    type: Sequelize.FLOAT,
     allowNull: false,
     unique: true
   },
@@ -24,9 +24,9 @@ const Professional = database.define('profissional', {
     allowNull: false,
     references: {         
       model: User,        
-      key: 'id_user'    
+      key: 'id'    
     }
   }
 });
 
-module.exports = Professional
+module.exports = Paciente

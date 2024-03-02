@@ -1,6 +1,8 @@
-const mysql = require('mysql2/promise')
-require('dotenv').config({ path:'./.env'})
+const { Pool } = require('pg');
+require('dotenv').config({ path: './.env' });
 
-const connectionWithPromise = mysql.createPool(process.env.DB_URL);
+const pool = new Pool({
+  connectionString: process.env.PG_URL, // Supondo que sua variável de ambiente seja PG_URL
+});
 
-module.exports = connectionWithPromise
+module.exports = pool;
