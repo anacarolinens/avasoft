@@ -2,7 +2,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from './components/HomePage.vue';
 import LoginPage from './components/LoginPage.vue';
-import RegisterPatient from './components/RegisterPatient.vue';
+import RegisterUser from './components/RegisterUser.vue';
 
 
 
@@ -19,9 +19,9 @@ const routes = [
         name: 'HomePage'
     },
     {
-        path: '/RegisterPatient',
-        component: RegisterPatient,
-        name: 'RegisterPatient'
+        path: '/RegisterUser',
+        component: RegisterUser,
+        name: 'RegisterUser'
     }
 ];
 

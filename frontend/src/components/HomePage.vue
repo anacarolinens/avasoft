@@ -9,7 +9,7 @@
 
     <div class="sidebar">
 
-      <router-link to="/RegisterPatient">registar paciente</router-link>
+      <router-link to="/RegisterUser">registar paciente</router-link>
       
       <router-link to="/">Sair</router-link>
 
