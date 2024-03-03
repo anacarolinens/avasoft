@@ -1,3 +1,3 @@
-const USER_ROLES = ['Profissional Nutricionista', 'Paciente'];
+const USER_ROLES = ['Profissional', 'Paciente'];
 
 module.exports = USER_ROLES
