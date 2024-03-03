@@ -13,6 +13,8 @@
       
       <router-link to="/">Sair</router-link>
 
+      <router-link to="/ListUser">Lista de usuarios</router-link>
+
     </div>
   </div>
 </template>
