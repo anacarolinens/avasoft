@@ -131,7 +131,6 @@ exports.updateUser = async (req, res, next) => {
         if (!user) {
             return res.status(404).json({ message: 'User Not Found' });
         }
-
         // Atualiza os dados do usuário
         Object.assign(user, updatedUserData);
         await user.save();

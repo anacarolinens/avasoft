@@ -2,11 +2,12 @@
     <div class="container">
         <header>
             <h1>Lista de Usuários</h1>
-            <router-link to="/HomePage">Home</router-link>
+            
         </header>
 
         <div class="content">
             <div class="sidebar">
+                <router-link to="/HomePage">Home</router-link>
                 <router-link to="/RegisterUser">Registrar Paciente</router-link>
                 <router-link to="/">Sair</router-link>
             </div>
@@ -20,8 +21,9 @@
                             <span class="user-gender">({{ user.gender }})</span>
                         </div>
                         <div class="user-actions">
-                            <button @click="editUser(user)">Editar</button>
-                            <button @click="deleteUser(user)">Excluir</button>
+                            <!-- Atualize o link de edição -->
+                            <router-link id="edit-button" :to="{ name: 'EditPage', params: { id: user.id_user } }">Editar</router-link>
+                            <button id="delete-button" @click="deleteUser(user)">Excluir</button>
                         </div>
                     </li>
                 </ul>
@@ -30,8 +32,9 @@
     </div>
 </template>
 
-<script>
-import axios from 'axios';
+<script> 
+
+
 
 export default {
     data() {
@@ -45,15 +48,22 @@ export default {
     methods: {
         async fetchUsers() {
             try {
-                const response = await axios.get('http://localhost:3000/users');
-                this.users = response.data.users;
+                const response = await fetch('http://localhost:3000/users');
+                if (response.ok) {
+                    const data = await response.json();
+                    this.users = data.users;
+                } else {
+                    console.error('Error fetching users:', response.statusText);
+                }
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
         },
         editUser(user) {
-            // Implemente a lógica para editar o usuário
-            console.log('Editar usuário:', user);
+            if (user.id_user !== undefined) {
+                this.$router.push({ name: 'EditPage', params: { id: user.id_user } });
+            }
+            // Redirecione para a página de edição com o ID do usuário
         },
         deleteUser(user) {
             // Implemente a lógica para excluir o usuário
@@ -74,59 +84,48 @@ header {
     width: 100%;
 }
 
-.container {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-}
-
-.content {
-    display: flex;
-    flex: 1;
-    /* Faz com que a seção de conteúdo ocupe o restante do espaço disponível */
-}
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    background-color: #555;
-    color: rgb(255, 255, 255);
-    padding: 1em;
-    width: 20%;
-    /* ou qualquer outra largura desejada */
-    height: calc(100vh - 80px);
-    /* 4em é a altura do header */
-    box-sizing: border-box;
-}
-
 .user-list {
     flex: 1;
     /* Faz com que a lista de usuários ocupe o restante do espaço disponível na horizontal */
     padding: 1em;
 }
 
-#links-sidebar {
-    margin-bottom: 1em;
-    color: #ff8818;
+.user-actions {
+    display: flex;
+    gap: 1em; /* Espaçamento entre os botões */
+  }
+  
+  #delete-button {
+    background-color: #e93c3c;
+    color: #fff; 
+    padding: 10px 15px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+  }
+  
+
+  #delete-button:hover {
+    background-color: #b12e2e; 
+  }
+
+  #edit-button {
+    background-color: #d1d728;
+    color: #fff; 
+    padding: 10px 15px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
     text-decoration: none;
-    font-size: 1em;
-}
+  }
+  
+  #edit-button:hover {
+    background-color: #9aa045; 
+  }
 
-#links-sidebar:hover {
-    text-decoration: underline;
-    color: #ffbb4c;
-    cursor: pointer;
-}
 
-button {
-    background-color: #ff8818;
-    color: #ffffff;
-    border: none;
-    padding: 1em;
-    cursor: pointer;
-    margin-top: auto;
-    /* Faz o botão ficar no final da sidebar */
-}
 
 .user-list {
     flex: 1;
@@ -164,15 +163,15 @@ button {
     align-items: center;
     border-bottom: 1px solid #ddd;
     padding: 1em 0;
-  }
-  
-  .user-info {
+}
+
+.user-info {
     display: flex;
     align-items: center;
-  }
-  
-  .user-actions {
+}
+
+.user-actions {
     display: flex;
     gap: 0.5em;
-  }
+}
 </style>

@@ -5,6 +5,8 @@ import LoginPage from './components/LoginPage.vue';
 import RegisterUser from './components/RegisterUser.vue';
 import ListUser from './components/ListUser.vue';
 
+import EditPage from "./components/EditPage.vue";
+
 
 
 const routes = [
@@ -28,6 +30,11 @@ const routes = [
         component: ListUser,
         name: 'ListUser'
     },
+    {
+        path: "/edit/:id",
+        name: "EditPage",
+        component: EditPage,
+      },
 ];
 
 const router = createRouter({

@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    
+
     <header>
       <h1>Bem-vindo</h1>
-      <router-link to="/HomePage">home</router-link>
+
     </header>
 
 
@@ -12,11 +12,13 @@
 
       <div class="sidebar">
 
+        <router-link to="/HomePage">home</router-link>
+        
         <router-link to="/RegisterUser">registar paciente</router-link>
 
-        <router-link to="/">Sair</router-link>
-
         <router-link to="/ListUser">Lista de usuarios</router-link>
+
+        <router-link to="/">Sair</router-link>
 
       </div>
 
@@ -154,40 +156,6 @@ header {
   width: 100%;
 }
 
-.container {
-  display: flex;
-
-  flex-direction: column;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  background-color: #555;
-  color: rgb(255, 255, 255);
-  padding: 1em;
-  width: 20%;
-  min-height: calc(100vh - 80px); /* Use min-height aqui */
-  box-sizing: border-box;
-}
-
-#links-sidebar {
-  margin-bottom: 1em;
-  color: #ff8818;
-  text-decoration: none;
-  font-size: 1em;
-}
-
-#links-sidebar:hover {
-  text-decoration: underline;
-  color: #ffbb4c;
-}
-
-
-.content-wrapper {
-  display: flex;
-}
-
 .section-form {
   width: 80%;
   /* Ajuste conforme necessário */
@@ -198,11 +166,6 @@ header {
   margin-bottom: 1em;
 }
 
-.content {
-  display: flex;
-
-  /* Faz com que a seção de conteúdo ocupe o restante do espaço disponível */
-}
 
 #userForm {
   flex: 1;
