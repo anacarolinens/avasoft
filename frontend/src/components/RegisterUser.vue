@@ -1,73 +1,138 @@
 <template>
-  <div class="container-patient">
+  <div class="container">
+
     <header>
       <h1>Bem-vindo</h1>
-      <router-link to="/HomePage">home</router-link>
+
     </header>
 
-    <h2>Registrar Usuario</h2>
-    <form id="userForm" action="http://localhost:3000/register" method="post">
-      <!-- Personal Information -->
-      <label for="fullName">Nome:</label>
-      <input type="text" id="fullName" name="fullName" required><br>
 
-      <label for="cpf">CPF:</label>
-      <input type="text" id="cpf" name="cpf" required><br>
 
-      <label for="dataNasc">Data de nascimento:</label>
-      <input type="text" id="dataNasc" name="dataNasc" required><br>
+    <div class="content">
 
-      <label for="gender">Genero:</label>
-      <input type="text" id="gender" name="gender" required><br>
+      <div class="sidebar">
 
-      <!-- Contact Information -->
-      <label for="phone">Telefone:</label>
-      <input type="text" id="phone" name="phone" required><br>
+        <router-link to="/HomePage">home</router-link>
+        
+        <router-link to="/RegisterUser">registar paciente</router-link>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required><br>
+        <router-link to="/ListUser">Lista de usuarios</router-link>
 
-      <!-- Address Information -->
-      <label for="street">Rua:</label>
-      <input type="text" id="street" name="street" required><br>
+        <router-link to="/">Sair</router-link>
 
-      <label for="number">Numero:</label>
-      <input type="text" id="number" name="number" required><br>
+      </div>
 
-      <label for="complement">Complemento:</label>
-      <input type="text" id="complement" name="complement"><br>
 
-      <label for="district">Bairro:</label>
-      <input type="text" id="district" name="district" required><br>
 
-      <label for="city">Cidade:</label>
-      <input type="text" id="city" name="city" required><br>
+      <form id="userForm" action="http://localhost:3000/register" method="post">
+        <h2>Registrar Usuário</h2>
 
-      <label for="state">Estado:</label>
-      <input type="text" id="state" name="state" required><br>
+        <!-- Informações do Usuário -->
+        <fieldset>
+          <legend>Informações do Usuário</legend>
 
-      <label for="cep">CEP:</label>
-      <input type="text" id="cep" name="cep" required><br>
+          <div class="form-group">
+            <label for="fullName">Nome:</label>
+            <input type="text" id="fullName" name="fullName" required>
+          </div>
 
-      <!-- Account Information -->
-      <label for="role">Role:</label>
-      <select id="role" name="role" required>
-        <option value="Profissional Nutricionista">Profissional Nutricionista</option>
-        <option value="Paciente">Paciente</option>
-      </select><br>
+          <div class="form-group">
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" required>
+          </div>
 
-      <label for="userName">Login:</label>
-      <input type="text" id="userName" name="userName" required><br>
+          <div class="form-group">
+            <label for="dataNasc">Data de Nascimento:</label>
+            <input type="text" id="dataNasc" name="dataNasc" required>
+          </div>
 
-      <label for="password">Senha:</label>
-      <input type="password" id="password" name="password" required><br>
+          <div class="form-group">
+            <label for="gender">Gênero:</label>
+            <input type="text" id="gender" name="gender" required>
+          </div>
 
-      <label for="confirmPassword">Confirmar Senha:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+          <div class="form-group">
+            <label for="phone">Telefone:</label>
+            <input type="text" id="phone" name="phone" required>
+          </div>
 
-      <button type="submit">Salvar</button>
-    </form>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+        </fieldset>
 
+        <!-- Endereço -->
+        <fieldset>
+          <legend>Endereço</legend>
+
+          <div class="form-group">
+            <label for="street">Rua:</label>
+            <input type="text" id="street" name="street" required>
+          </div>
+
+          <div class="form-group">
+            <label for="number">Número:</label>
+            <input type="text" id="number" name="number" required>
+          </div>
+
+          <div class="form-group">
+            <label for="complement">Complemento:</label>
+            <input type="text" id="complement" name="complement">
+          </div>
+
+          <div class="form-group">
+            <label for="district">Bairro:</label>
+            <input type="text" id="district" name="district" required>
+          </div>
+
+          <div class="form-group">
+            <label for="city">Cidade:</label>
+            <input type="text" id="city" name="city" required>
+          </div>
+
+          <div class="form-group">
+            <label for="state">Estado:</label>
+            <input type="text" id="state" name="state" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" name="cep" required>
+          </div>
+        </fieldset>
+
+        <!-- Login -->
+        <fieldset>
+          <legend>Login</legend>
+
+          <div class="form-group">
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+              <option value="Profissional Nutricionista">Profissional Nutricionista</option>
+              <option value="Paciente">Paciente</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="userName">Login:</label>
+            <input type="text" id="userName" name="userName" required>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirmar Senha:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+          </div>
+        </fieldset>
+
+        <button type="submit">Salvar</button>
+      </form>
+    </div>
 
   </div>
 </template>
@@ -91,51 +156,6 @@ header {
   width: 100%;
 }
 
-.container {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  background-color: #555;
-  color: rgb(255, 255, 255);
-  padding: 1em;
-  width: 20%;
-  /* ou qualquer outra largura desejada */
-  height: calc(100vh - 80px);
-  /* 4em é a altura do header */
-  box-sizing: border-box;
-}
-
-#links-sidebar {
-  margin-bottom: 1em;
-  color: #ff8818;
-  text-decoration: none;
-  font-size: 1em;
-}
-
-#links-sidebar:hover {
-  text-decoration: underline;
-  color: #ffbb4c;
-}
-
-button {
-  background-color: #ff8818;
-  color: #ffffff;
-  border: none;
-  padding: 1em;
-  cursor: pointer;
-  margin-top: auto;
-  /* Faz o botão ficar no final da sidebar */
-}
-
-.content-wrapper {
-  display: flex;
-}
-
 .section-form {
   width: 80%;
   /* Ajuste conforme necessário */
@@ -144,5 +164,56 @@ button {
 
 .form-group {
   margin-bottom: 1em;
+}
+
+
+#userForm {
+  flex: 1;
+  /* Faz com que a lista de usuários ocupe o restante do espaço disponível na horizontal */
+  padding: 1em;
+}
+
+form {
+  width: 50%;
+  margin: auto;
+}
+
+fieldset {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+legend {
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 </style>

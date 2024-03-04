@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-login">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Kode+Mono:wght@400..700&family=Nanum+Gothic&display=swap">
 
@@ -44,7 +44,7 @@ export default {
   
 <style scoped>
 
-.container {
+.container-login {
   display: flex;
   flex-direction: column;
   margin-left: 5em;
