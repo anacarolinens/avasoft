@@ -20,18 +20,18 @@ app.delete('/users/:id', userController.deleteUser);
 
 // define routes professionals
 app.get('/professionals', professionalController.getAllProfessionals);
-app.get('/professionals/:id', professionalController.getProfessionalById);
-app.post('/professionals', professionalController.createProfessional);
-app.put('/professionals/:id', professionalController.updateProfessional);
-app.delete('/professionals/:id', professionalController.deleteProfessional);
+app.get('/professional/:id', professionalController.getProfessionalById);
+app.post('/professional', professionalController.createProfessional);
+app.put('/professional/:id', professionalController.updateProfessional);
+app.delete('/professional/:id', professionalController.deleteProfessional);
 
 
 // define routes patients
-app.get('/patients', patientController.getAllPatients);
-app.get('/patients/:id', patientController.getPatientById);
-app.post('/patients', patientController.createPatient);
-app.put('/patients/:id', patientController.updatePatient);
-app.delete('/patients/:id', patientController.deletePatient);
+app.get('/patient', patientController.getAllPatients);
+app.get('/patient/:id', patientController.getPatientById);
+app.post('/patient', patientController.createPatient);
+app.put('/patient/:id', patientController.updatePatient);
+app.delete('/patient/:id', patientController.deletePatient);
 
 
 

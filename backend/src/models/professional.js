@@ -18,14 +18,6 @@ const Professional = database.define('profissional', {
     type: Sequelize.INTEGER,
     allowNull: false,
     unique: true
-  },
-  id_user: { 
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    references: {         
-      model: User,        
-      key: 'id_user'    
-    }
   }
 });
 

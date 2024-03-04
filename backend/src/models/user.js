@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize')
 const database = require('../database/db')
 const  USER_ROLES =  require('../models/userRules')
+const Professional = require('./professional')
+
 
 const User = database.define('user', {
   id_user: {
@@ -84,6 +86,10 @@ const User = database.define('user', {
     type: Sequelize.STRING,
     allowNull: true
   },
+  resetPasswordExpires: {
+    type: Sequelize.DATE,
+    allowNull: true
+  }
 
 });
 
