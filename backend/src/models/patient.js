@@ -10,22 +10,18 @@ const Patient = database.define('patient', {
     autoIncrement: true,
     allowNull: false,
   },
-  peso_inicial: {
+  weigth_ini: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-  altura_inicial: {
+  height_ini: {
     type: DataTypes.FLOAT,
     allowNull: false,
-  },
-  id_user: { 
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    references: {         
-      model: User,        
-      key: 'id_user'    
-    }
   }
 });
+
+Patient.associate = function(models) {
+  Patient.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+};
 
 module.exports = Patient;
