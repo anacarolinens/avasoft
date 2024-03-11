@@ -44,5 +44,9 @@ Este projeto visa aprimorar as avaliações antropométricas feitas por um profi
 - Classificação: Desejável
 
 ## 👩‍💻💼 Time de Desenvolvimento
-- Ana Caroline (Backend/Frontend)
-- Anderson Dantas (Backend/Frontend)
+
+
+ |    <img src="https://avatars.githubusercontent.com/u/85416744?v=4" width="100" height="100" style="border-radius: 50%;">  |   <img src="https://avatars.githubusercontent.com/u/127001432?v=4" width="100" height="100" style="border-radius: 50%;"> |
+ | :---------: | :---------: |
+ |  Ana Caroline |    Anderson Dantas   |
+ |    Backend    |        Frontend    |
