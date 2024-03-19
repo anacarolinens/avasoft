@@ -1,5 +1,6 @@
 <h1 align="center"> 
-Sistema de Avaliação Antropométrica - AVASOFT </h1>
+  <img alt="Banner" title="#Banner" style="object-fit: cover; height:250px; width:900px" src=".github/readmebanner.png"  />
+</h1>
 
 # 📚 Sobre
 O sistema Avasoft tem como objetivo auxiliar no processo das avaliações antropométricas, coletando e armazenando dados por um período de tempo, fornecendo um resultado comparativo dos dados sobre a evolução dos alunos ao longo do tempo,com auxílio de gráficos para a visualização dos resultados.
