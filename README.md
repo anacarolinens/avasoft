@@ -66,7 +66,7 @@ Este projeto visa aprimorar as avaliações antropométricas feitas por um profi
 
 ## 💡🐛 Issues
 ### ❓ Encontrou algum problema ou tem alguma ideia para melhorar o projeto? 
-💡 Fique à vontade para abrir uma issue e contribuir com o desenvolvimento! Siga as diretrizes abaixo:
+💡 Fique à vontade para [abrir uma issue](https://github.com/Andisssu/avasoft/issues/new) e contribuir com o desenvolvimento! Siga as diretrizes abaixo:
 
 1. **Problemas**: Ao relatar um problema, forneça o máximo de detalhes possível, incluindo os passos para reproduzir o problema.
 2. **Melhorias**: Para sugestões de melhorias, descreva claramente sua ideia e, se possível, forneça exemplos ou contexto adicional.
