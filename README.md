@@ -56,6 +56,10 @@ Este projeto visa aprimorar as avaliações antropométricas feitas por um profi
   <img src=".github/home.png" alt="Home" width="450px">
 </p>
 
+
+Veja os protótipos na íntegra [neste link do Figma](https://www.figma.com/file/bWBbK59qeUf50Tm1d81LF9/projeto-engenharia-de-software?type=design&node-id=0%3A1&mode=design&t=D6orlkc3kxER71NX-1).
+
+
 ## 🔄	Atualizações no sistema
   &nbsp; &nbsp; ✅ Necessidade: Registrar informações essenciais dos pacientes.<br>
   &nbsp; &nbsp; ❌ Necessidade: Armazenar dados precisos das medidas corporais para cálculos futuros.<br>
@@ -66,7 +70,7 @@ Este projeto visa aprimorar as avaliações antropométricas feitas por um profi
 
 ## 💡🐛 Issues
 ### ❓ Encontrou algum problema ou tem alguma ideia para melhorar o projeto? 
-💡 Fique à vontade para abrir uma issue e contribuir com o desenvolvimento! Siga as diretrizes abaixo:
+💡 Fique à vontade para [abrir uma issue](https://github.com/Andisssu/avasoft/issues/new) e contribuir com o desenvolvimento! Siga as diretrizes abaixo:
 
 1. **Problemas**: Ao relatar um problema, forneça o máximo de detalhes possível, incluindo os passos para reproduzir o problema.
 2. **Melhorias**: Para sugestões de melhorias, descreva claramente sua ideia e, se possível, forneça exemplos ou contexto adicional.
