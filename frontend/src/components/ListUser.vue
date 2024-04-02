@@ -2,13 +2,18 @@
     <div class="container">
         <header>
             <h1>Lista de Usuários</h1>
-            
         </header>
 
         <div class="content">
             <div class="sidebar">
                 <router-link to="/HomePage">Home</router-link>
-                <router-link to="/RegisterUser">Registrar Paciente</router-link>
+
+                <router-link to="/RegisterUser">Registar Usuario</router-link>
+
+                <router-link to="/ListUser">Lista de usuarios</router-link>
+        
+                <router-link to="/PhysicalAssessments">Avaliação Fisica</router-link>
+        
                 <router-link to="/">Sair</router-link>
             </div>
 
@@ -22,7 +27,8 @@
                         </div>
                         <div class="user-actions">
                             <!-- Atualize o link de edição -->
-                            <router-link id="edit-button" :to="{ name: 'EditPage', params: { id: user.id_user } }">Editar</router-link>
+                            <router-link id="edit-button"
+                                :to="{ name: 'EditPage', params: { id: user.id_user } }">Editar</router-link>
                             <button id="delete-button" @click="deleteUser(user)">Excluir</button>
                         </div>
                     </li>
@@ -32,10 +38,7 @@
     </div>
 </template>
 
-<script> 
-
-
-
+<script>
 export default {
     data() {
         return {
@@ -65,10 +68,24 @@ export default {
             }
             // Redirecione para a página de edição com o ID do usuário
         },
-        deleteUser(user) {
-            // Implemente a lógica para excluir o usuário
-            console.log('Excluir usuário:', user);
-        }
+        async deleteUser(user) {
+            try {
+                // Envie uma solicitação de exclusão para o seu servidor
+                const response = await fetch(`http://localhost:3000/users/${user.id_user}`, {
+                    method: 'DELETE',
+                });
+
+                if (response.ok) {
+                    console.log('Usuário excluído com sucesso:', user);
+                    // Atualize a lista de usuários após a exclusão
+                    this.fetchUsers();
+                } else {
+                    console.error('Erro ao excluir usuário:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Erro ao excluir usuário:', error);
+            }
+        },
     },
 };
 </script>
@@ -92,38 +109,39 @@ header {
 
 .user-actions {
     display: flex;
-    gap: 1em; /* Espaçamento entre os botões */
-  }
-  
-  #delete-button {
+    gap: 1em;
+    /* Espaçamento entre os botões */
+}
+
+#delete-button {
     background-color: #e93c3c;
-    color: #fff; 
-    padding: 10px 15px; 
-    border: none; 
-    border-radius: 4px; 
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease; 
-  }
-  
+    transition: background-color 0.3s ease;
+}
 
-  #delete-button:hover {
-    background-color: #b12e2e; 
-  }
 
-  #edit-button {
+#delete-button:hover {
+    background-color: #b12e2e;
+}
+
+#edit-button {
     background-color: #d1d728;
-    color: #fff; 
-    padding: 10px 15px; 
-    border: none; 
-    border-radius: 4px; 
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease;
     text-decoration: none;
-  }
-  
-  #edit-button:hover {
-    background-color: #9aa045; 
-  }
+}
+
+#edit-button:hover {
+    background-color: #9aa045;
+}
 
 
 

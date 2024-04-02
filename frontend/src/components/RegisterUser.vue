@@ -11,12 +11,14 @@
     <div class="content">
 
       <div class="sidebar">
-
-        <router-link to="/HomePage">home</router-link>
         
-        <router-link to="/RegisterUser">registar paciente</router-link>
+        <router-link to="/HomePage">Home</router-link>
+
+        <router-link to="/RegisterUser">Registar Usuario</router-link>
 
         <router-link to="/ListUser">Lista de usuarios</router-link>
+
+        <router-link to="/PhysicalAssessments">Avaliação Fisica</router-link>
 
         <router-link to="/">Sair</router-link>
 

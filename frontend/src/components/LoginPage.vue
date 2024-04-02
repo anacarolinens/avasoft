@@ -1,49 +1,82 @@
 <template>
   <div class="container-login">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Kode+Mono:wght@400..700&family=Nanum+Gothic&display=swap">
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Kode+Mono:wght@400..700&family=Nanum+Gothic&display=swap">
 
     <h1>AVA<span>SOFT</span></h1>
 
     <form action="" id="login-form">
-
       <div class="name-pass">
         <label for="name" id="label-name">NOME</label>
-        <input type="text" id="name" placeholder="" v-model="name">
+        <input type="text" id="name" placeholder="" v-model="userName">
 
         <label for="pass" id="label-pass">SENHA</label>
-        <input type="password" id="pass" placeholder="">
-
+        <input type="password" id="pass" placeholder="" v-model="password">
       </div>
 
-      <!-- <button role="button" class="button-login" @click="handleLogin">LOGIN</button> -->
-      <RouterLink to="/HomePage" role="button" class="button-login">LOGIN</RouterLink>
+      <button type="button" class="button-login" @click="handleLogin">LOGIN</button>
+
     </form>
 
     <img src="../assets/vitruvianwoman.png" alt="">
 
   </div>
 </template>
-  
+
 <script>
+
 
 export default {
 
+  data() {
+    return {
+      userName: '',
+      password: ''
+    }
+  },
+
   mounted() {
+
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      // Defina o token no cabeçalho de autorização para todas as requisições Axios
+      this.$axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+    }
+
     document.documentElement.style.overflow = 'hidden';
   },
   beforeUnmount() {
     document.documentElement.style.overflow = '';
   },
 
+
+
   methods: {
+    async handleLogin() {
+      try {
+        const response = await this.$axios.post('http://localhost:3000/login', {
+          userName: this.userName,
+          password: this.password,
+        });
 
-  }
-}
+        const { token } = response.data;
+
+        // Armazene o token em localStorage
+        localStorage.setItem('authToken', token);
+
+        // Redirecione para a HomePage ou faça outras ações necessárias após o login
+        this.$router.push('/HomePage');
+      } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        // Trate o erro, exiba uma mensagem de erro, etc.
+      }
+    },
+  },
+};
 </script>
-  
-<style scoped>
 
+<style scoped>
 .container-login {
   display: flex;
   flex-direction: column;
@@ -55,7 +88,7 @@ export default {
 }
 
 h1 {
-  
+
   color: #ffffff;
   font-size: 4em;
   
@@ -78,7 +111,7 @@ img {
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  
+
 }
 
 #label-name,
@@ -97,8 +130,10 @@ img {
 
 #name,
 #pass {
-  width: 100%; /* Alterado para ocupar 100% da largura do contêiner pai */
-  max-width: 45vh; /* Adicionado um valor máximo */
+  width: 100%;
+  /* Alterado para ocupar 100% da largura do contêiner pai */
+  max-width: 45vh;
+  /* Adicionado um valor máximo */
   padding: 1em;
   border-radius: 5px;
   border: none;
@@ -109,12 +144,14 @@ img {
 /* Adicionando regras de mídia para ajustes em telas menores */
 @media screen and (max-width: 768px) {
   .container {
-    margin-left: 1em; /* Reduzindo a margem para telas menores */
+    margin-left: 1em;
+    /* Reduzindo a margem para telas menores */
   }
 
   #name,
   #pass {
-    max-width: 100%; /* Ocupa 100% da largura para telas menores */
+    max-width: 100%;
+    /* Ocupa 100% da largura para telas menores */
   }
 }
 
@@ -179,7 +216,7 @@ img {
 #pass:focus,
 #name:focus {
   background-color: white;
-  transform: scale(1.05);
-  box-shadow: 13px 0px 20px #969696;
+  transform: scale(1.01);
+  box-shadow: 1px 0px 20px #969696;
 }
 </style>
