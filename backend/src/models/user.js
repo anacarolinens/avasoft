@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const database = require('../database/db')
-const  USER_ROLES =  require('../routes/userRoute')
+const  USER_ROLES =  require('../models/userRules')
 
 const User = database.define('user', {
   id_user: {
@@ -9,7 +9,7 @@ const User = database.define('user', {
     allowNull: false,
     primaryKey: true
   },
-  fullname: {
+  fullName: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -87,4 +87,4 @@ const User = database.define('user', {
 
 });
 
-module.exports = User
+module.exports = User;

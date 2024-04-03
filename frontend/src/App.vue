@@ -1,47 +1,22 @@
 <!-- App.vue -->
 <template>
+
+  
   <div id="app">
-    <router-view></router-view>
-    <component :is="currentComponent" @loginSuccess="handleLoginSuccess" @logout="handleLogout"/>
+    <router-view />  
   </div>
+
+
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-import LoginPage from './components/LoginPage.vue';
-import HomePage from './components/HomePage.vue';
-import RegisterPatient from './components/RegisterPatient.vue';
-
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    LoginPage,
-    HomePage,
-    RegisterPatient
+
   },
-  data() {
-    return {
-      showLoginPage: false,
-    };
-  },
-  computed: {
-    currentComponent() {
-      return this.showLoginPage ? 'LoginPage' : 'HomePage';
-    },
-  },
-  methods: {
-    handleLoginSuccess() {
-      // Lógica para lidar com o sucesso do login
-      console.log('Login bem-sucedido. Redirecionando para HomePage...');
-      this.showLoginPage = false;
-    },
-    handleLogout() {
-      // Lógica para lidar com o logout
-      console.log('Logout realizado. Redirecionando para LoginPage...');
-      this.showLoginPage = true;
-    },
-  },
+
 };
 </script>
 
@@ -60,4 +35,72 @@ body {
   color: #ffffff;
   background-color: #393939;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background-color: #333; /* Alterei a cor de fundo para um tom mais escuro */
+  color: #fff;
+  padding: 1em;
+  width: 20%;
+  min-height: calc(100vh - 80px); /* Use min-height aqui */
+  box-sizing: border-box;
+  overflow-y: auto; /* Adicionei scroll se o conteúdo for maior que a altura da barra lateral */
+}
+
+.sidebar a {
+  display: block;
+  padding: 1em;
+  margin-bottom: 0.5em;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.3s ease; /* Adicionei uma transição suave na mudança de cor de fundo */
+}
+
+.sidebar a:hover {
+  background-color: #555; /* Cor de fundo quando hover */
+}
+
+
+.section-form {
+  flex: 1; /* Faz com que a seção de formulário ocupe o restante do espaço disponível */
+  padding: 1em;
+}
+
+.form-group {
+  margin-bottom: 1em;
+}
+
+.content {
+   /*flex: 1; Faz com que a seção de conteúdo ocupe o restante do espaço disponível */
+  display: flex;
+}
+
+#userForm {
+  flex: 1; /* Faz com que a lista de usuários ocupe o restante do espaço disponível na horizontal */
+  padding: 1em;
+}
+
+fieldset {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+legend {
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+
 </style>

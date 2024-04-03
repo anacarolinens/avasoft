@@ -1,7 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const sequelize = require('../database/db');
 
 //Crud all users
 exports.getAllUsers = async (req, res, next) => {
@@ -31,8 +30,7 @@ exports.getUserById = async (req, res, next) => {
 
 // Create user and generate token
 exports.createUser = async (req, res, next) => {
-    const { fullName, email, password, confirmPassword, role } = req.body;
-
+    const { fullName, cpf, dataNasc, gender, phone, email, street, number, complement, district, city, state, cep, role, userName, password, confirmPassword } = req.body;
     // Check if passwords match
     if (password !== confirmPassword) {
         return res.status(400).json({ message: 'Passwords do not match' });
@@ -46,9 +44,21 @@ exports.createUser = async (req, res, next) => {
         // Create the user in the database with the hashed password
         const user = await User.create({
             fullName: fullName,
+            cpf: cpf,
+            dataNasc: dataNasc,
+            gender: gender,
+            phone: phone,
             email: email,
-            password: hashedPassword,
-            role: role
+            street: street,
+            number: number,
+            complement: complement,
+            district: district,
+            city: city,
+            state: state,
+            cep: cep,
+            role: role,
+            userName: userName,
+            password: hashedPassword
         });
 
         // Generate authentication token
@@ -72,11 +82,11 @@ exports.createUser = async (req, res, next) => {
 
 //Login user
 exports.loginUser = async (req, res, next) => {
-    const { email, password } = req.body;
+    const { userName, password } = req.body;
 
     try {
         // Find the user in the database
-        const user = await User.findOne({ where: { email: email } });
+        const user = await User.findOne({ where: { userName: userName } });
 
         if (!user) {
             return res.status(404).json({ message: 'User Not Found' });
@@ -91,7 +101,7 @@ exports.loginUser = async (req, res, next) => {
 
         // Generate authentication token
         const token = jwt.sign(
-            { userId: user.id, email: user.email },
+            { userId: user.id, userName: user.userName },
             process.env.JWT_SECRET, // Secret key from .env file
             { expiresIn: '1h' } // Token expiration time
         );
@@ -111,32 +121,31 @@ exports.loginUser = async (req, res, next) => {
 
 //Update user
 exports.updateUser = async (req, res, next) => {
-    const userId = req.params.id;
-    const updatedFullName = req.body.fullName;
-    const updatedemail = req.body.email;
-    const updatedpassword = req.body.password;
-    User.findByPk(userId)
-    .then(user => {
+    try {
+        const userId = req.params.id;
+        const updatedUserData = req.body;
+
+        // Verifica se o usuário existe
+        const user = await User.findByPk(userId);
+
         if (!user) {
-            return res.status(404).json({
-                message: 'User Not Found',
-            });
+            return res.status(404).json({ message: 'User Not Found' });
         }
-        user.fullName = updatedFullName;
-        user.email = updatedemail;
-        user.password = updatedpassword;
-        return user.save();
-    })
-    .then(user => {
+        // Atualiza os dados do usuário
+        Object.assign(user, updatedUserData);
+        await user.save();
+
         res.status(200).json({ 
             message: 'User updated successfully!',
-            user: user });
-    })
-    .catch(err => {
+            user: user 
+        });
+    } catch (error) {
         res.status(500).json({ 
-            message: 'Error -> ' + err });
-    });
-}
+            message: 'Error updating user -> ' + error 
+        });
+    }
+};
+
 
 //Delete user
 exports.deleteUser = async (req, res, next) => {
