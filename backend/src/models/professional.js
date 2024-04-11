@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const database = require('../database/db');
-const User = require('../models/user');
+const User = require('./user');
 
 
 const Professional = database.define('profissional', {
@@ -18,15 +18,12 @@ const Professional = database.define('profissional', {
     type: Sequelize.INTEGER,
     allowNull: false,
     unique: true
-  },
-  id_user: { 
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    references: {         
-      model: User,        
-      key: 'id_user'    
-    }
   }
+  
 });
+
+Professional.associate = function(models) {
+  Professional.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+};
 
 module.exports = Professional
