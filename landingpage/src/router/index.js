@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import Footer from "../components/Footer.vue";
+import Attribute from "../views//Attribute.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,10 +13,16 @@ const router = createRouter({
       meta: { showNavbar: false },
     },
     {
+      path: "/attribute",
+      name: "attribute",
+      component: Attribute,
+      meta: { showNavbar: false },
+    },
+    {
       path: "/contato",
       name: "contact",
       component: Footer,
-      meta: { showNavbar: true },
+      meta: { showNavbar: false },
     },
     ],
 
