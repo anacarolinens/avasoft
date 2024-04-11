@@ -28,7 +28,7 @@
       </p>
       <span class="flex gap-8 items-center justify-center">
         <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-          <img class="h-4 cursor-pointer" src="../assets/facebook.png" alt="Logo do Facebook" />
+          <img class="h-5 cursor-pointer" src="../assets/facebook.png" alt="Logo do Facebook" />
         </a>
         <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
           <img class="h-4 cursor-pointer" src="../assets/x-twitter.png" alt="Logo do X (antigo Twitter)" />
