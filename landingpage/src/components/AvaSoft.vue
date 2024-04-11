@@ -22,7 +22,7 @@
             <img src="../assets/microsoft.png" alt="Ícone de download" class="h-5 w-5 ml-2">
           </span>
         </button>
-        <button class="ml-0.5 bg-[#FF8139] rounded-r-lg px-3 py-2">
+        <button class="ml-0.5 bg-[#FF8139] rounded-r-lg px-3 py-2 hover:bg-[#FF5C00]">
           <img src="../assets/seta.png" alt="Seta dropdown">
         </button>
       </div>
