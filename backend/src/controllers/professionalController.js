@@ -1,4 +1,4 @@
-const Profissional = require('../models/professional');
+const Professional = require('../models/professional');
 const User = require('../models/user');
 
 //list all professionals
@@ -7,10 +7,12 @@ exports.getAllProfessionals = async (req, res) => {
       const professionals = await Professional.findAll({
         include: [{
           model: User,
+          as: 'user',
           where: { role: 'Profissional' }, // filter by user type
-          attributes: ['username', 'email'] 
+          attributes: ['fullName', 'email'] 
         }]
       });
+
       res.json(professionals);
     } catch (error) {
       console.error(error);
@@ -26,7 +28,7 @@ exports.getProfessionalById = async (req, res) => {
         include: [{
           model: User,
           where: { role: 'Profissional' }, 
-          attributes: ['username', 'email'] 
+          attributes: ['fullName', 'email'] 
         }]
       });
       if (!professional) {
@@ -42,9 +44,9 @@ exports.getProfessionalById = async (req, res) => {
 //create a professional
 exports.createProfessional = async (req, res) => {
     try {
-      const { name, email, especialidade } = req.body;
-      // Crie o usuário primeiro, depois o profissional
-      const user = await User.create({ username: name, email: email, role: 'Profissional' });
+      const { fullName, email, especialidade } = req.body;
+    
+      const user = await User.create({ fullName: fullName, email: email, role: 'Profissional' });
       const professional = await Professional.create({ user_id: user.id, especialidade });
       res.status(201).json({ message: 'Professional created successfully!', professional });
     } catch (error) {
@@ -56,7 +58,7 @@ exports.createProfessional = async (req, res) => {
 //update professional
   exports.updateProfessional = async (req, res) => {
     try {
-      const { name, email, especialidade } = req.body;
+      const { fullName, email, especialidade } = req.body;
       const professionalId = req.params.id;
       const professional = await Professional.findByPk(professionalId, {
         include: [{ model: User }]
@@ -65,7 +67,7 @@ exports.createProfessional = async (req, res) => {
         return res.status(404).json({ message: 'Professional not found.' });
       }
       // Atualize os dados do usuário e do profissional
-      await professional.User.update({ username: name, email: email });
+      await professional.User.update({ fullName: fullName, email: email });
       await professional.update({ especialidade });
       res.json({ message: 'Professional updated successfully!', professional });
     } catch (error) {

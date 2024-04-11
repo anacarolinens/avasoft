@@ -1,6 +1,9 @@
 const Sequelize = require('sequelize')
 const database = require('../database/db')
 const  USER_ROLES =  require('../models/userRules')
+const Professional = require('./professional');
+const Patient = require('./patient');
+
 
 const User = database.define('user', {
   id_user: {
@@ -24,7 +27,7 @@ const User = database.define('user', {
   },
   gender: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   phone: {
     type: Sequelize.STRING,
@@ -84,7 +87,14 @@ const User = database.define('user', {
     type: Sequelize.STRING,
     allowNull: true
   },
+  resetPasswordExpires: {
+    type: Sequelize.DATE,
+    allowNull: true
+  }
 
 });
+
+Professional.hasOne(User, { foreignKey: 'id_user', as: 'user' });
+Patient.hasOne(User, { foreignKey: 'id_user', as: 'user' });
 
 module.exports = User;
