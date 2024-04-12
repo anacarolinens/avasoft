@@ -6,7 +6,7 @@
                 <AvaSoft></AvaSoft>
             </div>
             <div>
-                 <Attribute></Attribute>
+                 <AttributeList></AttributeList>
             </div>
           
          
@@ -15,10 +15,10 @@
     </main>
   </template>
   
-  <script setup>
-  import AvaSoft from "../components/AvaSoft.vue";
-  import Attribute from "../components/Attribute.vue";
-  </script>
+<script setup>
+import AvaSoft from "../components/AvaSoft.vue";
+import AttributeList from "../components/AttributeList.vue";
+</script>
   
   <style scoped>
   </style>

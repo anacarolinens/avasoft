@@ -8,7 +8,7 @@
           <span class="text-[#FF8139]">EFICIENTE</span>, É AVA<span class="text-[#FF8139]">SOFT</span>
         </p>
       </h1>
-      <p class="mb-12">O Avasoft simplifica as avaliações antropométricas, 
+      <p class="mb-12">O Avasoft simplifica suas avaliações antropométricas, 
         coletando e armazenando dados dos alunos ao longo <br>
         do tempo. Com gráficos intuitivos, oferecemos resultados 
         comparativos, facilitando a visualização da <br>
@@ -32,6 +32,10 @@
 </template>
 
 <script setup>
+import DropdownHome from './DropdownHome.vue';
+
+
+
 </script>
 
 <style scoped>
