@@ -8,6 +8,9 @@
             <div>
                  <AttributeList></AttributeList>
             </div>
+            <div>
+                <SimplifyAva></SimplifyAva>
+            </div>
           
          
         </div>
@@ -18,6 +21,7 @@
 <script setup>
 import AvaSoft from "../components/AvaSoft.vue";
 import AttributeList from "../components/AttributeList.vue";
+import SimplifyAva from "../components/SimplifyAva.vue";
 </script>
   
   <style scoped>
