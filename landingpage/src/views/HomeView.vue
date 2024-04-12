@@ -1,19 +1,25 @@
 <template>
-   <main>
-    <div class="relative isolate overflow-hidden">
-            <div class="mx-auto justify-center lg:flex">
+    <main>
+      <div class="relative isolate overflow-hidden">
+        <div class="mx-auto justify-center lg:flex flex-col items-center">
+            <div>
                 <AvaSoft></AvaSoft>
-                <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:pt-8">
-                    <img src="" alt="">
-                </div>
             </div>
+            <div>
+                 <Attribute></Attribute>
+            </div>
+          
+         
         </div>
-  </main>
-</template>
-
-<script setup>
-import AvaSoft from "../components/AvaSoft.vue";
-
-</script>
-
-<style scoped></style>
+      </div>
+    </main>
+  </template>
+  
+  <script setup>
+  import AvaSoft from "../components/AvaSoft.vue";
+  import Attribute from "../components/Attribute.vue";
+  </script>
+  
+  <style scoped>
+  </style>
+  

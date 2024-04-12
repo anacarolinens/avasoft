@@ -1,8 +1,8 @@
 <template>
-  <main class="flex justify-center items-center h-screen">
+  <main class="flex justify-center items-center">
     <!-- Hero section -->
     <div class="text-center">
-      <h1 class="text-7xl font-bold mb-12">
+      <h1 class="text-7xl font-bold mb-12 mt-40">
         <p>SIMPLES, INTUITIVO E</p>
         <p>
           <span class="text-[#FF8139]">EFICIENTE</span>, É AVA<span class="text-[#FF8139]">SOFT</span>
