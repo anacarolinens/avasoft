@@ -1,90 +1,93 @@
 const Professional = require('../models/professional');
+const User = require('../models/user');
 
-// funtion to handle error
-function handleError(res, statusCode, message) {
-    res.status(statusCode).json({ message: message });
-}
-
-// get all professionals
-exports.getAllProfessionals = async (req, res, next) => {
+//list all professionals
+exports.getAllProfessionals = async (req, res) => {
     try {
-        const professionals = await Professional.findAll();
-        res.status(200).json({ professionals: professionals });
-    } catch (err) {
-        handleError(res, 500, 'Error -> ' + err);
-    }
-}
+      const professionals = await Professional.findAll({
+        include: [{
+          model: User,
+          as: 'user',
+          where: { role: 'Profissional' }, // filter by user type
+          attributes: ['fullName', 'email'] 
+        }]
+      });
 
-// get professional by id
-exports.getProfessionalById = async (req, res, next) => {
+      res.json(professionals);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error fetching professionals.' });
+    }
+};
+
+//get professional by id
+exports.getProfessionalById = async (req, res) => {
     try {
-        const professionalId = req.params.id;
-        const professional = await Professional.findByPk(professionalId);
-        if (!professional) {
-            return res.status(404).json({ message: 'Professional Not Found' });
-        }
-        res.status(200).json({ professional: professional });
-    } catch (err) {
-        handleError(res, 500, 'Error -> ' + err);
+      const professional = await Professional.findOne({
+        where: { id: req.params.id },
+        include: [{
+          model: User,
+          where: { role: 'Profissional' }, 
+          attributes: ['fullName', 'email'] 
+        }]
+      });
+      if (!professional) {
+        return res.status(404).json({ message: 'Professional not found.' });
+      }
+      res.json(professional);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error fetching professional.' });
     }
-}
+};
 
-// create professional  
-exports.createProfessional = async (req, res, next) => {
+//create a professional
+exports.createProfessional = async (req, res) => {
     try {
-        const newProfessional = await Professional.create(req.body);
-        res.status(200).json({ message: 'Professional created successfully!', professional: newProfessional });
-    } catch (err) {
-        handleError(res, 500, 'Error -> ' + err);
+      const { fullName, email, especialidade } = req.body;
+    
+      const user = await User.create({ fullName: fullName, email: email, role: 'Profissional' });
+      const professional = await Professional.create({ user_id: user.id, especialidade });
+      res.status(201).json({ message: 'Professional created successfully!', professional });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error creating professional.' });
     }
-}
-
-// update professional
-exports.updateProfessional = async (req, res, next) => {
+  };
+  
+//update professional
+  exports.updateProfessional = async (req, res) => {
     try {
-        const professionalId = req.params.id;
-        let professional = await Professional.findByPk(professionalId);
-        if (!professional) {
-            return res.status(404).json({ message: 'Professional Not Found' });
-        }
-        professional = Object.assign(professional, req.body);
-        await professional.save();
-        res.status(200).json({ message: 'Professional updated successfully!', professional: professional });
-    } catch (err) {
-        handleError(res, 500, 'Error -> ' + err);
+      const { fullName, email, especialidade } = req.body;
+      const professionalId = req.params.id;
+      const professional = await Professional.findByPk(professionalId, {
+        include: [{ model: User }]
+      });
+      if (!professional) {
+        return res.status(404).json({ message: 'Professional not found.' });
+      }
+      // Atualize os dados do usuário e do profissional
+      await professional.User.update({ fullName: fullName, email: email });
+      await professional.update({ especialidade });
+      res.json({ message: 'Professional updated successfully!', professional });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error updating professional.' });
     }
-}
+  };
 
-// delete professional
-exports.deleteProfessional = async (req, res, next) => {
+  //delete professional
+  exports.deleteProfessional = async (req, res) => {
     try {
-        const professionalId = req.params.id;
-        const professional = await Professional.findByPk(professionalId);
-        if (!professional) {
-            return res.status(404).json({ message: 'Professional Not Found' });
-        }
-        await professional.destroy();
-        res.status(200).json({ message: 'Professional deleted successfully!' });
-    } catch (err) {
-        handleError(res, 500, 'Error -> ' + err);
+      const professionalId = req.params.id;
+      const professional = await Professional.findByPk(professionalId);
+      if (!professional) {
+        return res.status(404).json({ message: 'Professional not found.' });
+      }
+      await professional.destroy();
+      res.json({ message: 'Professional deleted successfully!' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error deleting professional.' });
     }
-}
-
-// Login professional
-exports.loginProfessional = async (req, res, next) => {
-    try {
-        const { userName, password } = req.body;
-        const professional = await Professional.findOne({ where: { userName, password } });
-        if (!professional) {
-            return res.status(404).json({ message: 'Professional Not Found' });
-        }
-        res.status(200).json({ message: 'Professional logged in successfully!', professional: professional });
-    } catch (err) {
-        handleError(res, 500, 'Error -> ' + err);
-    }
-}
-
-// Logout professional
-exports.logoutProfessional = async (req, res, next) => {
-    res.status(200).json({ message: 'Professional logged out successfully!' });
-}
+  };
