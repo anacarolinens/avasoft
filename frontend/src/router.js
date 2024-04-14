@@ -9,6 +9,8 @@ import EditPage from "./components/EditPage.vue";
 import AssessmentPage from "./components/AssessmentPage.vue";
 import AssessmentUser from "./components/AssessmentUser.vue";
 import PhysicalAssessments from "./components/PhysicalAssessments.vue";
+import HeaderContent from "./components/HeaderContent.vue";
+
 const routes = [
     {
         path: '/',
@@ -50,7 +52,11 @@ const routes = [
         component: PhysicalAssessments,
         name: 'PhysicalAssessments'
     },
-    
+    {
+        path: '/HeaderContent',
+        component: HeaderContent,
+        name: 'HeaderContent'
+    },
 
     
 ];
