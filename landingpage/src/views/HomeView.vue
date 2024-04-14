@@ -24,6 +24,6 @@ import AttributeList from "../components/AttributeList.vue";
 import SimplifyAva from "../components/SimplifyAva.vue";
 </script>
   
-  <style scoped>
-  </style>
+<style scoped>
+ </style>
   

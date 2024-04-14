@@ -1,28 +1,27 @@
 <template>
     <main>
         <div class="mt-20 flex justify-center">
-            <img class="w-3/4" src="/src/assets/notebook.png" alt="Notebook com demonstração do">
+            <img class="w-3/4" :src="imagePath('notebook.png')" alt="Notebook com demonstração do">
         </div>
 
-        <div class="flex justify-center space-x-24 text-center mt-12 mb-40" style="min-width: 800px;">
-            <div v-for="feature in features" :key="feature.title" class="relative">
-                <button @click="toggleDescription(feature)">
+        <div class="flex justify-center text-center mt-16 mb-8" style="min-width: 800px;">
+            <div v-for="feature in features" :key="feature.title" class="feature-container">
+                <button @click="toggleDescription(feature)" class="feature-button">
                     <div class="flex flex-col items-center">
-                        <div class="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
-                            <img :src="feature.src" class="">
+                        <div :class="['w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center', {'w-24 h-24': feature.showDescription}]">
+                            <img :src="imagePath(feature.src)" class="feature-icon">
                         </div>
                         <p
-                            :class="['text-sm font-medium mt-4', clickedFeature === feature ? 'text-[#FF8139]' : 'text-[#A7A7A7]']">
-                            {{
-                            feature.title }}
+                            :class="['text-sm font-medium mt-4', clickedFeature === feature ? 'font-semibold text-[#FF8139]' : 'text-[#A7A7A7]']">
+                            {{ feature.title }}
                         </p>
                     </div>
                 </button>
-                <p 
-                    v-if="feature.showDescription" class="text-sm mt-2 max-w-xs text-center fade">
-                    {{ feature.description}}
-                </p>
-
+                <div v-if="feature.showDescription" class="description-area">
+                    <p class="mt-2 text-center">
+                        {{ feature.description}}
+                    </p>
+                </div>
             </div>
         </div>
     </main>
@@ -32,34 +31,35 @@
 export default {
     data() {
         return {
+            imageBasePath: '/src/assets/',
             features: [
                 {
                     title: 'Simplificação',
-                    src: '/landingpage/public/simplify.png',
+                    src: 'simplify.png', 
                     description: 'Diga adeus aos cálculos manuais e planilhas complicadas com o Avasoft!',
                     showDescription: false
                 },
                 {
                     title: 'Dinamismo',
-                    src: '/landingpage/public/dynamic.png',
+                    src: 'dynamic.png',
                     description: 'Realize avaliações antropométricas completas e precisas em minutos',
                     showDescription: false
                 },
                 {
                     title: 'Personalização',
-                    src: '/landingpage/public/personality.png',
+                    src: 'personality.png',
                     description: 'Um relatório digital personalizado com gráficos e dados específicos de um cliente',
                     showDescription: false
                 },
                 {
                     title: 'Visualização',
-                    src: '/landingpage/public/visualization.png',
+                    src: 'visualization.png',
                     description: 'Acompanhe o progresso de forma visualmente atraente',
                     showDescription: false
                 },
                 {
                     title: 'Versatilidade',
-                    src: '/landingpage/public/versatility.png',
+                    src: 'versatility.png',
                     description: 'Perfeito para profissionais de saúde, entusiastas do fitness e estudantes',
                     showDescription: false
                 },
@@ -69,30 +69,60 @@ export default {
     },
     methods: {
         toggleDescription(clickedFeature) {
-            this.features.forEach(feature => {
-                if (feature !== clickedFeature) {
+            if (this.clickedFeature === clickedFeature) {
+                this.clickedFeature.showDescription = !this.clickedFeature.showDescription;
+            } else {
+                this.features.forEach(feature => {
+                    if (feature !== clickedFeature) {
+                        feature.showDescription = false;
+                    }
+                });
+                clickedFeature.showDescription = true;
+                this.clickedFeature = clickedFeature;
+            }
+        },
+        imagePath(fileName) {
+            return this.imageBasePath + fileName;
+        },
+        closeDescriptionOnOutsideClick(event) {
+            if (!event.target.closest('.feature-container')) {
+                this.features.forEach(feature => {
                     feature.showDescription = false;
-                }
-            });
-            clickedFeature.showDescription = !clickedFeature.showDescription;
-            this.clickedFeature = clickedFeature.showDescription ? clickedFeature : null;
+                });
+                this.clickedFeature = null;
+            }
         }
+    },
+    mounted() {
+        document.addEventListener('click', this.closeDescriptionOnOutsideClick);
+    },
+    beforeUnmount() {
+        document.removeEventListener('click', this.closeDescriptionOnOutsideClick);
     }
 };
 </script>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s;
+.feature-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 200px; 
+    margin-bottom: 5px;
+    width: 258px;
 }
 
-.fade-enter,
-.fade-leave-to {
-    opacity: 0;
+.feature-button {
+    width: 100%;
+    text-align: center;
 }
 
-.max-w-xs {
-    max-width: 250px;
+.description-area {
+    padding: 10px;
+    text-align: center;
+}
+
+.feature-icon {
+    width: 35%;
 }
 </style>
