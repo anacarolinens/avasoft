@@ -1,19 +1,29 @@
 <template>
-   <main>
-    <div class="relative isolate overflow-hidden">
-            <div class="mx-auto justify-center lg:flex">
+    <main>
+      <div class="relative isolate overflow-hidden">
+        <div class="mx-auto justify-center lg:flex flex-col items-center">
+            <div>
                 <AvaSoft></AvaSoft>
-                <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:pt-8">
-                    <img src="" alt="">
-                </div>
             </div>
+            <div>
+                 <AttributeList></AttributeList>
+            </div>
+            <div>
+                <SimplifyAva></SimplifyAva>
+            </div>
+          
+         
         </div>
-  </main>
-</template>
-
+      </div>
+    </main>
+  </template>
+  
 <script setup>
 import AvaSoft from "../components/AvaSoft.vue";
-
+import AttributeList from "../components/AttributeList.vue";
+import SimplifyAva from "../components/SimplifyAva.vue";
 </script>
-
-<style scoped></style>
+  
+<style scoped>
+ </style>
+  
