@@ -6,10 +6,16 @@
                 <AvaSoft></AvaSoft>
             </div>
             <div>
-                 <AttributeList></AttributeList>
+              <AttributeList></AttributeList>
             </div>
             <div>
-                <SimplifyAva></SimplifyAva>
+              <SimplifyAva></SimplifyAva>
+            </div>
+            <div>
+              <GetUpdates></GetUpdates>
+            </div>
+            <div>
+              <DownloadHere></DownloadHere>
             </div>
           
          
@@ -22,6 +28,8 @@
 import AvaSoft from "../components/AvaSoft.vue";
 import AttributeList from "../components/AttributeList.vue";
 import SimplifyAva from "../components/SimplifyAva.vue";
+import GetUpdates from "../components/GetUpdates.vue";
+import DownloadHere from '../components/DownloadHere.vue';
 </script>
   
 <style scoped>
