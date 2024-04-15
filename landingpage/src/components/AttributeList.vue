@@ -4,7 +4,7 @@
             <img class="w-3/4" :src="imagePath('notebook.png')" alt="Notebook com demonstração do">
         </div>
 
-        <div class="flex justify-center text-center mt-16 mb-8" style="min-width: 800px;">
+        <div class="flex justify-center text-center mt-16 mb-28" style="min-width: 800px;">
             <div v-for="feature in features" :key="feature.title" class="feature-container">
                 <button @click="toggleDescription(feature)" class="feature-button">
                     <div class="flex flex-col items-center">
@@ -12,7 +12,7 @@
                             <img :src="imagePath(feature.src)" class="feature-icon">
                         </div>
                         <p
-                            :class="['text-sm font-medium mt-4', clickedFeature === feature ? 'font-semibold text-[#FF8139]' : 'text-[#A7A7A7]']">
+                            :class="['text-sm font-medium mt-4 text-base', clickedFeature === feature ? 'font-semibold text-[#FF8139]' : 'text-[#A7A7A7]']">
                             {{ feature.title }}
                         </p>
                     </div>
