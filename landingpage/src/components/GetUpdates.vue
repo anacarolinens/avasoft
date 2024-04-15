@@ -1,7 +1,7 @@
 <template>
-    <div class="text-center mt-48">
+    <div class="text-center mt-48 md:">
         <h1 class="mb-16 font-medium text-3xl relative">
-            <span class="relative inline-block">Receba</span> atualizações do sistema no seu e-mail
+            <span class="relative inline-block">Receba</span> atualizações do sistema em seu e-mail
         </h1>
         <div class="flex justify-center">
             <input type="text" class="input-field rounded px-4 py-2 text-sm h-14" placeholder="Digite seu email aqui...">
@@ -11,6 +11,9 @@
         </div>
     </div>
 </template>
+
+<script>
+</script>
 
 <style scoped>
 .text-center {

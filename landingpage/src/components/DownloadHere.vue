@@ -1,9 +1,11 @@
-<template>      
+<template>
     <div class="relative isolate overflow-hidden mt-36">
         <div class="mx-auto justify-center lg:flex">
-            <img src="../assets/notebook.png" alt="Notebook com demonstração do sistema" class="w-96 h-auto lg:w-auto lg:h-96">
+            <img src="../assets/notebook.png" alt="Notebook com demonstração do sistema"
+                class="w-96 h-auto lg:w-auto lg:h-96">
             <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:pt-8">
-                <h1 class="mt-10 text-2xl font-bold tracking-tight sm:text-4xl">Baixe aqui <br> <span class="text-[#FF8139]">agora</span>!
+                <h1 class="mt-10 text-2xl font-bold tracking-tight sm:text-4xl">Baixe aqui <br> <span
+                        class="text-[#FF8139]">agora</span>!
                 </h1>
                 <p class="mt-6 mb-10">
                     Não perca tempo. baixe já em seu desktop, o novo aplicativo <br>

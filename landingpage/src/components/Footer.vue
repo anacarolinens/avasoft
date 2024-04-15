@@ -13,7 +13,7 @@
                 <div class="flex flex-col gap-4">
                     <h3 class="text-white text-lg font-semibold">CONTATO</h3>
                     <a href="#" class="text-white text-sm">+55 99 9999-9999</a>
-                    <a href="#" class="text-white text-sm">Algum@algumacoisa.com</a>
+                    <a href="#" class="text-white text-sm">contato.avasoft@gmail.com</a>
                     <a href="#" class="text-white text-sm">Rua Alguma Coisa, 81, Qualquer Lugar</a>
                 </div>
             </div>
@@ -45,8 +45,7 @@
   
   <script setup>
   import { reactive } from "vue";
-  let date = new Date();
-  const year = reactive(date.getFullYear());
+  let year = new Date().getFullYear();
   </script>
   
   <style scoped></style>
