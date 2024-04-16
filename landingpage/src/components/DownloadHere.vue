@@ -12,18 +12,24 @@
                     que irá fazer você transformar a sua avaliação antropométrica <br>
                     com facilidade e precisão.
                 </p>
-                <button class="flex items-center bg-[#FF8139] px-6 py-3 text-white rounded-md hover:bg-[#FF5C00]">
-                    <span class="flex items-center">
-                        Baixar agora
-                        <img src="../assets/download.png" alt="Ícone de download" class="h-5 w-5 ml-2">
-                    </span>
-                </button>
+                <Button>
+                    Baixar agora
+                    <img src="../assets/download.png" alt="Ícone de download" class="h-5 w-5 ml-2">
+                </Button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Button from '../components/Button.vue';
+
+export default {
+    components: {
+        Button
+    }
+}
+
 </script>
 
 <style scoped>

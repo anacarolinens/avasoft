@@ -1,28 +1,52 @@
 <template>
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between">
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="relative flex h-16 items-center">
+            <div class="flex flex-1 items-center justify-center">
                 <div class="flex flex-shrink-0 items-center">
                     <img class="h-15 md:h-12: w-auto" src="../assets/logo-avasoft.png" alt="Avasoft Company Logo" />
                 </div>
                 <div class="sm:ml-6 space-x-8  flex items-center sm:ml-auto">
-                    <a href="#" class="relative">Home</a>
-                    <a href="#" class="relative">Atributos</a>
-                    <a href="#" class="relative">Avasoft</a>
-                    <a href="#" class="relative">Contato</a>
-                    <button class="flex items-center bg-[#FF8139] px-6 py-3 text-white rounded-md hover:bg-[#FF5C00]">
-                        <span class="flex items-center">
-                            Baixar agora
-                            <img src="../assets/download.png" alt="Ícone de download" class="h-5 w-5 ml-2">
-                        </span>
-                    </button>
+
+                    <ul class="md:flex md:items-center" >
+                        <li class="md:mx-4" v-for="link in Links">
+                            <a :href="link.link" class="relative">
+                                {{ link.name }}
+                            </a>
+                        </li>
+                    </ul>
+                    
+
+                    <Button>
+                        Baixar agora
+                        <img src="../assets/download.png" alt="Ícone de download" class="h-5 w-5 ml-2">
+                    </Button>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<script setup>
+<script>
+import Button from '../components/Button.vue';
+
+export default {
+    components: {
+        Button
+    },
+
+    setup() {
+        let Links = [
+            { name: 'Home', link: '/' },
+            { name: 'Atributos', link: '/atributos' },
+            { name: 'Avasoft', link: '/avasoft' },
+            { name: 'Contato', link: '/contato' },
+        ]
+
+        return {
+            Links
+        }
+    }
+}
 
 
 </script>
