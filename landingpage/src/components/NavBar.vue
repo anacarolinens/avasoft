@@ -37,8 +37,8 @@
           <div v-if="menuOpen"
             class="absolute top-16 md:top-0 right-0 inset-x-0 p-2 transition transform origin-top-right z-10 bg-white rounded-md shadow-lg md:relative md:bg-transparent md:p-0">
             <ul class="space-y-2">
-              <li v-for="link in Links" :key="link.name" class="px-4 py-2 hover:bg-gray-100">
-                <a :href="link.link" class="block text-gray-700 hover:text-gray-900">{{ link.name }}</a>
+              <li v-for="link in Links" :key="link.name" class="px-4 py-2 hover:bg-[#FFD6CE]">
+                <a :href="link.link" class="block text-gray-700">{{ link.name }}</a>
               </li>
               <li class="px-4 py-2">
                 <Button>
