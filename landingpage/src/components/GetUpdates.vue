@@ -1,16 +1,27 @@
 <template>
-    <div class="text-center mt-48">
+    <div class="text-center mt-28 md:">
         <h1 class="mb-16 font-medium text-3xl relative">
-            <span class="relative inline-block">Receba</span> atualizações do sistema no seu e-mail
+            <span class="relative inline-block">Receba</span> atualizações do sistema em seu e-mail
         </h1>
         <div class="flex justify-center">
-            <input type="text" class="input-field rounded px-4 py-2 text-sm h-14" placeholder="Digite seu email aqui...">
+            <input type="text" class="input-field rounded px-4 py-2 text-sm h-14"
+                placeholder="Digite seu email aqui...">
         </div>
         <div class="flex justify-center mt-10">
-            <button class="bg-[#FF8139] px-6 py-3 text-white rounded hover:bg-[#FF5C00]">Inscreva-se</button>
+            <Button>Inscreva-se</Button>
         </div>
     </div>
 </template>
+
+<script>
+import Button from '../components/Button.vue';
+
+export default {
+    components: {
+        Button
+    }
+}
+</script>
 
 <style scoped>
 .text-center {
