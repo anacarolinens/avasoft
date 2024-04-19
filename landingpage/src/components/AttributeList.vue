@@ -4,8 +4,8 @@
             <img class="w-3/4" :src="imagePath('notebook.png')" alt="Notebook com demonstração do">
         </div>
 
-        <div class="flex justify-center text-center mt-16 mb-28" style="min-width: 800px;">
-            <div v-for="feature in features" :key="feature.title" class="feature-container">
+        <div class="flex flex-wrap justify-center text-center mt-16 mb-28" style="min-width: 320px;">
+            <div v-for="feature in features" :key="feature.title" class="w-full feature-container mb-8" style="max-width: 200px;">
                 <button @click="toggleDescription(feature)" class="feature-button">
                     <div class="flex flex-col items-center">
                         <div :class="['w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center', {'w-24 h-24': feature.showDescription}]">
