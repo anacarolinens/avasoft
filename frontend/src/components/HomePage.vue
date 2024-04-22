@@ -1,18 +1,28 @@
 <!-- HomePage.vue -->
+
 <template>
+ 
   <div class="container">
+    
     <header>
       <h1>Bem-vindo, <span>Usuário</span>!</h1>
     </header>
 
-    <div class="sidebar">
+    <div class="content">
 
-      <router-link to="/RegisterPatient">registar paciente</router-link>
-      
-      <button @click="handleLogout">Sair</button>
+      <div class="sidebar">
 
+        <router-link to="/RegisterUser">Registar Usuario</router-link>
 
+        <router-link to="/ListUser">Lista de usuarios</router-link>
+
+        <router-link to="/PhysicalAssessments">Avaliação Fisica</router-link>
+
+        <router-link to="/">Sair</router-link>
+      </div>
     </div>
+
+
   </div>
 </template>
 
@@ -21,11 +31,7 @@
 export default {
 
   methods: {
-    // handleLogout() {
-    //   // Lógica de logout aqui
-    //   // Emitir evento para notificar componente pai (App.vue) sobre o logout
-    //   this.$emit('logout');
-    // },
+ 
   },
 };
 </script>
@@ -38,38 +44,6 @@ div {
 header {
   background-color: #ff8818;
   width: 100%;
-}
-
-.container {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  background-color: #555;
-  color: rgb(255, 255, 255);
-  padding: 1em;
-  width: 20%;
-  /* ou qualquer outra largura desejada */
-  height: calc(100vh - 80px);
-  /* 4em é a altura do header */
-  box-sizing: border-box;
-}
-
-#links-sidebar {
-  margin-bottom: 1em;
-  color: #ff8818;
-  text-decoration: none;
-  font-size: 1em;
-}
-
-#links-sidebar:hover {
-  text-decoration: underline;
-  color: #ffbb4c;
-  cursor: pointer;
 }
 
 button {
