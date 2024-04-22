@@ -1,5 +1,5 @@
 <template>
-    <div class="text-center mt-28 md:">
+    <div id="get-updates" class="text-center mt-28">
         <h1 class="mb-16 font-medium text-3xl relative">
             <span class="relative inline-block">Receba</span> atualizações do sistema em seu e-mail
         </h1>

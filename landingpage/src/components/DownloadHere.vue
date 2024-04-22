@@ -1,9 +1,9 @@
 <template>
     <div class="relative isolate overflow-hidden mt-36">
-        <div class="mx-auto justify-center lg:flex ">
+        <div class="mx-auto justify-center lg:flex">
             <img src="../assets/notebook.png" alt="Notebook com demonstração do sistema"
-                class="w-96 h-auto lg:w-auto lg:h-96">
-            <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:pt-8 lg:max-w-md ">
+                class="w-96 h-auto lg:w-auto lg:h-96 md:">
+            <div class="mx-auto max-w-2xl">
                 <!-- Adicionando a classe 'text-center' para alinhar o conteúdo ao centro -->
                 <h1 class="mt-10 text-2xl font-bold tracking-tight sm:text-4xl">Baixe aqui <br> <span
                         class="text-[#FF8139]">agora</span>!

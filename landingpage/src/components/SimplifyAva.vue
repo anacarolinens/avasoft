@@ -1,17 +1,17 @@
 <template>
-    <div class="text-center mb-15">
+    <div id="avasoft" class="text-center mb-15">
         <h1 class="mb-12 font-medium text-3xl">
             <span class="relative inline-block"> Simplificando </span> Avaliações
             Antropométricas
         </h1>
-        <p class="mb-28">
-            Explore a inovação em avaliações antropométricas. Com coleta de dados simplificada,<br>
-            análises instantâneas e acompanhamento visual do progresso, o Avasoft é a solução <br>
+        <p class="mb-28 md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto" style="white-space: pre-line;">
+            Explore a inovação em avaliações antropométricas. Com coleta de dados simplificada,
+            análises instantâneas e acompanhamento visual do progresso, o Avasoft é a solução
             definitiva. Veja abaixo nossa plataforma em ação.
         </p>
-      
+    <Carousel></Carousel>
     </div>
-  <Carousel></Carousel>
+   
 </template>
 
 <script setup>
