@@ -1,6 +1,6 @@
 <template>
     <main>
-        <div class="mt-20 flex justify-center">
+        <div id="attributes" class="mt-20 flex justify-center">
             <img class="w-3/4" :src="imagePath('notebook.png')" alt="Notebook com demonstração do">
         </div>
 
@@ -108,7 +108,7 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 200px; 
-    margin-bottom: 5px;
+    margin-bottom: 64px;
     width: 258px;
 }
 

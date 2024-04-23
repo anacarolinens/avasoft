@@ -56,7 +56,6 @@ export default {
       imageBasePath + 'slide-2.png',
       imageBasePath + 'slide-3.png',
       imageBasePath + 'slide-4.png',
-      // Adicione quantos slides desejar
     ];
 
     const currentSlide = ref(0);
@@ -93,4 +92,4 @@ export default {
 };
 </script>
 
-<style scoped></style
+<style scoped></style>
