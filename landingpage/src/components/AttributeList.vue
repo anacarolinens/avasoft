@@ -1,6 +1,6 @@
 <template>
     <main>
-        <div id="atributes" class="mt-20 flex justify-center">
+        <div id="attributes" class="mt-20 flex justify-center">
             <img class="w-3/4" :src="imagePath('notebook.png')" alt="Notebook com demonstração do">
         </div>
 

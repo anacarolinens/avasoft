@@ -65,7 +65,7 @@ export default {
       menuOpen: false,
       Links: [
         { name: 'Início', link: '#home' },
-        { name: 'Atributos', link: '#atributes' },
+        { name: 'Atributos', link: '#attributes' },
         { name: 'Avasoft', link: '#avasoft' },
         { name: 'Contato', link: '#contact-area' },
       ]
