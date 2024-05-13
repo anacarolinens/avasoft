@@ -1,15 +1,17 @@
 <template>
     <main>
         <div id="attributes" class="mt-20 flex justify-center">
-            <img class="w-3/4" :src="imagePath('notebook.png')" alt="Notebook com demonstração do">
+            <img class="h-auto lg:w-auto" :src="imagePath('notebook.png')" alt="Notebook com demonstração do">
         </div>
 
         <div class="flex flex-wrap justify-center text-center mt-16 mb-14" style="min-width: 320px;">
-            <div v-for="feature in features" :key="feature.title" class="w-full feature-container mb-8" style="max-width: 200px;">
+            <div v-for="feature in features" :key="feature.title" class="w-full feature-container mb-8"
+                style="max-width: 200px;">
                 <div @mouseover="toggleDescription(feature, true)" @mouseleave="toggleDescription(feature, false)"
                     class="feature-button">
                     <div class="flex flex-col items-center">
-                        <div :class="['w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center', {'w-24 h-24': feature.showDescription}]">
+                        <div
+                            :class="['w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center', {'w-24 h-24': feature.showDescription}]">
                             <img :src="imagePath(feature.src)" class="feature-icon">
                         </div>
                         <p
