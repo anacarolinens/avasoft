@@ -11,10 +11,13 @@
                     que irá fazer você transformar a sua avaliação antropométrica
                     com facilidade e precisão.
                 </p>
-                <Button class="text-center lg:text-left flex justify-center">
+                <div class="flex justify-center lg:justify-start">
+                    <Button>
                     Baixar agora
                     <img src="../assets/download.png" alt="Ícone de download" class="h-5 w-5 ml-2">
-                </Button>
+                    </Button>
+                </div>
+                
             </div>
         </div>
     </div>
