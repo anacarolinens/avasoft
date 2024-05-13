@@ -1,14 +1,18 @@
 <template>
   <Carousel :itemsToShow="3.95" :wrapAround="true" :transition="500">
     <Slide v-for="slide in slides" :key="slide.id">
-      <img :src="imageBasePath + slide.imageName" alt="Slide Image" class="rounded-lg">
+      <img :src="imageBasePath + slide.imageName" alt="Slide Image" class="carousel__image rounded-lg" />
     </Slide>
+    <template #addons>
+      <Navigation />
+      <Pagination />
+    </template>
   </Carousel>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import { Carousel, Pagination, Slide } from 'vue3-carousel'
+import { Carousel, Pagination, Navigation, Slide } from 'vue3-carousel'
 
 import 'vue3-carousel/dist/carousel.css'
 
@@ -18,6 +22,7 @@ export default defineComponent({
     Carousel,
     Slide,
     Pagination,
+    Navigation,
   },
   data() {
     return {
@@ -61,7 +66,7 @@ export default defineComponent({
   transform: rotateY(-20deg) scale(0.9);
 }
 
-.carousel__slide--active~.carousel__slide {
+.carousel__slide--active ~ .carousel__slide {
   transform: rotateY(20deg) scale(0.9);
 }
 
@@ -77,6 +82,12 @@ export default defineComponent({
 
 .carousel__slide--active {
   opacity: 1;
-  transform: rotateY(0) scale(1.1);
+  transform: rotateY(0) scale(1);
 }
+
+.carousel__image {
+  width: 100%;
+  height: auto;
+}
+
 </style>
