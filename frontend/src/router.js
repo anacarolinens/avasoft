@@ -10,7 +10,7 @@ import AssessmentPage from "./components/AssessmentPage.vue";
 import AssessmentUser from "./components/AssessmentUser.vue";
 import PhysicalAssessments from "./components/PhysicalAssessments.vue";
 import HeaderContent from "./components/HeaderContent.vue";
-
+import SidebarContent from "./components/SidebarContent.vue";
 const routes = [
     {
         path: '/',
@@ -56,6 +56,11 @@ const routes = [
         path: '/HeaderContent',
         component: HeaderContent,
         name: 'HeaderContent'
+    },
+    {
+        path: '/SidebarContent',
+        component: SidebarContent,
+        name: 'SidebarContent'
     },
 
     
