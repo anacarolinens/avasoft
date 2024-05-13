@@ -1,5 +1,5 @@
 <template>
-  <Carousel :itemsToShow="3.95" :wrapAround="true" :transition="500">
+  <Carousel :itemsToShow="2" :wrapAround="true" :transition="500">
     <Slide v-for="slide in slides" :key="slide.id">
       <img :src="imageBasePath + slide.imageName" alt="Slide Image" class="carousel__image rounded-lg" />
     </Slide>
