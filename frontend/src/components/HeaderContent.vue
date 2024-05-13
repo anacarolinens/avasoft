@@ -2,42 +2,32 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Kode+Mono:wght@400..700&family=Nanum+Gothic&display=swap">
 
-  <header class="bg-orange-500 h-24 flex items-center">
+  <header class="header bg-orange-500 h-24 flex items-center">
     <div class="menu">
-      <input hidden="" class="check-icon" type="checkbox" id="sidebar-toggle" :checked="sidebarVisible" @change="toggleSidebar">
+      <input hidden="" class="check-icon" type="checkbox" id="sidebar-toggle" :checked="sidebarVisible"
+        @change="toggleSidebar">
       <label class="icon-menu" for="sidebar-toggle">
         <div class="bar bar--1"></div>
         <div class="bar bar--2"></div>
         <div class="bar bar--3"></div>
       </label>
     </div>
-    <h1 class="rounded-md text-4xl">AVA<span class="text-black">SOFT</span></h1>
+    <h1 class="rounded-md text-4xl ml-10">AVA<span class="text-white">SOFT</span></h1>
   </header>
 
 
-  <sidebar id="sidebar" :class="{ 'hidden': !sidebarVisible }">
-    <router-link to="/HomePage">Home</router-link>
-    <router-link to="/RegisterUser">Registar Usuario</router-link>
-    <router-link to="/ListUser">Lista de usuarios</router-link>
-    <router-link to="/PhysicalAssessments">Avaliação Fisica</router-link>
-    <router-link to="/">Sair</router-link>
+  <sidebar id="sidebar" :class="{ 'sidebar-closed': !sidebarVisible }">
+    <a><router-link to="/HomePage">Home</router-link></a>
+    <a><router-link to="/RegisterUser">Registar Usuario</router-link></a>
+    <a><router-link to="/ListUser">Lista de usuarios</router-link></a>
+    <a><router-link to="/PhysicalAssessments">Avaliação Fisica</router-link></a>
+    <a><router-link to="/">Sair</router-link></a>
   </sidebar>
 
 
-  <!-- <div class="sidebar :class="{ 'hidden': !sidebarVisible }"">
-
-    <router-link to="/HomePage">Home</router-link>
-
-    <router-link to="/RegisterUser">Registar Usuario</router-link>
-
-    <router-link to="/ListUser">Lista de usuarios</router-link>
-
-    <router-link to="/PhysicalAssessments">Avaliação Fisica</router-link>
-
-    <router-link to="/">Sair</router-link>
-  </div> -->
-
-
+  <section>
+    <!-- corpo da pagina -->
+  </section>
 
 </template>
 
@@ -46,7 +36,7 @@
 export default {
   data() {
     return {
-      sidebarVisible: true // Inicialmente visível, input marcado
+      sidebarVisible: false // Inicialmente visível, input marcado
     };
   },
   methods: {
@@ -59,14 +49,43 @@ export default {
 
 
 <style>
-header h1 {
-  font-family: "Nanum Gothic", sans-serif;
-  font-weight: 900;
+header .menu {
   padding-left: 30px;
 }
 
-header .menu {
-  padding-left: 30px;
+.header {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+#sidebar {
+  position: fixed;
+  height: 100vh;
+  width: 200px;
+  background-color: #1E2021;
+  z-index: 0;
+  transition: transform 0.3s ease-out;
+ /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.494); */
+}
+
+#sidebar.sidebar-closed {
+  transform: translateX(-76%); /* Adicione esta linha */
+}
+
+
+/* Estilo para os links no sidebar */
+sidebar a {
+  display: block;
+  padding: 10px 0 0 10px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+sidebar a:hover {
+  background-color: #ddd;
 }
 
 
@@ -129,12 +148,11 @@ header .menu {
 }
 
 /* movimentação do sidebar */
-.hidden {
-  transform: translateX(-250px); /* Esconde o sidebar */
+/*.hidden {
+  transform: translateX(-250px);
 }
 
 #sidebar {
   transition: transform 0.3s ease;
-}
-
+}*/
 </style>

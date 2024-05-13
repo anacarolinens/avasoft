@@ -8,6 +8,7 @@ module.exports = {
       md: '768px',
       lg: '976px',
       xl: '1440px',
+      xll: '1920px',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],

@@ -582,6 +582,12 @@ video {
   }
 }
 
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1920px;
+  }
+}
+
 .fixed {
   position: fixed;
 }
@@ -592,6 +598,34 @@ video {
 
 .relative {
   position: relative;
+}
+
+.bottom-0 {
+  bottom: 0px;
+}
+
+.right-0 {
+  right: 0px;
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+.ml-12 {
+  margin-left: 3rem;
+}
+
+.mt-16 {
+  margin-top: 4rem;
+}
+
+.ml-20 {
+  margin-left: 5rem;
+}
+
+.ml-10 {
+  margin-left: 2.5rem;
 }
 
 .block {
@@ -610,12 +644,28 @@ video {
   height: 6rem;
 }
 
+.w-40 {
+  width: 10rem;
+}
+
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.flex-col {
+  flex-direction: column;
+}
+
 .items-center {
   align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-around {
+  justify-content: space-around;
 }
 
 .rounded-md {
@@ -631,6 +681,35 @@ video {
   background-color: rgb(249 115 22 / var(--tw-bg-opacity));
 }
 
+.p-20 {
+  padding: 5rem;
+}
+
+.px-20 {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.pt-11 {
+  padding-top: 2.75rem;
+}
+
+.pt-8 {
+  padding-top: 2rem;
+}
+
+.pl-20 {
+  padding-left: 5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-end {
+  text-align: end;
+}
+
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -639,6 +718,11 @@ video {
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .outline {
@@ -665,77 +749,30 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #ffffff;
-  background-color: #292929;
+  background-color: #212121;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
+@media (min-width: 976px) {
+  .lg\:my-0 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
 }
 
-#sidebar {
-  display: flex;
-  flex-direction: column;
-  color: #fff;
-  padding: 1em;
-  width: 20%;
-  min-height: calc(100vh - 80px);
-  /* Use min-height aqui */
-  box-sizing: border-box;
-  overflow-y: auto;
-  /* Adicionei scroll se o conteúdo for maior que a altura da barra lateral */
-  background-color: #4a4a4a;
+@media (min-width: 1440px) {
+  .xl\:m-0 {
+    margin: 0px;
+  }
+
+  .xl\:my-0 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
 }
 
-#sidebar a {
-  display: block;
-  padding: 1em;
-  margin-bottom: 0.5em;
-  text-decoration: none;
-  color: #fff;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-  /* Adicionei uma transição suave na mudança de cor de fundo */
-}
-
-#sidebar a:hover {
-  background-color: #555;
-  /* Cor de fundo quando hover */
-}
-
-.section-form {
-  flex: 1;
-  /* Faz com que a seção de formulário ocupe o restante do espaço disponível */
-  padding: 1em;
-}
-
-.form-group {
-  margin-bottom: 1em;
-}
-
-.content {
-  /*flex: 1; Faz com que a seção de conteúdo ocupe o restante do espaço disponível */
-  display: flex;
-}
-
-#userForm {
-  flex: 1;
-  /* Faz com que a lista de usuários ocupe o restante do espaço disponível na horizontal */
-  padding: 1em;
-}
-
-fieldset {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-
-legend {
-  font-weight: bold;
-}
-
-.form-group {
-  margin-bottom: 15px;
+@media (min-width: 1920px) {
+  .xll\:my-12 {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
 }

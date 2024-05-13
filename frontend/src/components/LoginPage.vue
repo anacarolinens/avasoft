@@ -4,22 +4,42 @@
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Kode+Mono:wght@400..700&family=Nanum+Gothic&display=swap">
 
-    <h1>AVA<span>SOFT</span></h1>
+    <header class="flex flex-col  xl:m-0" style="width: fit-content;">
+      <h1 class="mt-16">AVA<span>SOFT</span></h1>
+      <p class="text-center" style="color:#fff">Avaliação Antropometrica</p>
+    </header>
 
-    <form action="" id="login-form">
-      <div class="name-pass">
-        <label for="name" id="label-name">NOME</label>
+
+    <form action="" id="login-form" class="" style="width: fit-content;">
+      <div class="flex flex-col">
+        <label for="name" id="label-name" class="">Nome</label>
         <input type="text" id="name" placeholder="" v-model="userName">
 
-        <label for="pass" id="label-pass">SENHA</label>
+        <label for="pass" id="label-pass">Senha</label>
         <input type="password" id="pass" placeholder="" v-model="password">
       </div>
 
-      <button type="button" class="button-login" @click="handleLogin">LOGIN</button>
+      <p class="text-end text-white pt-8"><a href="#">Esqueceu a senha?</a></p>
+
+      <div class="flex justify-center">
+        <button type="button" class="button-login" @click="handleLogin">LOGIN</button>
+      </div>
+
+      <div class="text-center text-white pt-11">
+        <p>Não tem uma conta? <a href="#">Registre-se aqui!</a></p>
+        <p class="pt-8">__________ OU __________</p>
+
+        <div id="micro-google" class="flex justify-around pt-8">
+          <a href="#" class="flex justify-around  rounded-md items-center w-40"><img src="../assets/img/google.png" alt="">Google</a>
+          <a href="#" class="flex justify-around  rounded-md items-center w-40"><img src="../assets/img/microsoft.png" alt="">Microsoft</a>
+        </div>
+      </div>
+
 
     </form>
 
-    <img src="../assets/vitruvianwoman.png" alt="">
+    <div class="flex justify-center"><img id="vitruvianwoman" src="../assets/img/vitruvianwoman.png" alt="logo avasoft" class=" absolute bottom-0 right-0 z-0 xll:my-12 xl:my-0 lg:my-0"></div>
+
 
   </div>
 </template>
@@ -77,10 +97,53 @@ export default {
 </script>
 
 <style scoped>
+
+
+#label-name,
+#label-pass {
+  color: #ffffff;
+  font-size: 1em;
+  margin: 1em 0 1em 0;
+  font-family: "Nanum Gothic", sans-serif;
+}
+
+#name,
+#pass {
+  width: 30rem;
+  max-width: 30rem;
+  height: 45px;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1.5px solid lightgrey;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 2px 2px 20px 0px;
+}
+
+#name:hover,
+#pass:hover {
+  border: 2px solid lightgrey;
+  box-shadow: 0px 0px 20px -17px;
+}
+
+#name:active,
+#pass:active {
+  transform: scale(0.95);
+}
+
+#name:focus,
+#pass:focus {
+  border: 2px solid grey;
+}
+
+#vitruvianwoman {
+  z-index: -1;
+}
+
 .container-login {
   display: flex;
   flex-direction: column;
-  margin-left: 5em;
+  margin-left: 12em;
   height: 100vh;
   font-family: "Nanum Gothic", sans-serif;
   font-weight: 400;
@@ -88,73 +151,27 @@ export default {
 }
 
 h1 {
-
   color: #ffffff;
-  font-size: 4em;
-
-  margin-top: 1em;
+  font-size: 7em;
 }
 
 span {
-  color: #ff8818;
+  color: #FF5C00;
 }
 
-img {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  z-index: -1;
+
+#micro-google img {
+  width: 50px;
+  height: auto;
 }
 
-#login-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-
-}
-
-#label-name,
-#label-pass {
-  width: 100%;
-  margin-left: 1em;
-  margin-bottom: 10px;
-}
-
-.name-pass {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
-
-#name,
-#pass {
-  width: 100%;
-  /* Alterado para ocupar 100% da largura do contêiner pai */
-  max-width: 45vh;
-  /* Adicionado um valor máximo */
-  padding: 1em;
+#micro-google a{
+  background-color: #555555;
+  color: #ffffff;
+  padding: 0.5em 1em 0.5em 1em;
   border-radius: 5px;
-  border: none;
-  background-color: #ffffff;
-  margin-bottom: 2em;
+  font-weight: bold;
 }
-
-/* Adicionando regras de mídia para ajustes em telas menores */
-@media screen and (max-width: 768px) {
-  .container {
-    margin-left: 1em;
-    /* Reduzindo a margem para telas menores */
-  }
-
-  #name,
-  #pass {
-    max-width: 100%;
-    /* Ocupa 100% da largura para telas menores */
-  }
-}
-
 
 .button-login {
   margin-top: 2em;
@@ -165,7 +182,7 @@ img {
   border-width: 0;
   box-shadow: rgba(255, 157, 0, 0.2) 0 2px 4px, rgba(66, 55, 35, 0.15) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
   box-sizing: border-box;
-  color: #000000;
+  color: #ffffff;
   cursor: pointer;
   display: inline-flex;
   width: 180px;
@@ -174,7 +191,6 @@ img {
   line-height: 1;
   list-style: none;
   overflow: hidden;
-  margin-left: 60px;
   position: relative;
   text-align: left;
   text-decoration: none;
@@ -185,6 +201,7 @@ img {
   white-space: nowrap;
   will-change: box-shadow, transform;
   font-size: 18px;
+  font-weight: bold;
 }
 
 .button-login:focus {
@@ -199,24 +216,5 @@ img {
 .button-login:active {
   box-shadow: #ffa347 0 3px 7px inset;
   transform: translateY(2px);
-}
-
-
-#pass,
-#name {
-  border: none;
-  outline: none;
-  border-radius: 15px;
-  padding: 1em;
-  background-color: #ccc;
-  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
-  transition: 300ms ease-in-out;
-}
-
-#pass:focus,
-#name:focus {
-  background-color: white;
-  transform: scale(1.01);
-  box-shadow: 1px 0px 20px #969696;
 }
 </style>
