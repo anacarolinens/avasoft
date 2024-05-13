@@ -1,110 +1,33 @@
 <template>
-  <main class="flex justify-center items-center">
+  <main id="home" class="flex justify-center items-center">
     <!-- Hero section -->
     <div class="text-center ">
-      <h1 class="text-7xl font-bold mb-12 mt-40 text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 md:mb-8 lg:mb-10 xl:mb-12 mt-20 md:mt-24 lg:mt-32 xl:mt-40">
+      <h1
+        class="text-7xl font-bold mb-12 mt-40 text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 md:mb-8 lg:mb-10 xl:mb-12 mt-20 md:mt-24 lg:mt-32 xl:mt-40">
         <p>SIMPLES, INTUITIVO E</p>
         <p>
           <span class="text-[#FF8139]">EFICIENTE</span>, É AVA<span class="text-[#FF8139]">SOFT</span>
         </p>
       </h1>
-      <p class="mb-12">O Avasoft simplifica suas avaliações antropométricas,
-        coletando e armazenando dados dos alunos ao longo <br>
+      <p class="mb-12 md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto" style="white-space: pre-line;">
+        O Avasoft simplifica suas avaliações antropométricas,
+        coletando e armazenando dados dos alunos ao longo
         do tempo. Com gráficos intuitivos, oferecemos resultados
-        comparativos, facilitando a visualização da <br>
+        comparativos, facilitando a visualização da
         evolução dos alunos.
       </p>
 
-      <div class="flex justify-center">
-        <!-- Botões de download condicionais -->
-        <button v-if="isWindows"
-          class="flex items-center justify-center bg-[#FF8139] px-6 py-3 text-white rounded-l-md hover:bg-[#FF5C00]">
-          <span class="flex items-center">
-            Baixar para Windows
-            <img src="../assets/microsoft.png" alt="Ícone de download" class="h-5 w-5 ml-2">
-          </span>
-        </button>
-        <button v-else-if="isMacOS"
-          class="flex items-center justify-center bg-[#FF8139] px-6 py-3 text-white rounded-l-md hover:bg-[#FF5C00]">
-          <span class="flex items-center">
-            Baixar para macOS
-            <img src="../assets/macos.png" alt="Ícone de download" class="h-5 w-5 ml-2">
-          </span>
-        </button>
-        <div class="relative">
-          <button
-            class="flex items-center justify-center bg-[#FF8139] px-6 py-3 text-white rounded-l-md hover:bg-[#FF5C00]">
-            <span class="flex items-center">
-              Baixar para Linux
-              <img src="../assets/linux.png" alt="Ícone de download" class="h-5 w-5 ml-2">
-            </span>
-          </button>
-
-          <div id="dropdown" class="dropdown absolute z-50 mt-1 w-max origin-top-right rounded-md shadow-lg right-0">
-            <div class="bg-white rounded-md ring-1 ring-black ring-opacity-5">
-              <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                <a href="#" class="block px-8 py-2 text-sm text-gray-700 hover:bg-[#FFD6CE] hover:text-gray-900"
-                  role="menuitem">Baixar para Windows</a>
-                <a href="#" class="block px-8 py-2 text-sm text-gray-700 hover:bg-[#FFD6CE] hover:text-gray-900"
-                  role="menuitem">Baixar para Linux</a>
-                <a href="#" class="block px-8 py-2 text-sm text-gray-700 hover:bg-[#FFD6CE] hover:text-gray-900"
-                  role="menuitem">Baixar para MacOS</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button @click="toggleDropdown" class="ml-0.5 bg-[#FF8139] rounded-r-lg px-3 py-2 hover:bg-[#FF5C00]">
-          <img src="../assets/seta.png" alt="Seta dropdown">
-        </button>
-      </div>
+      <DropDown />
     </div>
   </main>
 </template>
 
-<script setup>
-// Função para detectar o sistema operacional
-const detectOS = () => {
-  const userAgent = navigator.userAgent;
-  if (userAgent.includes("Win")) {
-    return "Windows";
-  } else if (userAgent.includes("Mac")) {
-    return "MacOS";
-  } else if (userAgent.includes("Linux")) {
-    return "Linux";
-  } else {
-    return "Outro";
-  }
+<script>
+import DropDown from "./DropDown.vue";
+
+export default {
+  components: {
+    DropDown,
+  },
 };
-
-// Variável computada para determinar o sistema operacional do usuário
-const os = detectOS();
-
-// Variáveis boleanas para cada sistema operacional
-const isWindows = os === "Windows";
-const isMacOS = os === "MacOS";
-const isLinux = os === "Linux";
-
-// Função para alternar o estado do dropdown
-const toggleDropdown = () => {
-  const dropdown = document.getElementById("dropdown");
-  dropdown.classList.toggle("hidden");
-};
-
-const closeDropdownOnOutsideClick = (event) => {
-  const dropdown = document.getElementById("dropdown");
-  if (!dropdown.contains(event.target)) {
-    dropdown.classList.add("hidden");
-  }
-};
-
 </script>
-
-<style scoped>
-.dropdown {
-  display: none;
-}
-
-.dropdown.hidden {
-  display: block;
-}
-</style>
