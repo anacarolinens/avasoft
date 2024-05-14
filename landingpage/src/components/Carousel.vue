@@ -1,5 +1,5 @@
 <template>
-  <Carousel :itemsToShow="2" :wrapAround="true" :transition="500">
+  <Carousel :itemsToShow="1.5" :wrapAround="true" :transition="500">
     <Slide v-for="slide in slides" :key="slide.id">
       <img :src="imageBasePath + slide.imageName" alt="Slide Image" class="carousel__image rounded-lg" />
     </Slide>
@@ -40,6 +40,14 @@ export default defineComponent({
     imageBasePath() {
       return '/src/assets/';
     }
+  },
+  mounted() {
+    const prevButton = document.querySelector('.carousel__prev');
+    const nextButton = document.querySelector('.carousel__next');
+    const prevIcon = prevButton.querySelector('.carousel__icon');
+    const nextIcon = nextButton.querySelector('.carousel__icon');
+    prevIcon.style.fill = 'white';
+    nextIcon.style.fill = 'white';
   }
 })
 </script>
@@ -66,7 +74,7 @@ export default defineComponent({
   transform: rotateY(-20deg) scale(0.9);
 }
 
-.carousel__slide--active ~ .carousel__slide {
+.carousel__slide--active~.carousel__slide {
   transform: rotateY(20deg) scale(0.9);
 }
 
@@ -89,5 +97,4 @@ export default defineComponent({
   width: 100%;
   height: auto;
 }
-
 </style>
