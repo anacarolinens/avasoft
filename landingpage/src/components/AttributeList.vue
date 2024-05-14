@@ -71,7 +71,7 @@ export default {
     },
     computed: {
         imageBasePath() {
-            return '../assets/';
+            return './src/assets/';
         }
     },
     methods: {
