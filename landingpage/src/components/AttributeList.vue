@@ -87,7 +87,7 @@ export default {
             }
         },
         imagePath(fileName) {
-            return this.imageBasePath + fileName;
+            return require(`@/assets/${fileName}`);
         },
         closeDescriptionOnOutsideClick(event) {
             if (!event.target.closest('.feature-container')) {
