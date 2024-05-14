@@ -1,4 +1,5 @@
 {
+  "homepage": "https://anacarolinens.github.io/avasoft/landingpage",
   "name": "site",
   "private": true,
   "version": "0.0.0",
@@ -6,9 +7,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "vite build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "gh-pages": "^6.1.1",
     "vue": "^3.3.4",
     "vue-router": "^4.3.0",
     "vue3-carousel": "^0.3.3"
