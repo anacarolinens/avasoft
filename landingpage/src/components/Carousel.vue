@@ -38,7 +38,7 @@ export default defineComponent({
   },
   computed: {
     imageBasePath() {
-      return '/src/assets/';
+      return 'assets/';
     }
   },
   mounted() {

@@ -34,7 +34,6 @@
 export default {
     data() {
         return {
-            imageBasePath: '/src/assets/',
             features: [
                 {
                     title: 'Simplificação',
@@ -69,6 +68,11 @@ export default {
             ],
             clickedFeature: null
         };
+    },
+    computed: {
+        imageBasePath() {
+            return 'assets/';
+        }
     },
     methods: {
         toggleDescription(feature, show) {
