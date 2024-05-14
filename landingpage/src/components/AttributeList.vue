@@ -1,7 +1,7 @@
 <template>
     <main>
         <div id="attributes" class="mt-20 flex justify-center">
-            <img class="h-auto lg:w-auto" :src="imagePath('notebook.png')" alt="Notebook com demonstração do">
+            <img class="h-auto lg:w-auto" src="../assets/notebook.png" alt="Notebook com demonstração do">
         </div>
 
         <div class="flex flex-wrap justify-center text-center mt-16 mb-14" style="min-width: 320px;">
@@ -12,7 +12,7 @@
                     <div class="flex flex-col items-center">
                         <div
                             :class="['w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center', {'w-24 h-24': feature.showDescription}]">
-                            <img :src="imagePath(feature.src)" class="feature-icon">
+                            <img :src="`${imageBasePath}${feature.src}`" class="feature-icon">
                         </div>
                         <p
                             :class="['text-sm font-medium mt-4 text-base', clickedFeature === feature ? 'font-semibold text-[#FF8139]' : 'text-[#A7A7A7]']">

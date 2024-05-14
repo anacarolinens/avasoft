@@ -1,7 +1,7 @@
 <template>
   <Carousel :itemsToShow="2.5" :wrapAround="true" :transition="500">
     <Slide v-for="slide in slides" :key="slide.id">
-      <img :src="imageBasePath + slide.imageName" alt="Slide Image" class="carousel__image rounded-lg" />
+      <img :src="`${imageBasePath}${slide.imageName}`" alt="Slide Image" class="carousel__image rounded-lg" />
     </Slide>
     <template #addons>
       <Navigation />
