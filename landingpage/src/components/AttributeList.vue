@@ -12,7 +12,7 @@
                     <div class="flex flex-col items-center">
                         <div
                             :class="['w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center', {'w-24 h-24': feature.showDescription}]">
-                            <img :src="`${imageBasePath}${feature.src}`" class="feature-icon">
+                            <img :src="`../assets/${feature.src}`" class="feature-icon">
                         </div>
                         <p
                             :class="['text-sm font-medium mt-4 text-base', clickedFeature === feature ? 'font-semibold text-[#FF8139]' : 'text-[#A7A7A7]']">
@@ -69,11 +69,6 @@ export default {
             clickedFeature: null
         };
     },
-    computed: {
-        imageBasePath() {
-            return './src/assets/';
-        }
-    },
     methods: {
         toggleDescription(feature, show) {
             if (show) {
@@ -85,9 +80,6 @@ export default {
                 feature.showDescription = false;
                 this.clickedFeature = null;
             }
-        },
-        imagePath(fileName) {
-            return require(`@/assets/${fileName}`);
         },
         closeDescriptionOnOutsideClick(event) {
             if (!event.target.closest('.feature-container')) {
