@@ -5,7 +5,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/avasoft/landingpage',
+  base: '/avasoft',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
