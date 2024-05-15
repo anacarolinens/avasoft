@@ -1,7 +1,7 @@
 <template>
     <main>
         <div id="attributes" class="mt-20 flex justify-center">
-            <img class="h-auto lg:w-auto" :src="imagePath('notebook.png')" alt="Notebook com demonstração do">
+            <img class="h-auto lg:w-auto" src="../assets/notebook.png" alt="Notebook com demonstração do">
         </div>
 
         <div class="flex flex-wrap justify-center text-center mt-16 mb-14" style="min-width: 320px;">
@@ -34,7 +34,6 @@
 export default {
     data() {
         return {
-            imageBasePath: '/src/assets/',
             features: [
                 {
                     title: 'Simplificação',
@@ -69,6 +68,11 @@ export default {
             ],
             clickedFeature: null
         };
+    },
+    computed: {
+        imageBasePath() {
+            return 'src/assets/';
+        }
     },
     methods: {
         toggleDescription(feature, show) {
