@@ -31,48 +31,49 @@
 </template>
 
 <script>
+import simplifyImage from '@/assets/simplify.png';
+import dynamicImage from '@/assets/dynamic.png';
+import personalityImage from '@/assets/personality.png';
+import visualizationImage from '@/assets/visualization.png';
+import versatilityImage from '@/assets/versatility.png';
+
 export default {
     data() {
         return {
             features: [
                 {
                     title: 'Simplificação',
-                    src: 'simplify.png', 
+                    src: simplifyImage, 
                     description: 'Diga adeus aos cálculos manuais e planilhas complicadas com o Avasoft!',
                     showDescription: false
                 },
                 {
                     title: 'Dinamismo',
-                    src: 'dynamic.png',
+                    src: dynamicImage,
                     description: 'Realize avaliações antropométricas completas e precisas em minutos',
                     showDescription: false
                 },
                 {
                     title: 'Personalização',
-                    src: 'personality.png',
+                    src: personalityImage,
                     description: 'Um relatório digital personalizado com gráficos e dados específicos de um cliente',
                     showDescription: false
                 },
                 {
                     title: 'Visualização',
-                    src: 'visualization.png',
+                    src: visualizationImage,
                     description: 'Acompanhe o progresso de forma visualmente atraente',
                     showDescription: false
                 },
                 {
                     title: 'Versatilidade',
-                    src: 'versatility.png',
+                    src: versatilityImage,
                     description: 'Perfeito para profissionais de saúde, entusiastas do fitness e estudantes',
                     showDescription: false
                 },
             ],
             clickedFeature: null
         };
-    },
-    computed: {
-        imageBasePath() {
-            return 'src/assets/';
-        }
     },
     methods: {
         toggleDescription(feature, show) {
@@ -87,7 +88,7 @@ export default {
             }
         },
         imagePath(fileName) {
-            return this.imageBasePath + fileName;
+            return fileName;
         },
         closeDescriptionOnOutsideClick(event) {
             if (!event.target.closest('.feature-container')) {

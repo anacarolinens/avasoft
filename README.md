@@ -8,6 +8,21 @@ O sistema Avasoft tem como objetivo auxiliar no processo das avaliações antrop
 ## 📑Resumo
 Este projeto visa aprimorar as avaliações antropométricas feitas por um profissional nutricionista curso de educação física da UFAC. Atualmente, as avaliações são feitas manualmente em formulários impressos, resultando em possíveis erros e dificuldades no armazenamento de dados. O software proposto eliminará o uso de papel, simplificando o processo de coleta e armazenamento de dados, além de fornecer resultados comparativos e gráficos. A análise de viabilidade técnica, econômica e legal mostrou que o desenvolvimento é factível, contando com a expertise da equipe e recursos disponíveis.
 
+## 🎉 Link de Deploy
+
+Você pode ver uma pequena landing page de apresentação do sistema e fazer o download do projeto para desktop (disponível nas próximas etapas) no seguinte link:
+
+<div  align="center">
+  
+  [Landing page ](https://anacarolinens.github.io/avasoft/)
+  
+</div>
+<br>
+
+
+
+
+
 ## 🖥️🛠️ Tecnologias e Ferramentas utilizadas
 
 <div align="center">
