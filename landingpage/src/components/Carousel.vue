@@ -1,5 +1,5 @@
 <template>
-  <Carousel :itemsToShow="2.5" :wrapAround="true" :transition="500">
+  <Carousel :itemsToShow="itemsToShow" :wrapAround="true" :transition="500" :breakpoints="breakpoints">
     <Slide v-for="slide in slides" :key="slide.id">
       <img :src="imagePath(slide.imageName)" alt="Slide Image" class="carousel__image rounded-lg" />
     </Slide>
@@ -21,7 +21,6 @@ import slide4 from '@/assets/slide-4.png'
 import slide5 from '@/assets/slide-5.png'
 import slide6 from '@/assets/slide-6.png'
 
-
 import 'vue3-carousel/dist/carousel.css'
 
 export default defineComponent({
@@ -34,6 +33,7 @@ export default defineComponent({
   },
   data() {
     return {
+      itemsToShow: 2.5,
       slides: [
         { id: 1, imageName: slide1 },
         { id: 2, imageName: slide2 },
@@ -41,7 +41,24 @@ export default defineComponent({
         { id: 4, imageName: slide4 },
         { id: 5, imageName: slide5 },
         { id: 6, imageName: slide6 },
-      ]
+      ],
+      breakpoints: {
+        1200: {
+          itemsToShow: 2.5
+        },
+        1024: {
+          itemsToShow: 2
+        },
+        768: {
+          itemsToShow: 1.5
+        },
+        640: {
+          itemsToShow: 1.2
+        },
+        480: {
+          itemsToShow: 1
+        }
+      }
     }
   },
   methods: {
@@ -104,5 +121,32 @@ export default defineComponent({
 .carousel__image {
   width: 100%;
   height: auto;
+}
+
+/* Media queries to adjust slide padding */
+@media (max-width: 1024px) {
+  .carousel__slide {
+    padding: 4px;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel__slide {
+    padding: 3px;
+  }
+}
+
+@media (max-width: 640px) {
+  .carousel__slide {
+    padding: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel__slide {
+    padding: 1px;
+  }
 }
 </style>
