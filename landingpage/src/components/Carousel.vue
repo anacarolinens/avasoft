@@ -57,7 +57,13 @@ export default defineComponent({
         },
         480: {
           itemsToShow: 1
-        }
+        },
+        320: {
+          itemsToShow: 1
+        },
+        300: {
+          itemsToShow: 1
+        },
       }
     }
   },
