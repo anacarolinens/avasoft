@@ -95,9 +95,9 @@ Vamos trabalhar juntos para tornar este projeto ainda melhor!
 ## 👩‍💻💼 Time de Desenvolvimento
 <div align="center">
 
- |  Ana Caroline |    Anderson Dantas   |
- | :---------: | :---------: |
- |    <img src="https://avatars.githubusercontent.com/u/85416744?v=4" width="100" height="100" style="border-radius: 50%;">  |   <img src="https://avatars.githubusercontent.com/u/127001432?v=4" width="100" height="100" style="border-radius: 50%;"> |
- |    Backend    |        Frontend    |
+ |  Ana Caroline |    Anderson Dantas   |  Alexandre  | Felipe  |
+ | :---------: | :---------: |  :---------: | :---------: |
+ |    <img src="https://avatars.githubusercontent.com/u/85416744?v=4" width="100" height="100" style="border-radius: 50%;">  |   <img src="https://avatars.githubusercontent.com/u/127001432?v=4" width="100" height="100" style="border-radius: 50%;"> | <img src="https://avatars.githubusercontent.com/u/75650952?v=4" width="100" height="100" style="border-radius: 50%;"> | <img src="https://avatars.githubusercontent.com/u/99162735?v=4" width="100" height="100" style="border-radius: 50%;"> |
+ |    Backend    |        Frontend    |  Backend    |     Frontend    |
 
 </div>
