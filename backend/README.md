@@ -75,31 +75,13 @@ Para configurar o projeto, siga os passos abaixo:
 
 3. Crie uma copia do arquivo `env_exemple.env` e renomei para `.env` com suas credenciais do banco de dados PostgreSQL:
 
-    ```
-    # configuração do servidor
-    PG_PORT=5432
-
-    # configuração do banco de dados
-    PG_HOST=localhost
-    PG_USER=postgres
-    DB_NAME=seu_database
-    DB_USER=seu_usuario
-    DB_PASSWORD=sua_senha
-    ```
-
-4. Execute as migrações para criar as tabelas no banco de dados:
-
-    ```bash
-    npx sequelize-cli db:migrate
-    ```
-
-5. Para popular o banco de dados com dados iniciais (opcional):
+4. Para popular o banco de dados com dados iniciais (opcional):
 
     ```bash
     npx sequelize-cli db:seed:all
     ```
 
-6. Inicie o servidor:
+5. Inicie o servidor:
 
     ```bash
     npm start
