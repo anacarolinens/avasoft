@@ -7,41 +7,41 @@ Este projeto é uma aplicação de sistema backend desenvolvida utilizando Node.
 ## 🗂 Estrutura do Projeto
 
     backend/
-    │
-    ├── config/
-    |   └── config.js
-    ├── src/
-    │   ├── controllers/
-    |   |   ├── patientController.js
-    |   |   ├── professionalController.js
-    │   │   └── userController.js
-    |   ├── middlewares/
-    │   │   └── auth.js
-    |   ├── database/
-    |   |   ├── connection.js
-    |   |   ├── pconnectionWithPromise.js
-    │   │   └── db.js
-    │   ├── models/
-    |   |   ├── assessment.js
-    |   |   ├── bmi.js
-    |   |   ├── patient.js
-    |   |   ├── professional.js
-    |   |   ├── user.js
-    │   │   └── userRules.js
-    │   ├── routes/
-    |   |   ├── patientRoute.js
-    |   |   ├── professionalRoute.js
-    │   │   └── userRoute.js
-    │   ├── utils/
-    │   ├── app.js
-    │   └── server.js
-    ├── .env
-    ├── .gitignore
-    ├── app.js
-    ├── env_exemple.env
-    ├── package.json
-    ├── README.md
-    └── server.js   
+    │    ├── config/
+    │    |   └── config.js
+    │    ├── src/
+    │    │   ├── controllers/
+    │    |   |   ├── patientController.js
+    │    |   |   ├── professionalController.js
+    │    │   │   └── userController.js
+    │    |   ├── middlewares/
+    │    │   │   └── auth.js
+    │    |   ├── database/
+    │    |   |   ├── connection.js
+    │    |   |   ├── pconnectionWithPromise.js
+    │    │   │   └── db.js
+    │    │   ├── models/
+    │    |   |   ├── assessment.js
+    │    |   |   ├── bmi.js
+    │    |   |   ├── patient.js
+    │    |   |   ├── professional.js
+    │    |   |   ├── user.js
+    │    │   │   └── userRules.js
+    │    │   ├── routes/
+    │    |   |   ├── patientRoute.js
+    │    |   |   ├── professionalRoute.js
+    │    │   │   └── userRoute.js
+    │    │   ├── utils/
+    │    │   ├── app.js
+    │    │   └── server.js
+    │    ├── .env
+    │    ├── .gitignore
+    │    ├── app.js
+    │    ├── env_exemple.env
+    │    ├── package.json
+    │    ├── README.md
+    │    └── server.js
+    └──
 
 ## Requisitos para rodar localmente
 
@@ -80,3 +80,43 @@ Para configurar o projeto, siga os passos abaixo:
     ```bash
     npm start
     ```
+
+## 🛠 Tecnologias Utilizadas
+
+### **Node.js**
+
+- **Descrição:** Ambiente de execução JavaScript no lado do servidor.
+- **Versão:** 14.x ou superior.
+- **Uso:** Executa o código JavaScript no servidor e gerencia as dependências do projeto.
+
+### **Express.js**
+
+- **Descrição:** Framework web para Node.js.
+- **Uso:** Facilita a criação de APIs e o gerenciamento de rotas, middleware e manipulação de requisições HTTP.
+
+### **Sequelize**
+
+- **Descrição:** ORM (Object-Relational Mapper) para Node.js.
+- **Versão:** 6.x ou superior.
+- **Uso:** Facilita a interação com o banco de dados PostgreSQL, fornecendo uma camada de abstração sobre consultas SQL e manipulação de dados.
+
+### **PostgreSQL**
+
+- **Descrição:** Sistema de gerenciamento de banco de dados relacional.
+- **Versão:** 12.x ou superior.
+- **Uso:** Armazena os dados da aplicação de forma estruturada e relacional.
+
+### **dotenv**
+
+- **Descrição:** Biblioteca para carregar variáveis de ambiente a partir de um arquivo `.env`.
+- **Uso:** Configura as variáveis de ambiente necessárias para a aplicação, como credenciais do banco de dados e configurações de ambiente.
+
+### **Nodemon**
+
+- **Descrição:** Ferramenta que monitora mudanças no código e reinicia automaticamente o servidor.
+- **Uso:** Facilita o desenvolvimento ao reiniciar automaticamente a aplicação sempre que há alterações no código-fonte.
+
+
+## 🤝 Contribuição
+
+Se você deseja contribuir para o projeto, siga as diretrizes descritas no arquivo README.md localizado na raiz do projeto.
