@@ -45,7 +45,7 @@ Antes de iniciar o desenvolvimento, certifique-se de ter as seguintes ferramenta
 - [Vue CLI](https://cli.vuejs.org/) (se ainda não estiver instalado, você pode instalá-lo globalmente com `npm install -g @vue/cli`)
 
 ##   🛠️ Instalação
-Instalação das Dependências
+### Instalação das Dependências
 Para instalar todas as dependências necessárias, execute o seguinte comando no diretório raiz do projeto:
 ```
 npm install
@@ -68,6 +68,20 @@ Para verificar e corrigir automaticamente problemas de formatação e erros de c
 npm run lint
 ```
 
+## Compilação e Execução com Electron
+
+Para iniciar o desenvolvimento com Electron, utilize o comando:
+
+```
+npm run electron:serve
+```
+
+Para compilar o projeto para produção com Electron, utilize o comando:
+
+```
+npm run electron:build
+```
+
 ## 🌐 Tecnologias Utilizadas
 ### Vue.js
 Vue.js é um framework JavaScript progressivo para a construção de interfaces de usuário. Para mais informações, consulte a documentação oficial do Vue.js.
@@ -88,4 +102,4 @@ Para obter mais informações e guias detalhados sobre como utilizar as tecnolog
 
 ## 🤝 Contribuição
 Se você deseja contribuir para o projeto, siga as diretrizes descritas no arquivo README.md localizado na raiz do projeto.
-Veja [Configuration Reference](https://cli.vuejs.org/config/).
+
