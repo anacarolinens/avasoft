@@ -29,7 +29,7 @@ Este documento fornece uma visão geral sobre como configurar e desenvolver a la
     │    │       └── HomeView.vue  
     │    │   ├── App.vue            # Componente raiz
     │    │   ├── index.js
-    │    │   └── main.js            # Arquivo principal de inicialização
+    │    │   ├── main.js            # Arquivo principal de inicialização
     │    ├── .gitignore
     │    ├── index.html
     │    ├── postcss.config.js
