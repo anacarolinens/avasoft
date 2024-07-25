@@ -75,13 +75,7 @@ Para configurar o projeto, siga os passos abaixo:
 
 3. Crie uma copia do arquivo `env_exemple.env` e renomei para `.env` com suas credenciais do banco de dados PostgreSQL:
 
-4. Para popular o banco de dados com dados iniciais (opcional):
-
-    ```bash
-    npx sequelize-cli db:seed:all
-    ```
-
-5. Inicie o servidor:
+4. Inicie o servidor:
 
     ```bash
     npm start
