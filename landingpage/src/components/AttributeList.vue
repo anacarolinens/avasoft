@@ -1,7 +1,7 @@
 <template>
     <main>
         <div id="attributes" class="mt-20 flex justify-center">
-            <img class="h-auto lg:w-auto" :src="imagePath('notebook.png')" alt="Notebook com demonstração do">
+            <img class="h-auto lg:w-auto" src="../assets/notebook.png" alt="Notebook com demonstração do">
         </div>
 
         <div class="flex flex-wrap justify-center text-center mt-16 mb-14" style="min-width: 320px;">
@@ -31,38 +31,43 @@
 </template>
 
 <script>
+import simplifyImage from '@/assets/simplify.png';
+import dynamicImage from '@/assets/dynamic.png';
+import personalityImage from '@/assets/personality.png';
+import visualizationImage from '@/assets/visualization.png';
+import versatilityImage from '@/assets/versatility.png';
+
 export default {
     data() {
         return {
-            imageBasePath: '/src/assets/',
             features: [
                 {
                     title: 'Simplificação',
-                    src: 'simplify.png', 
+                    src: simplifyImage, 
                     description: 'Diga adeus aos cálculos manuais e planilhas complicadas com o Avasoft!',
                     showDescription: false
                 },
                 {
                     title: 'Dinamismo',
-                    src: 'dynamic.png',
+                    src: dynamicImage,
                     description: 'Realize avaliações antropométricas completas e precisas em minutos',
                     showDescription: false
                 },
                 {
                     title: 'Personalização',
-                    src: 'personality.png',
+                    src: personalityImage,
                     description: 'Um relatório digital personalizado com gráficos e dados específicos de um cliente',
                     showDescription: false
                 },
                 {
                     title: 'Visualização',
-                    src: 'visualization.png',
+                    src: visualizationImage,
                     description: 'Acompanhe o progresso de forma visualmente atraente',
                     showDescription: false
                 },
                 {
                     title: 'Versatilidade',
-                    src: 'versatility.png',
+                    src: versatilityImage,
                     description: 'Perfeito para profissionais de saúde, entusiastas do fitness e estudantes',
                     showDescription: false
                 },
@@ -83,7 +88,7 @@ export default {
             }
         },
         imagePath(fileName) {
-            return this.imageBasePath + fileName;
+            return fileName;
         },
         closeDescriptionOnOutsideClick(event) {
             if (!event.target.closest('.feature-container')) {

@@ -5,9 +5,15 @@ import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [vue()],
+  base: '/avasoft',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
     },
+  publicDir: 'public',
+  build: {
+    outDir: 'dist',
+    assetsDir: "src/assets",
+  },
   },
 });
