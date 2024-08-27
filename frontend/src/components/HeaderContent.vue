@@ -12,9 +12,8 @@
         <div class="bar bar--3"></div>
       </label>
     </div>
-    <h1 class="rounded-md text-4xl ml-10">AVA<span class="text-white">SOFT</span></h1>
+    <h1 class="rounded-md text-4xl ml-10 text-black">AVA<span class="text-white">SOFT</span></h1>
   </header>
-
 
   <sidebar id="sidebar" :class="{ 'sidebar-closed': !sidebarVisible }">
     <a><router-link to="/HomePage">Home</router-link></a>
@@ -23,11 +22,6 @@
     <a><router-link to="/PhysicalAssessments">Avaliação Fisica</router-link></a>
     <a><router-link to="/">Sair</router-link></a>
   </sidebar>
-
-
-  <section>
-    <!-- corpo da pagina -->
-  </section>
 
 </template>
 
@@ -68,7 +62,7 @@ header .menu {
   background-color: #1E2021;
   z-index: 0;
   transition: transform 0.3s ease-out;
- /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.494); */
+  box-shadow: -15px 0px 20px 20px rgb(0 0 0 / 49%);
 }
 
 #sidebar.sidebar-closed {
