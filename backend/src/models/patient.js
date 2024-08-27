@@ -1,9 +1,9 @@
-const Sequelize = require("sequelize");
-const database = require("../database/db");
-const User = require("./user");
+const Sequelize = require('sequelize')
+const database = require('../database/db');
+const User = require('./user');
 const { DataTypes } = Sequelize;
 
-const Patient = database.define("patient", {
+const Patient = database.define('patient', {
   id_patient: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -17,11 +17,11 @@ const Patient = database.define("patient", {
   height_ini: {
     type: DataTypes.FLOAT,
     allowNull: false,
-  },
+  }
 });
 
-Patient.associate = function () {
-  Patient.belongsTo(User, { foreignKey: "user_id", as: "user" });
+Patient.associate = function(models) {
+  Patient.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
 };
 
 module.exports = Patient;

@@ -38,7 +38,7 @@
 
     </form>
 
-    <div class="flex justify-center"><img id="vitruvianwoman" src="../assets/img/vitruvianwoman.svg" alt="logo avasoft" class=" absolute bottom-0 right-0 z-0 xll:my-12 xl:my-0 lg:my-0"></div>
+    <div class="flex justify-center"><img id="vitruvianwoman" src="../assets/img/vitruvianwoman.png" alt="logo avasoft" class=" absolute bottom-0 right-0 z-0 xll:my-12 xl:my-0 lg:my-0"></div>
 
 
   </div>
