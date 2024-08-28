@@ -1,32 +1,27 @@
-const Sequelize = require('sequelize')
-const database = require('../database/db');
-const User = require('../models/user');
+const Sequelize = require("sequelize");
+const database = require("../database/db");
+const User = require("./user");
 
-
-const Professional = database.define('profissional', {
+const Professional = database.define("profissional", {
   id_professional: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   registry_professional: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   experience: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    unique: true
+    unique: true,
   },
-  id_user: { 
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    references: {         
-      model: User,        
-      key: 'id_user'    
-    }
-  }
 });
 
-module.exports = Professional
+Professional.associate = function () {
+  Professional.belongsTo(User, { foreignKey: "user_id", as: "user" });
+};
+
+module.exports = Professional;

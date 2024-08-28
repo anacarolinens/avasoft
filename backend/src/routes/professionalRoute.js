@@ -3,10 +3,10 @@ const router = express.Router();
 const ProfessionalController = require("../controllers/professionalController");
 
 // CRUD Routes /professionals
-router.get("/", ProfessionalController.getAllProfessionals); // /professionals
-router.get("/:id", ProfessionalController.getProfessionalById); // /professionals/:id
-router.post("/", ProfessionalController.createProfessional); // /professionals
-router.put("/:id", ProfessionalController.updateProfessional); // /professionals/:id
-router.delete("/:id", ProfessionalController.deleteProfessional); // /professionals/:id
+router.get("/", ProfessionalController.getAllProfessionals); // GET /professionals
+router.get("/:id", ProfessionalController.getProfessionalById); // GET /professionals/:id
+router.post("/", ProfessionalController.createProfessional); // POST /professionals
+router.put("/:id", ProfessionalController.updateProfessional); // PUT /professionals/:id
+router.delete("/:id", ProfessionalController.deleteProfessional); // DELETE /professionals/:id
 
 module.exports = router;
