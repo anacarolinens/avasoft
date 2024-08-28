@@ -2,7 +2,7 @@
 <template>
 
   <div id="app">
-    <HeaderContent/>
+    <HeaderContent v-if="!$route.meta.hideHeader" />
     <!-- <HeaderContent v-if="isLoggedIn" /> -->
     <section class="px-20">
       <router-view />  
