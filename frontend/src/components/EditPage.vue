@@ -1,28 +1,13 @@
 <template>
   <div class="container">
 
-    <header>
-      <h1>Bem-vindo</h1>
-      
-    </header>
+
 
 
 
     <div class="content">
 
-      <div class="sidebar">
-        
-        <router-link to="/HomePage">Home</router-link>
 
-        <router-link to="/RegisterUser">Registar Usuario</router-link>
-
-        <router-link to="/ListUser">Lista de usuarios</router-link>
-
-        <router-link to="/PhysicalAssessments">Avaliação Fisica</router-link>
-
-        <router-link to="/">Sair</router-link>
-
-      </div>
 
 
 
@@ -197,74 +182,5 @@ export default {
 
  
 <style scoped>
-div {
-  box-sizing: border-box;
-}
 
-header {
-  background-color: #52ff18;
-  width: 100%;
-}
-
-.section-form {
-  width: 80%;
-  /* Ajuste conforme necessário */
-  padding: 1em;
-}
-
-.form-group {
-  margin-bottom: 1em;
-}
-
-
-#userForm {
-  flex: 1;
-  /* Faz com que a lista de usuários ocupe o restante do espaço disponível na horizontal */
-  padding: 1em;
-}
-
-
-fieldset {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-
-legend {
-  font-weight: bold;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-form {
-  width: 50%;
-  margin: auto;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input,
-select {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-top: 5px;
-}
-
-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 </style>

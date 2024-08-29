@@ -1,24 +1,25 @@
-
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from './components/HomePage.vue';
-import LoginPage from './components/LoginPage.vue';
+import HomePage from './templates/HomePage.vue';
+import LoginPage from './templates/LoginPage.vue';
 import RegisterUser from './components/RegisterUser.vue';
 import ListUser from './components/ListUser.vue';
 import EditPage from "./components/EditPage.vue";
 
-import AssessmentPage from "./components/AssessmentPage.vue";
+import AssessmentPage from "./templates/AssessmentPage.vue";
 import AssessmentUser from "./components/AssessmentUser.vue";
 import PhysicalAssessments from "./components/PhysicalAssessments.vue";
 const routes = [
     {
         path: '/',
         component: LoginPage,
-        name: 'LoginPage'
+        name: 'LoginPage',
+        meta: { hideHeader: true }
     },
     {
         path: '/HomePage',
         component: HomePage,
-        name: 'HomePage'
+        name: 'HomePage',
+        meta: { requiresAuth: true }
     },
     {
         path: '/RegisterUser',
@@ -49,15 +50,14 @@ const routes = [
         path: '/PhysicalAssessments',
         component: PhysicalAssessments,
         name: 'PhysicalAssessments'
-    },
-    
-
-    
+    }
 ];
 
 const router = createRouter({
     history: createWebHistory(),
     routes
 });
+
+
 
 export default router; // Export the router instance

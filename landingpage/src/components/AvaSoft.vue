@@ -1,40 +1,34 @@
 <template>
-  <main class="flex justify-center items-center">
+  <main id="home" class="flex justify-center items-center">
     <!-- Hero section -->
-    <div class="container mx-auto">
-      <div class="">
-        <h1>
-          <p>SIMPLES, INTUITIVO E</p>
-          <p>
-            <span class="text-[#FF8139]">EFICIENTE</span>, É AVA <span class="text-[#FF8139]">SOFT</span>
-          </p>
-        </h1>
-        <p>O Avasoft simplifica as avaliações antropométricas, 
-          coletando e armazenando dados dos alunos ao longo <br>
-          do tempo. Com gráficos intuitivos, oferecemos resultados 
-          comparativos, facilitando a visualização da <br>
-          evolução dos alunos.
+    <div class="text-center">
+      <h1
+        class="text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 md:mb-8 lg:mb-10 xl:mb-12 mt-20 md:mt-24 lg:mt-32 xl:mt-40">
+        <p>SIMPLES, INTUITIVO E</p>
+        <p>
+          <span class="text-[#FF8139]">EFICIENTE</span>, É AVA<span class="text-[#FF8139]">SOFT</span>
         </p>
+      </h1>
+      <p class="text-base sm:text-lg md:text-base mb-12 md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto"
+        style="white-space: pre-line;">
+        O Avasoft simplifica suas avaliações antropométricas,
+        coletando e armazenando dados dos alunos ao longo
+        do tempo. Com gráficos intuitivos, oferecemos resultados
+        comparativos, facilitando a visualização da
+        evolução dos alunos.
+      </p>
 
-        <div class="mt-4">
-          <button class="flex items-center justify-center bg-[#FF8139] px-6 py-3 text-white rounded-md hover:bg-[#FF5C00]">
-            <span class="flex items-center">
-              Baixar para Windows
-              <img src="../assets/microsoft.png" alt="Ícone de download" class="h-5 w-5 ml-2">
-            </span>
-          </button>
-
-          <button class="ml-4">
-            <img src="../assets/seta.png" alt="Seta dropdown">
-          </button>
-        </div>
-      </div>
+      <DropDown />
     </div>
   </main>
 </template>
 
-<script setup>
-</script>
+<script>
+import DropDown from "./DropDown.vue";
 
-<style scoped>
-</style>
+export default {
+  components: {
+    DropDown,
+  },
+};
+</script>
