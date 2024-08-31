@@ -19,7 +19,7 @@
         <input type="password" id="pass" placeholder="" v-model="password">
       </div>
 
-      <p class="text-end text-white pt-8"><a href="#">Esqueceu a senha?</a></p>
+      <p class="text-end text-white pt-8"><a><router-link to="/PasswordReset">Esqueceu a senha?</router-link></a></p>
 
       <div class="flex justify-center">
         <button type="button" class="button-login" @click="handleLogin">LOGIN</button>
