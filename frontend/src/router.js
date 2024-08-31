@@ -8,6 +8,10 @@ import EditPage from "./components/EditPage.vue";
 import AssessmentPage from "./templates/AssessmentPage.vue";
 import AssessmentUser from "./components/AssessmentUser.vue";
 import PhysicalAssessments from "./components/PhysicalAssessments.vue";
+import PasswordReset from './templates/PasswordReset.vue';
+import PasswordResetConfirm from './templates/PasswordResetConfirm.vue';
+
+
 const routes = [
     {
         path: '/',
@@ -50,6 +54,18 @@ const routes = [
         path: '/PhysicalAssessments',
         component: PhysicalAssessments,
         name: 'PhysicalAssessments'
+    },
+    {
+        path: '/PasswordResetConfirm',
+        component: PasswordResetConfirm,
+        name: 'PasswordResetConfirm',
+        meta: { hideHeader: true }
+    },
+    {
+        path: '/PasswordReset',
+        component: PasswordReset,
+        name: 'PasswordReset',
+        meta: { hideHeader: true }
     }
 ];
 
