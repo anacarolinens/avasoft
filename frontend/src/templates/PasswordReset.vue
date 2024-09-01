@@ -1,25 +1,28 @@
 <template>
-    <div class="container-reset">
-
-        <header class="flex flex-col  xl:m-0" style="width: fit-content;">
-            <h1 class="text-9xl mt-16">AVA<span>SOFT</span></h1>
-            <p class="text-center" style="color:#fff">Avaliação Antropometrica</p>
-        </header>
-
-        <form action="" id="reset-form" class="" style="width: fit-content;">
+    <div class="container-reset flex justify-center items-center max-w-full pt-1">
+        <div id="hea" class="text-center w-full">
+            <div class="flex items-center justify-center">
+                <img id="logo" src="../assets/img/logo.svg" alt="logo avasoft"
+                    class="max-w-[10%] max-h-[10%] opacity-50 mr-4" />
+                <div>
+                    <h1 class="text-8xl">AVA<span>SOFT</span></h1>
+                    <p class="text-center" style="color:#fff">Avaliação Antropometrica</p>
+                </div>
+            </div>
+        </div>
+        <span class="mt-4 mb-4 " style="font-size: 25px; color:#fff">Recuperação de senha</span>
+        <form action="" id="reset-form" class="w-full max-w-md">
             <div class="flex flex-col">
-                <p style="color:#fff">Digite aqui seu email para que possamos enviar a recuperação de senha para seu email.</p>
+                <p style="color:#fff">Digite aqui seu email para que possamos enviar a recuperação de senha para seu
+                    email.</p>
                 <label for="email" id="label-email">Email</label>
-                <input type="email" id="email" placeholder="Digite seu usuário aqui..." v-model="email">
+                <input type="email" id="email" placeholder="Digite seu email aqui..." v-model="email" class="w-full">
             </div>
 
-            <div class="flex justify-center">
+            <div class="flex justify-center mt-4">
                 <button type="button" class="button-reset" @click="handleResetRequest">Enviar</button>
             </div>
         </form>
-
-        <img id="logo" src="../assets/img/logo.svg" alt="logo avasoft"
-            class="fixed top-1/2 right-0 transform -translate-y-1/2 max-w-[100%] max-h-[100%] opacity-50 z-[-1]" />
     </div>
 </template>
 
@@ -49,11 +52,12 @@ export default {
 </script>
 
 <style scoped>
-p{
-    width: 30rem;
-    max-width: 30rem;
-    height: 45px;
+p {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
 }
+
 #label-email {
     color: #ffffff;
     font-size: 1em;
@@ -62,8 +66,7 @@ p{
 }
 
 #email {
-    width: 30rem;
-    max-width: 30rem;
+    width: 100%;
     height: 45px;
     padding: 12px;
     border-radius: 5px;
@@ -87,11 +90,10 @@ p{
 }
 
 .button-reset {
-    margin-top: 2em;
     background-color: #ff8818;
     color: #ffffff;
     width: 180px;
-    height: 80px;
+    height: 50px;
     border-radius: 4px;
     font-size: 18px;
     font-weight: bold;
@@ -116,8 +118,8 @@ p{
 .container-reset {
     display: flex;
     flex-direction: column;
-    margin-left: 12em;
     height: 100vh;
+    width: 100%;
     font-family: "Nanum Gothic", sans-serif;
 }
 </style>
