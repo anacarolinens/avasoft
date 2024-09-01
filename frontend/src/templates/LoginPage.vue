@@ -130,12 +130,12 @@ export default {
 
 #name:active,
 #pass:active {
-  transform: scale(0.95);
+  transform: scale(0.99);
 }
 
 #name:focus,
 #pass:focus {
-  border: 2px solid grey;
+  border: 1px solid grey;
 }
 
 #logo {
@@ -180,15 +180,15 @@ span {
   align-items: center;
   appearance: none;
   background-color: #ff8818;
-  border-radius: 4px;
+  border-radius: 50px;
   border-width: 0;
-  box-shadow: rgba(255, 157, 0, 0.2) 0 2px 4px, rgba(66, 55, 35, 0.15) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+ /*box-shadow: rgba(255, 157, 0, 0.2) 0 2px 4px, rgba(66, 55, 35, 0.15) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;*/
   box-sizing: border-box;
   color: #ffffff;
   cursor: pointer;
   display: inline-flex;
   width: 180px;
-  height: 80px;
+  height: 60px;
   justify-content: center;
   line-height: 1;
   list-style: none;
@@ -206,17 +206,13 @@ span {
   font-weight: bold;
 }
 
-.button-login:focus {
-  box-shadow: #af6a0a 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-}
-
 .button-login:hover {
   box-shadow: rgba(255, 255, 255, 0.278) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .button-login:active {
   box-shadow: #ffa347 0 3px 7px inset;
-  transform: translateY(2px);
+  transform: translateY(0.80px);
 }
 </style>
