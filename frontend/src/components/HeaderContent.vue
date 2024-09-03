@@ -16,11 +16,39 @@
   </header>
 
   <sidebar id="sidebar" :class="{ 'sidebar-closed': !sidebarVisible }">
-    <a><router-link to="/HomePage">Home</router-link></a>
-    <a><router-link to="/RegisterUser">Registar Usuario</router-link></a>
-    <a><router-link to="/ListUser">Lista de usuarios</router-link></a>
-    <a><router-link to="/PhysicalAssessments">Avaliação Fisica</router-link></a>
-    <a><router-link to="/">Sair</router-link></a>
+    <a class="sidebar-link">
+      <router-link to="/HomePage" class="router-link">
+        <div class="link-content"> 
+          Home
+          <img src="@/assets/img/home-icon.svg" class="w-12" alt="">
+        </div>
+      </router-link>
+      <span class="link-border"></span>
+    </a>
+    <a class="sidebar-link">
+      <router-link to="/RegisterUser" class="router-link">
+        Registar Usuario
+      </router-link>
+      <span class="link-border"></span>
+    </a>
+    <a class="sidebar-link">
+      <router-link to="/ListUser" class="router-link">
+        Lista de usuarios
+      </router-link>
+      <span class="link-border"></span>
+    </a>
+    <a class="sidebar-link">
+      <router-link to="/PhysicalAssessments" class="router-link">
+        Avaliação Fisica
+      </router-link>
+      <span class="link-border"></span>
+    </a>
+    <a class="sidebar-link">
+      <router-link to="/" class="router-link">
+        Sair
+      </router-link>
+      <span class="link-border"></span>
+    </a>
   </sidebar>
 
 </template>
@@ -66,22 +94,55 @@ header .menu {
 }
 
 #sidebar.sidebar-closed {
-  transform: translateX(-76%); /* Adicione esta linha */
+  transform: translateX(-76%);
 }
-
 
 /* Estilo para os links no sidebar */
 sidebar a {
-  display: block;
+  display: flex;
+  justify-content: space-between;
   padding: 10px 0 0 10px;
   text-decoration: none;
   color: #ffffff;
 }
 
-sidebar a:hover {
-  background-color: #ddd;
+.sidebar-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
+.router-link {
+  color: #fff; 
+  text-decoration: none;
+  padding: 10px 0;
+  width: 100%;
+  transition: background-color 0.3s; 
+  display: inline-block; 
+}
+
+/* Novo estilo para o contêiner */
+.link-content {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px; 
+  background-color: #ff8000; 
+  width: 0%; 
+  transition: width 0.3s; 
+}
+
+.router-link:hover + .link-border,
+.router-link:focus + .link-border {
+  width: 100%; 
+}
 
 /* menu amburguer */
 .icon-menu {
@@ -140,13 +201,4 @@ sidebar a:hover {
   --rotate-bar-one: 45deg;
   --rotate-bar-three: -45deg;
 }
-
-/* movimentação do sidebar */
-/*.hidden {
-  transform: translateX(-250px);
-}
-
-#sidebar {
-  transition: transform 0.3s ease;
-}*/
 </style>
