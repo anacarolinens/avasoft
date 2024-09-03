@@ -11,12 +11,12 @@ const Professional = database.define("profissional", {
   },
   registry_professional: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
+    unique: true,
   },
   experience: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    unique: true,
+    type: Sequelize.STRING,
+    allowNull: true,
   },
 });
 

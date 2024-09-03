@@ -92,7 +92,13 @@ const User = database.define("user", {
   // }
 });
 
-User.hasOne(Professional, { foreignKey: "user_id", as: "professional" });
-User.hasOne(Patient, { foreignKey: "user_id", as: "patient" });
+User.hasOne(Professional, {
+  foreignKey: "id_professional",
+  as: "professional",
+});
+User.hasOne(Patient, {
+  foreignKey: "id_patient",
+  as: "patient",
+});
 
 module.exports = User;
