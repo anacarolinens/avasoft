@@ -166,6 +166,12 @@ exports.updateUser = async (req, res, next) => {
       return res.status(404).json({ message: "User Not Found" });
     }
 
+    // Repete campos obrigatorios que não foram atualizados
+    const { cpf, email, userName } = user;
+    updatedUserData.cpf = cpf; //
+    updatedUserData.email = email;
+    updatedUserData.userName = userName;
+
     // Verifica se a senha está no corpo da requisição e gera um hash
     if (updatedUserData.password) {
       const salt = await bcrypt.genSalt(10);
