@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Patient = require("../models/patient");
+const Professional = require("../models/professional");
 
 //Crud all users
 exports.getAllUsers = async (req, res, next) => {
@@ -78,6 +80,21 @@ exports.createUser = async (req, res, next) => {
       userName: userName,
       password: hashedPassword,
     });
+
+    // Try to create the associated record based on role
+    try {
+      if (role === "Paciente") {
+        await Patient.create({ user_id: user.id });
+      } else if (role === "Profissional") {
+        await Professional.create({ user_id: user.id });
+      }
+    } catch (assocError) {
+      // If there's an error creating the associated record, delete the user
+      await user.destroy();
+      return res.status(500).json({
+        message: "Error creating associated record -> " + assocError,
+      });
+    }
 
     // Generate authentication token
     const token = jwt.sign(
