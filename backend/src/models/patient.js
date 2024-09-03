@@ -12,16 +12,17 @@ const Patient = database.define("patient", {
   },
   weigth_ini: {
     type: DataTypes.FLOAT,
-    allowNull: false,
+    allowNull: true,
   },
   height_ini: {
     type: DataTypes.FLOAT,
-    allowNull: false,
+    allowNull: true,
   },
 });
 
 Patient.associate = function () {
   Patient.belongsTo(User, { foreignKey: "user_id", as: "user" });
+  Patient.hasMany(Bmi, { foreignKey: "id_patient", as: "bmi" });
 };
 
 module.exports = Patient;
