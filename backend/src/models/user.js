@@ -86,7 +86,7 @@ const User = database.define("user", {
     type: Sequelize.STRING,
     allowNull: true,
   },
-  // resetPasswordExpires: {
+  // passwordResetExpires: {
   //   type: Sequelize.DATE,
   //   allowNull: true
   // }

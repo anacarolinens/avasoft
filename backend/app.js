@@ -18,6 +18,10 @@ app.get('/users/:id', userController.getUserById);
 app.put('/users/:id', userController.updateUser);
 app.delete('/users/:id', userController.deleteUser);
 
+// Password reset routes
+app.post('/reset-password', userController.resetPasswordRequest);
+app.post('/reset-password-confirm', userController.resetPassword);
+
 // define routes professionals
 app.get('/professionals', professionalController.getAllProfessionals);
 app.get('/professional/:id', professionalController.getProfessionalById);
