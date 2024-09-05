@@ -1,104 +1,90 @@
 const Sequelize = require("sequelize");
 const database = require("../database/db");
 const USER_ROLES = require("../models/userRules");
-const Professional = require("./professional");
-const Patient = require("./patient");
+const { DataTypes } = Sequelize;
 
 const User = database.define("user", {
   id_user: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
   fullName: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   cpf: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
   dataNasc: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   gender: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   phone: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   email: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
   street: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   number: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   complement: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   district: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   city: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   state: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   cep: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   role: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     validate: {
       isIn: [USER_ROLES],
     },
   },
   userName: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
   password: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
   resetPasswordToken: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: true,
   },
-  // passwordResetExpires: {
-  //   type: Sequelize.DATE,
-  //   allowNull: true
-  // }
-});
-
-User.hasOne(Professional, {
-  foreignKey: "id_professional",
-  as: "professional",
-});
-User.hasOne(Patient, {
-  foreignKey: "id_patient",
-  as: "patient",
 });
 
 module.exports = User;

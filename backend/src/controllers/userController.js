@@ -86,9 +86,9 @@ exports.createUser = async (req, res, next) => {
     // Try to create the associated record based on role
     try {
       if (role === "Paciente") {
-        await Patient.create({ user_id: user.id });
+        await Patient.create({ user_id: user.id_user });
       } else if (role === "Profissional") {
-        await Professional.create({ user_id: user.id });
+        await Professional.create({ user_id: user.id_user });
       }
     } catch (assocError) {
       // If there's an error creating the associated record, delete the user

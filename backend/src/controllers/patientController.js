@@ -8,15 +8,16 @@ exports.getAllPatients = async (req, res) => {
       include: [
         {
           model: User,
-          where: { role: "Paciente" }, // Filter by user role
-          attributes: ["userName", "email"],
+          as: 'user',
+          attributes: ['userName', 'email'],
+          where: { role: 'Paciente' }
         },
       ],
     });
     res.json(patients);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error fetching patients." });
+    console.error("Error fetching patients:", error);
+    res.status(500).json({ message: "Error fetching patients.", error: error.message });
   }
 };
 
@@ -24,12 +25,13 @@ exports.getAllPatients = async (req, res) => {
 exports.getPatientById = async (req, res) => {
   try {
     const patient = await Patient.findOne({
-      where: { id: req.params.id },
+      where: { id_patient: req.params.id },  // Corrigido para `id_patient`
       include: [
         {
           model: User,
-          where: { role: "Paciente" },
-          attributes: ["userName", "email"],
+          as: 'user',
+          attributes: ['userName', 'email'],
+          where: { role: 'Paciente' }
         },
       ],
     });
@@ -38,8 +40,8 @@ exports.getPatientById = async (req, res) => {
     }
     res.json(patient);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error fetching patient." });
+    console.error("Error fetching patient:", error);
+    res.status(500).json({ message: "Error fetching patient.", error: error.message });
   }
 };
 
@@ -57,7 +59,7 @@ exports.createPatient = async (req, res) => {
 
     // Create a patient record associated with the user
     const patient = await Patient.create({
-      user_id: user.id,
+      user_id: user.id_user,  // Corrigido para `user.id_user`
       weigth_ini,
       height_ini,
     });
@@ -75,16 +77,15 @@ exports.updatePatient = async (req, res) => {
     const { userName, email, weigth_ini, height_ini } = req.body;
     const patientId = req.params.id;
 
-    // Find the patient with associated user
     const patient = await Patient.findByPk(patientId, {
-      include: [{ model: User }],
+      include: [{ model: User, as: 'user' }],
     });
 
     if (!patient) {
       return res.status(404).json({ message: "Patient not found." });
     }
 
-    // Update the associated user and patient records
+    // Update associated user and patient records
     await patient.user.update({ userName, email });
     await patient.update({ weigth_ini, height_ini });
 
@@ -106,7 +107,7 @@ exports.deletePatient = async (req, res) => {
     }
 
     // Delete the associated user
-    await User.destroy({ where: { id: patient.user_id } });
+    await User.destroy({ where: { id_user: patient.user_id } });  // Corrigido para `id_user`
 
     // Delete the patient record
     await patient.destroy();

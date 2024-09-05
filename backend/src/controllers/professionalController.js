@@ -26,7 +26,7 @@ exports.getAllProfessionals = async (req, res) => {
 exports.getProfessionalById = async (req, res) => {
   try {
     const professional = await Professional.findOne({
-      where: { id: req.params.id },
+      where: { id_professional: req.params.id },  // Corrigido para `id_professional`
       include: [
         {
           model: User,
@@ -73,13 +73,13 @@ exports.createProfessional = async (req, res) => {
     const user = await User.create({
       userName,
       email,
-      password, // Certifique-se de que o password está sendo tratado corretamente
+      password,
       role: "Profissional",
     });
 
     // Criação do registro de profissional associado
     const professional = await Professional.create({
-      user_id: user.id,
+      user_id: user.id_user,  // Corrigido para `user.id_user`
       registry_professional,
       experience,
     });
@@ -108,14 +108,17 @@ exports.updateProfessional = async (req, res) => {
       return res.status(404).json({ message: "Professional not found." });
     }
 
-    // Atualiza os dados do usuário e do profissional
+    // Update associated user and professional records
     await professional.user.update({ userName, email });
     await professional.update({ registry_professional, experience });
 
-    res.json({ message: "Professional updated successfully!", professional });
+    res.json({
+      message: "Professional updated successfully!",
+      professional,
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error updating professional.", error });
+    res.status(500).json({ message: "Error updating professional." });
   }
 };
 
@@ -130,7 +133,7 @@ exports.deleteProfessional = async (req, res) => {
     }
 
     // Delete the associated user
-    await User.destroy({ where: { id: professional.user_id } });
+    await User.destroy({ where: { id_user: professional.user_id } });
 
     // Delete the professional record
     await professional.destroy();

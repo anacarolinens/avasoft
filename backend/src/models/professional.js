@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const database = require("../database/db");
 const User = require("./user");
 
-const Professional = database.define("profissional", {
+const Professional = database.define("professional", {
   id_professional: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -20,8 +20,7 @@ const Professional = database.define("profissional", {
   },
 });
 
-Professional.associate = function () {
-  Professional.belongsTo(User, { foreignKey: "user_id", as: "user" });
-};
+// Associações
+Professional.belongsTo(User, { foreignKey: "user_id", as: "user" });
 
 module.exports = Professional;
