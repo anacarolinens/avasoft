@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -84,9 +86,9 @@ exports.createUser = async (req, res, next) => {
     // Try to create the associated record based on role
     try {
       if (role === "Paciente") {
-        await Patient.create({ user_id: user.id });
+        await Patient.create({ user_id: user.id_user });
       } else if (role === "Profissional") {
-        await Professional.create({ user_id: user.id });
+        await Professional.create({ user_id: user.id_user });
       }
     } catch (assocError) {
       // If there's an error creating the associated record, delete the user
@@ -166,6 +168,12 @@ exports.updateUser = async (req, res, next) => {
       return res.status(404).json({ message: "User Not Found" });
     }
 
+    // Repete campos obrigatorios que não foram atualizados
+    const { cpf, email, userName } = user;
+    updatedUserData.cpf = cpf; //
+    updatedUserData.email = email;
+    updatedUserData.userName = userName;
+
     // Verifica se a senha está no corpo da requisição e gera um hash
     if (updatedUserData.password) {
       const salt = await bcrypt.genSalt(10);
@@ -217,3 +225,90 @@ exports.deleteUser = async (req, res, next) => {
       });
     });
 };
+
+exports.resetPassword = async (req, res, next) => {
+  const { resetToken, newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    return res.status(400).json({ message: "Passwords do not match" });
+  }
+
+  try {
+    const user = await User.findOne({
+      where: {
+        resetPasswordToken: resetToken,
+      //  passwordResetExpires: {
+     //     [Sequelize.Op.gt]: Date.now(), // Check for unexpired token
+     //   },
+      },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired reset token" });
+    }
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword,   
+ salt);
+
+    // Update user password and clear reset token/expires fields
+    user.password = hashedPassword;
+    user.resetPasswordToken = null;
+    user.resetPasswordToken = null;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({   
+ message: "Error resetting password"   
+ });
+  }
+};
+
+// Adicione esta função ao `userController.js`
+exports.resetPasswordRequest = async (req, res, next) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ where: { email: email } });
+
+    if (!user) {
+      return res.status(404).json({ message: "User Not Found" });
+    }
+
+    // Gerar token e definir data de expiração
+    const resetToken = crypto.randomBytes(20).toString('hex');
+    user.resetPasswordToken = resetToken;
+    user.passwordResetExpires = Date.now() + 3600000; // 1 hora
+
+    await user.save();
+
+    // Configurar e enviar e-mail (o exemplo abaixo é apenas um esqueleto)
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+    console.log("email:",process.env.EMAIL_USER, "senha:",process.env.EMAIL_PASS);
+    const mailOptions = {
+      to: email,
+      from: 'avasoft8@gmail.com',
+      subject: 'Password Reset',
+      text: `Você solicitou a mudança de senha?\n\n
+      http://${req.headers.host}/reset-password-confirm/${resetToken}\n\n
+      caso não tenha ignore este e-mail.\n`
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: "Password reset instructions sent to email" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error requesting password reset" });
+  }
+};
+

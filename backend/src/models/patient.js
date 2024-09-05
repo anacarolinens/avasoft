@@ -18,11 +18,25 @@ const Patient = database.define("patient", {
     type: DataTypes.FLOAT,
     allowNull: true,
   },
+  user_id: {  // Ajuste no nome do campo para `user_id`
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User,
+      key: 'id_user',
+    },
+  },
 });
 
-Patient.associate = function () {
-  Patient.belongsTo(User, { foreignKey: "user_id", as: "user" });
-  Patient.hasMany(Bmi, { foreignKey: "id_patient", as: "bmi" });
-};
+// Associações
+Patient.belongsTo(User, { 
+  foreignKey: 'user_id',
+  as: 'user'
+});
+
+User.hasOne(Patient, {
+  foreignKey: 'user_id',
+  as: 'patient',
+});
 
 module.exports = Patient;
