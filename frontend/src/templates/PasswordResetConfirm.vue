@@ -17,9 +17,6 @@
         <span class="mt-4 mb-4 " style="font-size: 25px; color:#fff">Redefina sua senha</span>
         <form action="" id="reset-form" class="w-full max-w-md" >
             <div class="flex flex-col">
-                <label for="userName" id="label-userName">Usuário</label>
-                <input type="text" id="userName" placeholder="Digite seu usuário aqui..." v-model="userName">
-
                 <label for="newPassword" id="label-newPassword">Nova Senha</label>
                 <input type="password" id="newPassword" placeholder="Digite sua senha aqui..." v-model="newPassword">
 
@@ -28,8 +25,9 @@
                     v-model="confirmPassword">
             </div>
 
-            <div class="flex justify-center">
+            <div class="flex flex-col items-center justify-center gap-3">
                 <button type="button" class="button-reset" @click="handlePasswordReset">Redefinir</button>
+                <a class="" ><router-link to="/" class="underline decoration-orange-500 text-white hover:text-orange-700"> Fazer Login </router-link></a>
             </div>
         </form>
     </div>
@@ -39,7 +37,7 @@
 export default {
     data() {
         return {
-            userName: '',
+            resetToken: this.$route.params.resetToken,
             newPassword: '',
             confirmPassword: '',
         }
@@ -52,9 +50,10 @@ export default {
             }
 
             try {
-                const response = await this.$axios.post('http://localhost:3000/password-reset-confirm', {
-                    userName: this.userName,
+                const response = await this.$axios.post('http://localhost:3000/reset-password-confirm', {
+                    resetToken: this.resetToken,
                     newPassword: this.newPassword,
+                    confirmPassword:this.confirmPassword
                 });
 
                 console.log('Senha redefinida com sucesso:', response.data);

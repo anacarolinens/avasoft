@@ -26,7 +26,7 @@
       <span class="link-border"></span>
     </a>
     <a class="sidebar-link">
-      <router-link to="/RegisterUser" class="router-link">
+      <router-link to="/ProfessionalRegister" class="router-link">
         Registar Usuario
       </router-link>
       <span class="link-border"></span>
@@ -37,6 +37,7 @@
       </router-link>
       <span class="link-border"></span>
     </a>
+    
     <a class="sidebar-link">
       <router-link to="/PhysicalAssessments" class="router-link">
         Avaliação Fisica

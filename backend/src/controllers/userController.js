@@ -294,12 +294,13 @@ exports.resetPasswordRequest = async (req, res, next) => {
       }
     });
     console.log("email:",process.env.EMAIL_USER, "senha:",process.env.EMAIL_PASS);
+    const frontendUrl = process.env.FRONTEND_URL;
     const mailOptions = {
       to: email,
       from: 'avasoft8@gmail.com',
       subject: 'Password Reset',
       text: `Você solicitou a mudança de senha?\n\n
-      http://${req.headers.host}/reset-password-confirm/${resetToken}\n\n
+      http://${frontendUrl}/reset-password-confirm/${resetToken}\n\n
       caso não tenha ignore este e-mail.\n`
     };
 

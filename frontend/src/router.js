@@ -4,12 +4,13 @@ import LoginPage from './templates/LoginPage.vue';
 import RegisterUser from './components/RegisterUser.vue';
 import ListUser from './components/ListUser.vue';
 import EditPage from "./components/EditPage.vue";
-
 import AssessmentPage from "./templates/AssessmentPage.vue";
 import AssessmentUser from "./components/AssessmentUser.vue";
 import PhysicalAssessments from "./components/PhysicalAssessments.vue";
 import PasswordReset from './templates/PasswordReset.vue';
 import PasswordResetConfirm from './templates/PasswordResetConfirm.vue';
+import ProfessionalRegister from './templates/ProfessionalRegister.vue';
+import PatientList from './templates/PatientList.vue';
 
 
 const routes = [
@@ -56,7 +57,7 @@ const routes = [
         name: 'PhysicalAssessments'
     },
     {
-        path: '/PasswordResetConfirm',
+        path: '/reset-password-confirm/:resetToken',
         component: PasswordResetConfirm,
         name: 'PasswordResetConfirm',
         meta: { hideHeader: true }
@@ -66,6 +67,16 @@ const routes = [
         component: PasswordReset,
         name: 'PasswordReset',
         meta: { hideHeader: true }
+    },
+    {
+        path: '/ProfessionalRegister',
+        component: ProfessionalRegister,
+        name: 'ProfessionalRegister'
+    },
+    {
+        path: '/PatientList',
+        component: PatientList,
+        name: 'PatientList'
     }
 ];
 
@@ -74,6 +85,4 @@ const router = createRouter({
     routes
 });
 
-
-
-export default router; // Export the router instance
+export default router;
