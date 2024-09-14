@@ -6,6 +6,8 @@ const userController = require('./src/controllers/userController');
 const professionalController = require('./src/controllers/professionalController');
 const patientController = require('./src/controllers/patientController');
 
+require('dotenv').config();//necessario para o envio de email de recuperar senha
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

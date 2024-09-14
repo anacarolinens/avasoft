@@ -19,8 +19,9 @@
                 <input type="email" id="email" placeholder="Digite seu email aqui..." v-model="email" class="w-full">
             </div>
 
-            <div class="flex justify-center mt-4">
-                <button type="button" class="button-reset" @click="handleResetRequest">Enviar</button>
+            <div class="flex flex-col items-center justify-center gap-3">
+                <button type="button" class="button-reset mt-5" @click="handleResetRequest">Enviar</button>
+                <a class="mt" ><router-link to="/" class="underline decoration-orange-500 text-white hover:text-orange-700"> Fazer Login </router-link></a>
             </div>
         </form>
     </div>
@@ -36,14 +37,15 @@ export default {
     methods: {
         async handleResetRequest() {
             try {
-                const response = await this.$axios.post('http://localhost:5434/reset-password', {
+                const response = await this.$axios.post('http://localhost:3000/reset-password', {
                     email: this.email,
                 });
 
                 console.log('Instruções enviadas:', response.data);
-                // Mostrar uma notificação de que o email foi enviado ou redirecionar para outra página
+                alert("enviado com sucesso! verique aqui seu email.");// Mostrar uma notificação de que o email foi enviado ou redirecionar para outra página
             } catch (error) {
                 console.error('Erro ao solicitar recuperação de senha:', error);
+                alert("Erro ao solicitar recuperação de senha!, esse email está cadastro no sistemas??")
                 // Trate o erro, exiba uma mensagem de erro, etc.
             }
         },

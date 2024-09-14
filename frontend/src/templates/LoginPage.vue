@@ -4,8 +4,8 @@
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Kode+Mono:wght@400..700&family=Nanum+Gothic&display=swap">
 
-    <header class="flex flex-col  xl:m-0" style="width: fit-content;">
-      <h1 class="text-9xl mt-16">AVA<span>SOFT</span></h1>
+    <header class="flex flex-col justify-center items-center xl:m-0 pl-14" style="width: fit-content;">
+      <h1 class="text-8xl mt-3">AVA<span>SOFT</span></h1>
       <p class="text-center" style="color:#fff">Avaliação Antropometrica</p>
     </header>
 
@@ -19,18 +19,16 @@
         <input type="password" id="pass" placeholder="" v-model="password">
       </div>
 
-      <p class="text-end text-white pt-8"><a><router-link to="/PasswordReset">Esqueceu a senha?</router-link></a></p>
+      <p class="text-end text-white pt-2"><a class="text-orange-400 hover:underline"><router-link to="/PasswordReset">Esqueceu a senha?</router-link></a></p>
 
       <div class="flex justify-center">
-        <button type="button" class="button-login" @click="handleLogin">LOGIN</button>
+        <button type="button" class="button-login" @click="handleLogin">Entrar</button>
       </div>
-      <a href="/HomePage">arrombar</a>
+      <div class="text-center text-white pt-2">
+        <p>Não tem uma conta? <a href="#" class="text-orange-400 hover:underline">Registre-se aqui!</a></p>
+        <p class="pt-2">__________ OU __________</p>
 
-      <div class="text-center text-white pt-11">
-        <p>Não tem uma conta? <a href="#">Registre-se aqui!</a></p>
-        <p class="pt-8">__________ OU __________</p>
-
-        <div id="micro-google" class="flex justify-around pt-8">
+        <div id="micro-google" class="flex justify-around pt-4">
           <a href="#" class="flex justify-around  rounded-md items-center w-40"><img src="../assets/img/google.png" alt="">Google</a>
           <a href="#" class="flex justify-around  rounded-md items-center w-40"><img src="../assets/img/microsoft.png" alt="">Microsoft</a>
         </div>
@@ -77,7 +75,7 @@ export default {
   methods: {
     async handleLogin() {
       try {
-        const response = await this.$axios.post('http://localhost:5434/login', {
+        const response = await this.$axios.post('http://localhost:3000/login', {
           userName: this.userName,
           password: this.password,
         });
@@ -105,7 +103,7 @@ export default {
 #label-pass {
   color: #ffffff;
   font-size: 1em;
-  margin: 1em 0 1em 0;
+  margin: 0.5em 0 0.5em 0;
   font-family: "Nanum Gothic", sans-serif;
 }
 
@@ -163,7 +161,7 @@ span {
 
 
 #micro-google img {
-  width: 50px;
+  width: 30px;
   height: auto;
 }
 
@@ -176,11 +174,11 @@ span {
 }
 
 .button-login {
-  margin-top: 2em;
+  margin-top: 1em;
   align-items: center;
   appearance: none;
   background-color: #ff8818;
-  border-radius: 50px;
+  border-radius: 5px;
   border-width: 0;
  /*box-shadow: rgba(255, 157, 0, 0.2) 0 2px 4px, rgba(66, 55, 35, 0.15) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;*/
   box-sizing: border-box;
@@ -188,7 +186,7 @@ span {
   cursor: pointer;
   display: inline-flex;
   width: 180px;
-  height: 60px;
+  height: 40px;
   justify-content: center;
   line-height: 1;
   list-style: none;
