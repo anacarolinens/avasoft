@@ -4,6 +4,8 @@ import App from './App.vue';
 import router from './router'; // Import the router instance directly
 import axios from 'axios';
 import './assets/output.css';
+import "preline/preline";
+
 const app = createApp(App);
 
 app.config.globalProperties.$axios = axios;

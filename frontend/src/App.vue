@@ -4,28 +4,35 @@
   <div id="app">
     <HeaderContent v-if="!$route.meta.hideHeader" />
     <!-- <HeaderContent v-if="isLoggedIn" /> -->
-    <section >
+    <section class="pt-28 mx-auto md:px-20">
       <router-view />  
     </section>
   </div>
+
+  
 
 </template>
 
 <script>
 import HeaderContent from './components/HeaderContent.vue';
+import { onMounted } from 'vue';
 
 export default {
   name: 'App',
   components: {
     HeaderContent
   },
-  // computed: {
-  //   isLoginPage() {
-  //     return this.$route.path === '/login'; // Verifica se a rota atual é a de login
-  //   }
-  // }
+  setup() {
+    onMounted(() => {
+      setTimeout(() => {
+        window.HSStaticMethods.autoInit();
+      }, 100);
+    });
+  }
 };
 </script>
+
+
 
 <style scoped>
 

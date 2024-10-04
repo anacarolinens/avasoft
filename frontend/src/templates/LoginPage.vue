@@ -39,7 +39,12 @@
 
     <img id="logo" src="../assets/img/logo.svg" alt="logo avasoft" class="fixed top-1/2 right-0 transform -translate-y-1/2 max-w-[100%] max-h-[100%] opacity-50 z-[-1] md:max-w-[100%] md:max-h-[100%] sm:max-w-[100%] sm:max-h-[100%]" />
 
-
+    <router-link to="/HomePage" class="router-link">
+      <div class="link-content"> 
+        Home
+        <img src="@/assets/img/home-icon.svg" class="w-12" alt="">
+      </div>
+    </router-link>
 
   </div>
 </template>
