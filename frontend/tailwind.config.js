@@ -1,7 +1,14 @@
+// @ts-nocheck
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-
-  content: ['./src/**/*.{vue,html,js}', './components/**/*.{vue,html,js}',],
+  content: [
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
+    "./index.html",
+    './components/**/*.{vue,html,js}',
+    './templates/**/*.{vue,html,js}',
+    './node_modules/preline/preline.js',
+  ],
   theme: {
     screens: {
       sm: '480px',
@@ -28,10 +35,10 @@ module.exports = {
       borderRadius: {
         '4xl': '2rem',
       },
-      plugins: [
-
-      ]
-    }
-  }
+    },
+  },
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('preline/plugin'),
+  ],
 }
-

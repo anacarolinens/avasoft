@@ -9,7 +9,7 @@ exports.getAllPatients = async (req, res) => {
         {
           model: User,
           as: 'user',
-          attributes: ['userName', 'email'],
+          attributes: ['fullName', 'email', 'userName'],
           where: { role: 'Paciente' }
         },
       ],
