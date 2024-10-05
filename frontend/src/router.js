@@ -74,7 +74,7 @@ const routes = [
         name: 'ProfessionalRegister'
     },
     {
-        path: '/PatientList',
+        path: '/patientlist',
         component: PatientList,
         name: 'PatientList'
     }
@@ -84,5 +84,14 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 });
+
+router.afterEach((to, from, failure) => {
+    if (!failure) {
+        setTimeout(() => {
+            window.HSStaticMethods.autoInit();
+        }, 100)
+    }
+});
+
 
 export default router;
