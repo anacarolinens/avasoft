@@ -8,7 +8,7 @@
                 placeholder="Digite seu email aqui...">
         </div>
         <div class="flex justify-center mt-10">
-            <Button>Inscreva-se</Button>
+            <Button class="ml-5 bg-[#FF8139] px-4 lg:px-6 py-3 text-white rounded-md hover:bg-[#FF5C00]">Inscreva-se</Button>
         </div>
     </div>
 </template>
