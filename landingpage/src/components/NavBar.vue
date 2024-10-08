@@ -12,10 +12,17 @@
             <li class="md:mx-4" v-for="link in Links">
               <a :href="link.link" class="relative">{{ link.name }}</a>
             </li>
-            <Button class="ml-5">
+            <Button class="ml-5 bg-[#FF8139] px-4 lg:px-6 py-3 text-white rounded-md hover:bg-[#FF5C00]">
               Baixar agora
               <img src="../assets/download.png" alt="Ícone de download" class="h-5 w-5 ml-2">
             </Button>
+
+            <router-link to="">
+              <Button class="ml-5 bg-[#212121] px-4 lg:px-6 py-3 text-white rounded-md hover:bg-[#3d3d3d]">
+                Área do Paciente
+                <img src="../assets/download.png" alt="Ícone de entrar" class="h-5 w-5 ml-2">
+              </Button>
+            </router-link>
           </ul>
         </div>
 
@@ -39,12 +46,15 @@
               <li v-for="link in Links" :key="link.name" class="px-4 py-2 hover:bg-[#FFD6CE]">
                 <a :href="link.link" class="block text-gray-700">{{ link.name }}</a>
               </li>
-              <li class="px-4 py-2">
-                <Button>
+              <li class="px-4 py-2 flex">
+                <button class="bg-[#FF8139] px-4 lg:px-6 py-3 text-white rounded-md hover:bg-[#FF5C00] flex items-center">
                   Baixar agora
                   <img src="../assets/download.png" alt="Ícone de download" class="h-5 w-5 ml-2">
+                </button>
+                <Button class="ml-5 bg-[#212121] px-4 lg:px-6 py-3 text-white rounded-md hover:bg-[#3d3d3d]">
+                  Área do Paciente
                 </Button>
-              </li>
+              </li>              
             </ul>
           </div>
         </div>
