@@ -7,7 +7,7 @@
             <img class="h-15 md:h-12 w-auto" src="../assets/logo-avasoft.png" alt="Avasoft Company Logo" />
           </div>
         </div>
-        <div class="hidden lg:block sm:ml-6 space-x-8 flex items-center">
+        <div class="hidden lg:block sm:ml-6 space-x-8 items-center">
           <ul class="md:flex md:items-center">
             <li class="md:mx-4" v-for="link in Links" :key="link.name">
               <a :href="link.link" class="relative">{{ link.name }}</a>
