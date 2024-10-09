@@ -12,12 +12,9 @@ const router = createRouter({
       meta: { showNavbar: false },
     },
     {
-      path: "/loginPatient",
-      name: "loginPatient",
-      component: LoginPatient,
-      meta: { showNavbar: false },
+    
     }
-  ],
+    ],
 
 });
 
