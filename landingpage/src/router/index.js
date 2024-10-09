@@ -10,6 +10,9 @@ const router = createRouter({
       component: HomeView,
       meta: { showNavbar: false },
     },
+    {
+    
+    }
     ],
 
 });
