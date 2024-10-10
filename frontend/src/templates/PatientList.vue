@@ -28,7 +28,7 @@
           <td class="py-2 px-4">{{ patient.user.email }}</td>
           <td class="py-2 px-4 text-center rounded-r-lg flex justify-center space-x-2">
             <button class="bg-yellow-500 text-white py-1 px-2 rounded" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-scale-animation-modal" data-hs-overlay="#hs-scale-animation-modal">Editar</button>
-            <button class="bg-red-500 text-white py-1 px-2 rounded" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-danger-alert" data-hs-overlay="#hs-danger-alert">Excluir</button>
+            <button @click="deletePatient(patient.id_patient)" class="bg-red-500 text-white py-1 px-2 rounded" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-danger-alert" data-hs-overlay="#hs-danger-alert">Excluir</button>
             <button @click="viewDetails(patient.id_patient)" class="bg-blue-500 text-white py-1 px-2 rounded">Visualizar</button>
           </td>
         </tr>
@@ -190,10 +190,11 @@ export default {
     },
     async deletePatient(patientId) {
       try {
-        await this.$axios.delete(`http://localhost:3000/patient/${patientId}`);
-        this.fetchPatients(); // Atualiza a lista de pacientes após a exclusão
+        await axios.delete(`http://localhost:3000/patient/${patientId}`);
+        this.patients = this.patients.filter(patient => patient.id_patient !== patientId);
       } catch (error) {
-        console.error('Erro ao excluir paciente:', error);
+        console.error(error);
+        // Exibir mensagem de erro
       }
     }
   },
