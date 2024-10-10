@@ -9,7 +9,7 @@ exports.getAllPatients = async (req, res) => {
         {
           model: User,
           as: 'user',
-          attributes: ['fullName', 'email', 'userName'],
+          attributes: ['fullName', 'email', 'userName', 'cpf', 'dataNasc', 'gender', 'phone', 'street', 'number', 'complement', 'district', 'city', 'state', 'cep'],
           where: { role: 'Paciente' }
         },
       ],
@@ -25,12 +25,12 @@ exports.getAllPatients = async (req, res) => {
 exports.getPatientById = async (req, res) => {
   try {
     const patient = await Patient.findOne({
-      where: { id_patient: req.params.id },  // Corrigido para `id_patient`
+      where: { id_patient: req.params.id },
       include: [
         {
           model: User,
           as: 'user',
-          attributes: ['userName', 'email'],
+          attributes: ['fullName', 'email', 'userName', 'cpf', 'dataNasc', 'gender', 'phone', 'street', 'number', 'complement', 'district', 'city', 'state', 'cep'],
           where: { role: 'Paciente' }
         },
       ],
@@ -45,7 +45,6 @@ exports.getPatientById = async (req, res) => {
   }
 };
 
-// Create patient
 exports.createPatient = async (req, res) => {
   try {
     const { userName, email, weigth_ini, height_ini } = req.body;
@@ -59,7 +58,7 @@ exports.createPatient = async (req, res) => {
 
     // Create a patient record associated with the user
     const patient = await Patient.create({
-      user_id: user.id_user,  // Corrigido para `user.id_user`
+      user_id: user.id_user,
       weigth_ini,
       height_ini,
     });
@@ -107,7 +106,7 @@ exports.deletePatient = async (req, res) => {
     }
 
     // Delete the associated user
-    await User.destroy({ where: { id_user: patient.user_id } });  // Corrigido para `id_user`
+    await User.destroy({ where: { id_user: patient.user_id } });
 
     // Delete the patient record
     await patient.destroy();

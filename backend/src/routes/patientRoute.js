@@ -9,5 +9,4 @@ router.post('/', PatientController.createPatient); // POST /pacientes
 router.put('/:id', PatientController.updatePatient); // PUT /pacientes/:id
 router.delete('/:id', PatientController.deletePatient); // DELETE /pacientes/:id
 
-
 module.exports = router;

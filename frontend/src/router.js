@@ -9,9 +9,9 @@ import AssessmentUser from "./components/AssessmentUser.vue";
 import PhysicalAssessments from "./components/PhysicalAssessments.vue";
 import PasswordReset from './templates/PasswordReset.vue';
 import PasswordResetConfirm from './templates/PasswordResetConfirm.vue';
-import ProfessionalRegister from './templates/ProfessionalRegister.vue';
+import PatientRegister from './templates/PatientRegister.vue';
 import PatientList from './templates/PatientList.vue';
-
+import ViewInformation from './templates/ViewInformation.vue';
 
 const routes = [
     {
@@ -69,15 +69,21 @@ const routes = [
         meta: { hideHeader: true }
     },
     {
-        path: '/ProfessionalRegister',
-        component: ProfessionalRegister,
-        name: 'ProfessionalRegister'
+        path: '/PatientRegister',
+        component: PatientRegister,
+        name: 'PatientRegister'
     },
     {
         path: '/patientlist',
         component: PatientList,
         name: 'PatientList'
-    }
+    },
+    {
+        path: '/ViewInformation/:id',
+        component: ViewInformation,
+        name: 'ViewInformation'
+    },
+
 ];
 
 const router = createRouter({
@@ -89,9 +95,8 @@ router.afterEach((to, from, failure) => {
     if (!failure) {
         setTimeout(() => {
             window.HSStaticMethods.autoInit();
-        }, 100)
+        }, 100);
     }
 });
-
 
 export default router;

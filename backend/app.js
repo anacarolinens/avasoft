@@ -24,13 +24,12 @@ app.delete('/users/:id', userController.deleteUser);
 app.post('/reset-password', userController.resetPasswordRequest);
 app.post('/reset-password-confirm', userController.resetPassword);
 
-// define routes professionals
+// Define routes for professionals
 app.get('/professionals', professionalController.getAllProfessionals);
 app.get('/professional/:id', professionalController.getProfessionalById);
 app.post('/professional', professionalController.createProfessional);
 app.put('/professional/:id', professionalController.updateProfessional);
 app.delete('/professional/:id', professionalController.deleteProfessional);
-
 
 // Define routes for patients
 app.get('/patients', patientController.getAllPatients); // Changed from /patient to /patients
@@ -38,5 +37,6 @@ app.get('/patient/:id', patientController.getPatientById); // Changed from /pati
 app.post('/patient', patientController.createPatient); // Changed from /patient to /patients
 app.put('/patient/:id', patientController.updatePatient); // Changed from /patient to /patients
 app.delete('/patient/:id', patientController.deletePatient); // Changed from /patient to /patients
+
 
 module.exports = app;

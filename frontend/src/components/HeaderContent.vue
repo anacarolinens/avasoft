@@ -53,10 +53,10 @@
           Home
         </router-link>
 
-        <router-link to="/ProfessionalRegister"
+        <router-link to="/PatientRegister"
           class="flex items-center text-gray-300 hover:text-white hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium transition duration-150 ease-in-out"
           active-class="bg-gray-800 text-white">
-          Registrar Usuário
+          Cadastrar Paciente
         </router-link>
 
         <router-link to="/PhysicalAssessments"
