@@ -18,7 +18,7 @@ const Patient = database.define("patient", {
     type: DataTypes.FLOAT,
     allowNull: true,
   },
-  user_id: {  // Ajuste no nome do campo para `user_id`
+  user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -31,12 +31,14 @@ const Patient = database.define("patient", {
 // Associações
 Patient.belongsTo(User, { 
   foreignKey: 'user_id',
-  as: 'user'
+  as: 'user',
+  onDelete: 'CASCADE'  // Excloi cascata
 });
 
 User.hasOne(Patient, {
   foreignKey: 'user_id',
   as: 'patient',
+  onDelete: 'CASCADE' 
 });
 
 module.exports = Patient;
