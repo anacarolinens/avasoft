@@ -9,8 +9,7 @@
       <input type="text" v-model="searchQuery" placeholder="Buscar pacientes..."
         class="w-full p-3 rounded focus:border-orange-500" />
     </div>
-
-    <!-- Tabela de pacientes -->
+    
   <!-- Tabela de pacientes -->
   <div class="overflow-x-auto w-full">
     <table class="min-w-full" style="border-collapse: separate; border-spacing: 0 20px;">
@@ -24,16 +23,26 @@
       </thead>
       <tbody>
         <tr v-for="patient in filteredPatients" :key="patient.id_patient" class="bg-gray-700 text-white">
-          <td class="py-2 px-4 rounded-l-lg">{{ patient.user.fullName }}</td> <!-- Nome completo do paciente -->
-          <td class="py-2 px-4">{{ patient.phone || 'Não informado' }}</td> <!-- Telefone -->
-          <td class="py-2 px-4">{{ patient.user.email }}</td> <!-- E-mail -->
-          <td class="py-2 px-4 text-center rounded-r-lg flex space-x-2">
-            <button  class="bg-yellow-500 text-white py-1 px-2 rounded mr-2">Editar</button>
-            <button  class="bg-red-500 text-white py-1 px-2 rounded" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-danger-alert" data-hs-overlay="#hs-danger-alert">Excluir</button>
+          <td class="py-2 px-4 rounded-l-lg">{{ patient.user.fullName }}</td>
+          <td class="py-2 px-4">{{ patient.user.phone || 'Não informado' }}</td>
+          <td class="py-2 px-4">{{ patient.user.email }}</td>
+          <td class="py-2 px-4 text-center rounded-r-lg flex justify-center space-x-2">
+            <button class="bg-yellow-500 text-white py-1 px-2 rounded" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-scale-animation-modal" data-hs-overlay="#hs-scale-animation-modal">Editar</button>
+            <button class="bg-red-500 text-white py-1 px-2 rounded" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-danger-alert" data-hs-overlay="#hs-danger-alert">Excluir</button>
+            <button @click="viewDetails(patient.id_patient)" class="bg-blue-500 text-white py-1 px-2 rounded">Visualizar</button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <!-- Botão para adicionar novo paciente -->
+    <div class="flex justify-end w-full max-w-4xl mt-6">
+      <router-link to="/PatientRegister">
+        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded">
+          Adicionar Paciente
+        </button>
+      </router-link>
+    </div>
 
     <!-- Modal de confirmação de exclusão -->
     <div id="hs-danger-alert" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto" role="dialog" tabindex="-1" aria-labelledby="hs-danger-alert-label">
@@ -75,226 +84,117 @@
     </div>
   </div>
 
-    <!-- Botão para adicionar novo paciente -->
-    <div class="flex justify-end w-full max-w-4xl mt-6">
-      <router-link to="/add-patient">
-        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded">
-          Adicionar Paciente
-        </button>
-      </router-link>
-    </div>
-  </div>
-
-  <!-- Table Section -->
-<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-  <!-- Card -->
-  <div class="flex flex-col">
-    <div class="-m-1.5 overflow-x-auto">
-      <div class="p-1.5 min-w-full inline-block align-middle">
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-          <!-- Header -->
-          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200">
+  <!-- Modal de edição de paciente -->  
+  <div id="hs-scale-animation-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-scale-animation-modal-label">
+    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-4xl lg:w-full m-3 lg:mx-auto">
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+          <h3 id="hs-large-modal-label" class="font-bold text-gray-800 dark:text-white">
+            Editar Dados do Paciente
+          </h3>
+          <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600" aria-label="Close" data-hs-overlay="#hs-large-modal">
+            <span class="sr-only">Close</span>
+            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
+          </button>
+        </div>
+  
+        <form id="edit-patient-form" class="p-4 overflow-y-auto">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <div class="inline-flex gap-x-2">
-                <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
-                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                  Novo Paciente
-                </a>
-              </div>
+              <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome Completo</label>
+              <input type="text" id="fullName" name="fullName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="" required>
+            </div>
+            <div>
+              <label for="cpf" class="block text-sm font-medium text-gray-700 dark:text-gray-300">CPF</label>
+              <input type="text" id="cpf" name="cpf" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="" required>
+            </div>
+            <div>
+              <label for="dataNasc" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Data de Nascimento</label>
+              <input type="date" id="dataNasc" name="dataNasc" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="" required>
+            </div>
+            <div>
+              <label for="gender" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Gênero</label>
+              <select id="gender" name="gender" class="mt-1 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+                <option value="O">Outro</option>
+              </select>
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Telefone</label>
+              <input type="text" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="" required>
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+              <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="" required>
+            </div>
+            <div>
+              <label for="street" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Endereço</label>
+              <input type="text" id="street" name="street" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="" required>
+            </div>
+            <div>
+              <label for="city" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cidade</label>
+              <input type="text" id="city" name="city" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="" required>
             </div>
           </div>
-          <!-- End Header -->
-
-          <!-- Table -->
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-
-
-                <th scope="col" class="px-6 py-3 text-start">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                      Nome
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-start">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                      E-mail
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-start">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                      Telefone
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-start">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                      Avalições
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-end"></th>
-              </tr>
-            </thead>
-
-            <tbody class="divide-y divide-gray-200">
-              <tr>
-
-
-                <td class="size-px whitespace-nowrap">
-                  <div class="px-6 py-3">
-                    <span class="text-sm text-gray-600">Streamlab</span>
-                  </div>
-                </td>
-                <td class="size-px whitespace-nowrap">
-                  <div class="px-6 py-3">
-                    <div class="flex items-center gap-x-2">
-                      <div class="grow">
-                        <span class="text-sm text-gray-600">Christina Bersh</span>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td class="size-px whitespace-nowrap">
-                  <div class="px-6 py-3">
-                    <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-xs rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                      Copy Key
-                      <svg class="shrink-0 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
-                    </button>
-                  </div>
-                </td>
-                <td class="size-px whitespace-nowrap">
-                  <div class="px-6 py-3">
-                    <span class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full">
-                      <svg class="size-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                      </svg>
-                      Successful
-                    </span>
-                  </div>
-                </td>
-
-                <td class="size-px whitespace-nowrap">
-                  <div class="px-6 py-1.5">
-                    <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
-                      <button id="hs-table-dropdown-1" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 align-middle disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-                      </button>
-                      <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-40 z-10 bg-white shadow-2xl rounded-lg p-2 mt-2" role="menu" aria-orientation="vertical" aria-labelledby="hs-table-dropdown-1">
-                        <div class="py-2 first:pt-0 last:pb-0">
-                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="#">
-                            Editar
-                          </a>
-                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="#">
-                            Visualizar
-                          </a>
-                        </div>
-                        <div class="py-2 first:pt-0 last:pb-0">
-                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
-                            Excluir
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <!-- End Table -->
-
-          <!-- Footer -->
-          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200">
-            <div>
-              <p class="text-sm text-gray-600">
-                <span class="font-semibold text-gray-800">6</span> results
-              </p>
-            </div>
-
-            <div>
-              <div class="inline-flex gap-x-2">
-                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                  Prev
-                </button>
-
-                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                  Next
-                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <!-- End Footer -->
+        </form>
+  
+        <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+          <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#hs-scale-animation-modal">
+            Cancelar
+          </button>
+          <button type="submit" form="edit-patient-form" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+            Salvar
+          </button>
         </div>
       </div>
     </div>
   </div>
-  <!-- End Card -->
+
 </div>
-<!-- End Table Section -->
+
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
       searchQuery: '',
       patients: [],
-      selectedPatientId: null // Armazena o id do paciente a ser excluído
     };
   },
   computed: {
     filteredPatients() {
       return this.patients.filter(patient => {
-        const name = patient.name || ''; // Garante que 'name' não seja undefined
+        const name = patient.user.fullName || ''; // Garante que 'name' não seja undefined
         return name.toLowerCase().includes(this.searchQuery.toLowerCase());
       });
     }
   },
   methods: {
-    // Busca os pacientes do backend
     async fetchPatients() {
       try {
-        const response = await this.$axios.get('http://localhost:3000/patients');
+        const response = await axios.get('http://localhost:3000/patients');
         this.patients = response.data;
       } catch (error) {
-        console.error('Erro ao buscar pacientes:', error);
+        console.error(error);
+        // Exibir mensagem de erro
       }
     },
-
-    // Confirma a exclusão e remove o paciente
-    async confirmDeletePatient() {
-      if (this.selectedPatientId) {
-        try {
-          // Exclui o paciente selecionado
-          await this.$axios.delete(`http://localhost:3000/patients/${this.selectedPatientId}`);
-          this.fetchPatients(); // Atualiza a lista de pacientes
-          this.closeDeleteModal(); // Fecha o modal
-        } catch (error) {
-          console.error('Erro ao excluir paciente:', error);
-        }
-      }
-    },
-
-    // Redireciona para a página de detalhes do paciente
     viewDetails(patientId) {
-      this.$router.push(`/patients/${patientId}`);
+      this.$router.push(`/ViewInformation/${patientId}`);
     },
-
-    // Redireciona para a página de edição do paciente
-    editPatient(patientId) {
-      this.$router.push(`/edit-patient/${patientId}`);
+    async deletePatient(patientId) {
+      try {
+        await this.$axios.delete(`http://localhost:3000/patient/${patientId}`);
+        this.fetchPatients(); // Atualiza a lista de pacientes após a exclusão
+      } catch (error) {
+        console.error('Erro ao excluir paciente:', error);
+      }
     }
   },
   mounted() {
