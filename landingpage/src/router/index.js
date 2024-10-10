@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import LoginPatient from "../components/LoginPatient.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,12 +11,9 @@ const router = createRouter({
       meta: { showNavbar: false },
     },
     {
-      path: "/loginPatient",
-      name: "loginPatient",
-      component: LoginPatient,
-      meta: { showNavbar: false },
+    
     }
-  ],
+    ],
 
 });
 
