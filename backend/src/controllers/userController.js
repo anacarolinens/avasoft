@@ -267,7 +267,7 @@ exports.resetPassword = async (req, res, next) => {
   }
 };
 
-// Adicione esta função ao `userController.js`
+// reset password request
 exports.resetPasswordRequest = async (req, res, next) => {
   const { email } = req.body;
 
