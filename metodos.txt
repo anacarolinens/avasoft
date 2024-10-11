@@ -1,0 +1,76 @@
+AVALIAÇÃO ANTROPOMÉTRICA
+
+A avaliação antropométrica é uma ferramenta importante em diversas áreas, como medicina, nutrição, educação física e pesquisa científica, sendo utilizada para avaliar características físicas e morfológicas do corpo humano. Existem vários protocolos e métodos para realizar essas avaliações. Alguns dos protocolos mais comuns incluem:
+
+Índice de Massa Corporal (IMC)
+Calculado dividindo o peso corporal pela altura ao quadrado (kg/m²)
+
+Circunferência da Cintura (CC)
+Medição da circunferência da cintura com uma fita métrica, geralmente tomada no ponto médio entre a borda inferior da última costela e a borda superior da crista ilíaca.
+
+Circunferência do Quadril (CQ)
+Medição da circunferência do quadril com uma fita métrica, geralmente no ponto de maior circunferência ao redor das nádegas.
+
+Relação Cintura-Quadril (RCQ)
+Calculada dividindo a circunferência da cintura pela circunferência do quadril.
+
+Dobras Cutâneas
+Utiliza um adipômetro para medir a espessura das dobras cutâneas em diferentes locais do corpo, como tríceps, subescapular, abdominal, entre outros. Existem vários protocolos para isso, como o protocolo de sete dobras de Jackson-Pollock.
+
+Altura Sentada
+Medição da altura sentada, geralmente com uma fita métrica.
+
+Estatura
+Medição da altura em pé, geralmente com um estadiômetro.
+
+Perímetro do Braço (PB)
+Medição da circunferência do braço contraído, geralmente na metade do caminho entre o acrômio e o olécrano.
+
+Comprimento da Perna
+Medição do comprimento da perna, geralmente do ponto mais alto do fêmur até o chão.
+
+Estatura Sentada
+Medição da estatura enquanto a pessoa está sentada, geralmente com um estadiômetro.
+
+
+PROTOCOLOS / MÉTODOS
+
+Densidade corporal - Mcardle
+A densidade corporal é uma medida indireta da gordura corporal, baseada na relação entre a massa corporal e o volume do corpo.
+
+A fórmula de Siri é usada para calcular a percentagem de gordura corporal a partir da densidade corporal:
+
+%G = [(4.95/DENSIDADE C.) - 4.50] X 100
+
+para calcular a Densidade corporal usa se as seguintes fórmulas
+
+HOMENS
+(18 -34 anos ) DC = 1,1610 - 0,0632 log (BI+ TR+ SB +SI)
+(18 -27 anos ) DC = 1,0913 - 0,00116 ( TR+ SB )
+
+MULHERES
+(18 -48 anos ) DC = 1,06234 - 0,00068 (SB) - 0,00039 (TR) - 0,00025 (CX)
+
+CRIANÇAS (FEMININO)
+(9-12 ANOS ) DC = 1,088-0,014 (log 10 TR) - 0,036 ( log10 SB)
+(13-16 anos ) DC = 1,114 - 0,031 (log10 TR) - 0,041 ( log10 SB )
+
+CRIANÇAS (MASCULINO)
+(9-12 ANOS ) DC = 1,108-0,027 (log10 TR) - 0,038 (log10 SB)
+(13-16 anos) DC = 1,130 - 0,055 (log10 TR) - 0,026 (log10 SB)
+
+TR = tríceps - SI = supra-ilíaca - AB= abdominal - CX= Coxa - SB= subescapular - BI= bíceps
+
+Pollock
+É uma versão simplificada do protocolo Jackson & Pollock e envolve cinco dobras cutâneas que são Tríceps; coxa; supra-ilíaca; abdômen e peitoral
+
+X1= Somatória de peitoral, abdômen e coxa
+X2= Somatória de tríceps, supra-ilíaca e coxa
+X3= Idade em anos
+
+
+DC Homens (18- 61 anos): 
+1,1093800 - 0,0008267(X1) + 0,0000016 (X1)² - 0,0002574 (X3)
+
+DC Mulheres (18-55 anos):
+1,0994921 - 0,0009929(X2) + 0,0000023 (X2)² - 0,0001392 (X3)

@@ -1,7 +1,7 @@
 import './index.css'
 import { createApp } from 'vue';
 import App from './App.vue';
-import router from './router'; // Import the router instance directly
+import router from './router'; 
 import axios from 'axios';
 import './assets/output.css';
 import "preline/preline";

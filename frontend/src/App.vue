@@ -1,16 +1,12 @@
 <!-- App.vue -->
 <template>
-
   <div id="app">
     <HeaderContent v-if="!$route.meta.hideHeader" />
     <!-- <HeaderContent v-if="isLoggedIn" /> -->
     <section class="pt-28 mx-auto md:px-20">
-      <router-view />  
+      <router-view :key="$route.fullPath" />  
     </section>
   </div>
-
-  
-
 </template>
 
 <script>
@@ -32,10 +28,5 @@ export default {
 };
 </script>
 
-
-
 <style scoped>
-
-
-
 </style>

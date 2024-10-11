@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const userController = require('./src/controllers/userController');
 const professionalController = require('./src/controllers/professionalController');
 const patientController = require('./src/controllers/patientController');
+const assessmentController = require('./src/controllers/assessmentController');
 
 require('dotenv').config();//necessario para o envio de email de recuperar senha
 
@@ -24,13 +25,12 @@ app.delete('/users/:id', userController.deleteUser);
 app.post('/reset-password', userController.resetPasswordRequest);
 app.post('/reset-password-confirm', userController.resetPassword);
 
-// define routes professionals
+// Define routes for professionals
 app.get('/professionals', professionalController.getAllProfessionals);
 app.get('/professional/:id', professionalController.getProfessionalById);
 app.post('/professional', professionalController.createProfessional);
 app.put('/professional/:id', professionalController.updateProfessional);
 app.delete('/professional/:id', professionalController.deleteProfessional);
-
 
 // Define routes for patients
 app.get('/patients', patientController.getAllPatients); // Changed from /patient to /patients
@@ -38,5 +38,12 @@ app.get('/patient/:id', patientController.getPatientById); // Changed from /pati
 app.post('/patient', patientController.createPatient); // Changed from /patient to /patients
 app.put('/patient/:id', patientController.updatePatient); // Changed from /patient to /patients
 app.delete('/patient/:id', patientController.deletePatient); // Changed from /patient to /patients
+
+// Define routes for assessments
+app.get('/assessments', assessmentController.getAllAssessments);
+app.get('/assessments/:id', assessmentController.getAssessmentById);
+app.post('/assessments', assessmentController.createAssessment);
+app.put('/assessments/:id', assessmentController.updateAssessment);
+app.delete('/assessments/:id', assessmentController.deleteAssessment);
 
 module.exports = app;
