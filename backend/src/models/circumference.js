@@ -98,16 +98,14 @@ const Circumference = database.define('circumference', {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
-    leftAncke: {
+    leftAnkle: {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
-    rightAncke: {
+    rightAnkle: {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
-
 });
 
 module.exports = Circumference;
-

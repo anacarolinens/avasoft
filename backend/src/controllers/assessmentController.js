@@ -3,7 +3,7 @@ const Patient = require('../models/patient');
 const Circumference = require('../models/circumference');
 const Skinfold = require('../models/skinfold');
 const Bmi = require('../models/bmi');
-const AssessmentService = require('../services/assessmentService');
+const { AssessmentService } = require('../services/assessmentService');
 
 // Get all assessments with associated data
 exports.getAllAssessments = async (req, res) => {
@@ -75,58 +75,51 @@ exports.getAssessmentById = async (req, res) => {
 
 // Create assessment with related data
 exports.createAssessment = async (req, res) => {
-    const { id_patient, assessmentDate, weight, height, dateRecorded,circumferenceData, skinfoldData, method, gender, age } = req.body;
-  
-    if (!assessmentDate || !method) {
-      return res.status(400).json({ message: "assessmentDate and method are required." });
-    }
-  
-    try {
-      // Create assessment
-      const assessment = await Assessment.create({
-        id_patient,
-        assessmentDate,
-        weight,
-        height,
-        method,
-        dateRecorded,
-      });
-  
-      // Create related circumference and skinfold records
-      if (circumferenceData) {
-        await Circumference.create({
-          ...circumferenceData,
-          id_assessment: assessment.id_assessment,
-        });
-      }
-  
-      if (skinfoldData) {
-        await Skinfold.create({
-          ...skinfoldData,
-          id_assessment: assessment.id_assessment,
-        });
-      }
-  
-      // Process BMI and body fat percentage
-      const assessmentData = {
-        dateRecorded: assessment.assessmentDate,
-        weight,
-        height,
-        skinfolds: skinfoldData,
-        method,
-        id_assessment: assessment.id_assessment,
-        gender,
-        age,
-      };
-      
-      const processedData = await AssessmentService (assessmentData);
-  
-      res.status(201).json({ message: "Assessment created successfully!", assessment, processedData });
-    } catch (error) {
-      console.error("Error creating assessment:", error);
-      res.status(500).json({ message: "Error creating assessment.", error: error.message });
-    }
-  };
+  const { id_patient, assessmentDate, weight, height, dateRecorded, circumferenceData, skinfoldData, method, gender, age } = req.body;
+
+  if (!assessmentDate || !method || !dateRecorded) {
+    return res.status(400).json({ message: 'Os campos assessmentDate, method e dateRecorded são obrigatórios.' });
+  }
+
+  try {
+    const assessment = await Assessment.create({
+      id_patient,
+      assessmentDate,
+      weight,
+      height,
+      method,
+    });
+
+    // Criar dados de circunferência
+    await Circumference.create({
+      id_assessment: assessment.id_assessment,
+      ...circumferenceData,
+    });
+
+    // Criar dados de dobras cutâneas
+    await Skinfold.create({
+      id_assessment: assessment.id_assessment,
+      ...skinfoldData,
+    });
+
+    // Chamar o serviço de avaliação para calcular e salvar o BMI
+    await AssessmentService({
+      id_assessment: assessment.id_assessment,
+      weight,
+      height,
+      skinfolds: skinfoldData,
+      method,
+      gender,
+      age,
+      dateRecorded,
+    });
+
+    res.status(201).json({ message: 'Avaliação criada com sucesso.', assessment });
+  } catch (error) {
+    console.error('Error creating assessment:', error);
+    res.status(500).json({ message: 'Error creating assessment.', error: error.message });
+  }
+};
 
 // Update assessment with related data
 exports.updateAssessment = async (req, res) => {
