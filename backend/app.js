@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const userController = require('./src/controllers/userController');
 const professionalController = require('./src/controllers/professionalController');
 const patientController = require('./src/controllers/patientController');
+const assessmentController = require('./src/controllers/assessmentController');
 
 require('dotenv').config();//necessario para o envio de email de recuperar senha
 
@@ -38,5 +39,11 @@ app.post('/patient', patientController.createPatient); // Changed from /patient 
 app.put('/patient/:id', patientController.updatePatient); // Changed from /patient to /patients
 app.delete('/patient/:id', patientController.deletePatient); // Changed from /patient to /patients
 
+// Define routes for assessments
+app.get('/assessments', assessmentController.getAllAssessments);
+app.get('/assessments/:id', assessmentController.getAssessmentById);
+app.post('/assessments', assessmentController.createAssessment);
+app.put('/assessments/:id', assessmentController.updateAssessment);
+app.delete('/assessments/:id', assessmentController.deleteAssessment);
 
 module.exports = app;

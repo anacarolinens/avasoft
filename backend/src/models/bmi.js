@@ -1,23 +1,36 @@
-const Sequelize = require('sequelize')
-const database = require('../database/db');
+const Sequelize = require("sequelize");
+const database = require("../database/db");
+const Assessment = require('./assessment');
+const { DataTypes } = Sequelize;
 
 const Bmi = database.define('bmi', {
-    id_bmi: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
+  id_bmi: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
+  id_assessment: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Assessment,
+      key: 'id_assessment',
     },
-    bmi_value: {
-        type: Sequelize.FLOAT,
-        allowNull: false
-    },
-    id_patient: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-        model: 'patient',
-        key: 'id_patient'
-        }
-    }
-    });
+  },
+  bmiValue: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  classification: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  dateRecorded: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  
+});
+
+module.exports = Bmi;

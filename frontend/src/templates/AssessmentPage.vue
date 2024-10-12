@@ -66,7 +66,7 @@
             </div>
           </div>
           <!-- Resultado Percentual de Gordura -->
-          <div v-if="percentualGordura !== null" :class="gorduraClass" class="p-4 mt-4 rounded-md mt-2">
+          <div v-if="percentualGordura !== null" :class="gorduraClass" class="p-4 mt-4 rounded-md">
             <p><strong>Percentual de Gordura:</strong> {{ percentualGordura }}% - {{ gorduraStatus }}</p>
           </div>
         </fieldset>
@@ -80,7 +80,7 @@
           <label for="cq" class="block mt-4 text-sm font-medium text-gray-700">Circunferência do Quadril (cm)</label>
           <input v-model="cq" type="number" class="mt-1 p-2 w-full border-gray-300 rounded-md" placeholder="Ex: 95" />
           <!-- Resultado RCQ -->
-          <div v-if="rcq !== null" :class="rcqClass" class="p-4 mt-4 rounded-md mt-2">
+          <div v-if="rcq !== null" :class="rcqClass" class="p-4 mt-4 rounded-md">
             <p><strong>Relação Cintura-Quadril (RCQ):</strong> {{ rcq }} - {{ rcqStatus }}</p>
           </div>
         </fieldset>

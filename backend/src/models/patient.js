@@ -28,17 +28,4 @@ const Patient = database.define("patient", {
   },
 });
 
-// Associações
-Patient.belongsTo(User, { 
-  foreignKey: 'user_id',
-  as: 'user',
-  onDelete: 'CASCADE'  // Excloi cascata
-});
-
-User.hasOne(Patient, {
-  foreignKey: 'user_id',
-  as: 'patient',
-  onDelete: 'CASCADE' 
-});
-
 module.exports = Patient;

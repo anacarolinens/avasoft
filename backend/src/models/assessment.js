@@ -1,35 +1,39 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const Sequelize = require("sequelize");
+const database = require("../database/db");
+const { DataTypes } = Sequelize
 const Patient = require('./patient');
-const Professional = require('./professional');
 
-const Assessment = sequelize.define('assessment', {
+const Assessment = database.define('assessment', {
   id_assessment: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  dataAssessment: {
-    type: DataTypes.FLOAT,
+  assessmentDate: {
+    type: DataTypes.DATE,
     allowNull: false,
   },
-  id_patient: { 
-    type: Sequelize.INTEGER,
+  id_patient: {
+    type: DataTypes.INTEGER,
     allowNull: false,
-    references: {         
-      model: Patient,        
-      key: 'id_patient'    
+    references: {
+      model: Patient,
+      key: 'id_patient',
     },
   },
-  id_professional: { 
-    type: Sequelize.INTEGER,
+  height: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  weight: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  method: {
+    type: DataTypes.ENUM('Guedes', 'Pollock', 'Jackson & Pollock', 'McArdle'),
     allowNull: false,
-    references: {         
-      model: Professional,        
-      key: 'id_professional'    
-    }
-  }
+  },
 });
 
 module.exports = Assessment;

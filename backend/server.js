@@ -2,6 +2,11 @@ const app = require("./app");
 const http = require("http");
 const debug = require("debug")("nodestr:server");
 require("dotenv").config();
+const database = require('./src/database/db');
+const User = require('./src/models/user'); // Caminho correto para o arquivo user.js
+const Patient = require('./src/models/patient'); 
+const Assessment = require('./src/models/assessment'); 
+require('./src/models/associations'); 
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
@@ -11,6 +16,12 @@ const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+database.sync().then(() => {
+  console.log('Database synchronized');
+}).catch(error => {
+  console.error('Unable to connect to the database:', error);
+});
 
 function normalizePort(value) {
   const port = parseInt(value, 10);
