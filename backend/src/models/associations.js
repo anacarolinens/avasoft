@@ -4,6 +4,7 @@ const Assessment = require("./assessment");
 const Skinfold = require("./skinfold");
 const Circumference = require("./circumference");
 const Bmi = require("./bmi");
+const BodyComposition = require("./BodyComposition");
 
 // Associações
 
@@ -35,21 +36,35 @@ Assessment.belongsTo(Patient, {
   onDelete: 'CASCADE',
 });
 
-// Avaliação tem uma dobras cutâneas (Skinfold)
-Assessment.hasOne(Skinfold, {
-  foreignKey: 'id_assessment',
-  as: 'skinfold',
-  onDelete: 'CASCADE',
-});
-
-// Avaliação tem uma circunferência (Circumference)
+// Avaliação tem uma circunferência
 Assessment.hasOne(Circumference, {
   foreignKey: 'id_assessment',
   as: 'circumference',
   onDelete: 'CASCADE',
 });
 
-// Avaliação tem um índice de massa corporal (BMI)
+// Circunferência pertence a uma avaliação
+Circumference.belongsTo(Assessment, {
+  foreignKey: 'id_assessment',
+  as: 'assessment',
+  onDelete: 'CASCADE',
+});
+
+// Avaliação tem uma dobra cutânea
+Assessment.hasOne(Skinfold, {
+  foreignKey: 'id_assessment',
+  as: 'skinfold',
+  onDelete: 'CASCADE',
+});
+
+// Dobra cutânea pertence a uma avaliação
+Skinfold.belongsTo(Assessment, {
+  foreignKey: 'id_assessment',
+  as: 'assessment',
+  onDelete: 'CASCADE',
+});
+
+// Avaliação tem um BMI
 Assessment.hasOne(Bmi, {
   foreignKey: 'id_assessment',
   as: 'bmi',
@@ -63,15 +78,15 @@ Bmi.belongsTo(Assessment, {
   onDelete: 'CASCADE',
 });
 
-// Circunferência pertence a uma avaliação
-Circumference.belongsTo(Assessment, {
+// Avaliação tem uma composição corporal
+Assessment.hasOne(BodyComposition, {
   foreignKey: 'id_assessment',
-  as: 'assessment',
+  as: 'bodyComposition',
   onDelete: 'CASCADE',
 });
 
-// Dobras cutâneas pertencem a uma avaliação
-Skinfold.belongsTo(Assessment, {
+// Composição corporal pertence a uma avaliação
+BodyComposition.belongsTo(Assessment, {
   foreignKey: 'id_assessment',
   as: 'assessment',
   onDelete: 'CASCADE',
@@ -84,4 +99,5 @@ module.exports = {
   Skinfold,
   Circumference,
   Bmi,
+  BodyComposition, 
 };
