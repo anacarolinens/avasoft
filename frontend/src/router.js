@@ -42,9 +42,10 @@ const routes = [
         component: EditPage,
     },
     {
-        path: '/AssessmentPage',
+        path: '/AssessmentPage/:id_patient',
         component: AssessmentPage,
-        name: 'AssessmentPage'
+        name: 'AssessmentPage',
+        props: true, // Permite passar o parâmetro id como prop para o componente
     },
     {
         path: '/AssessmentUser',
