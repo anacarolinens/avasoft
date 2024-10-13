@@ -61,6 +61,31 @@ CRIANÇAS (MASCULINO)
 
 TR = tríceps - SI = supra-ilíaca - AB= abdominal - CX= Coxa - SB= subescapular - BI= bíceps
 
+
+Guedes 
+Desenvolvido por José Ernandes Rufino Guedes, esse protocolo envolve a medição de três dobras cutâneas sendo tríceps, supra-ilíaca e abdominal para homens e Subescapular, supra-ilíaca e coxa para mulheres. Essas medidas são então inseridas em uma equação para estimar a percentagem de gordura corporal.
+
+Para calcular a densidade corporal:
+
+Homens: DC=1.17136−0.06706log⁡(TR+SI+AB)
+
+Mulheres: DC=1.16650−0.07063log⁡(CX+SI+SB)
+
+O percentual de gordura é calculado através da fórmula de Siri:
+
+%G = [(4.95 / Densidade Corporal) - 4.50] x 100.
+
+Jackson & Pollock
+Este protocolo é um dos mais conhecidos e utilizados. Ele envolve a medição de sete dobras cutâneas que são Subescapular, axilar média, tríceps; coxa; supra-ilíaca; abdômen e peitoral
+
+Dobras Cutâneas Homens Adultos:
+1,11200000 - [0,00043499 (ST) + 0,00000055 (ST)²] - [0,0002882 (idade)]
+
+Dobras Cutâneas Mulheres Adultas:
+1,0970 - [0,00046971 (ST) + 0,00000056 (ST)²] - [0,00012828 (idade)]
+
+ST = Soma de Todas
+
 Pollock
 É uma versão simplificada do protocolo Jackson & Pollock e envolve cinco dobras cutâneas que são Tríceps; coxa; supra-ilíaca; abdômen e peitoral
 

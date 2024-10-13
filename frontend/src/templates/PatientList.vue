@@ -35,8 +35,8 @@
                 data-hs-overlay="#hs-danger-alert">Excluir</button>
               <button @click="viewDetails(patient.id_patient)"
                 class="bg-blue-500 text-white py-1 px-2 rounded">Visualizar</button>
-                <button @click="AssessmentPage(patient.id_patient)"
-                class="bg-green-500 text-white py-1 px-2 rounded">Nova Avaliação</button>
+              <button @click="AssessmentPage(patient.id_patient)" class="bg-green-500 text-white py-1 px-2 rounded">Nova
+                Avaliação</button>
             </td>
           </tr>
         </tbody>
@@ -317,9 +317,9 @@ export default {
       }
     },
     // Editar paciente
-    editPatient(patient) {     
+    editPatient(patient) {
       // Carregar os dados do paciente no modal
-      this.patientToEdit = { ...patient.user };    
+      this.patientToEdit = { ...patient.user };
       this.patientToEdit.user_id = patient.user_id; // Use 'user_id' do objeto principal paciente      
     },
 
@@ -343,8 +343,8 @@ export default {
     viewDetails(patientId) {
       this.$router.push(`/ViewInformation/${patientId}`);
     },
-    AssessmentPage() {
-      this.$router.push(`/AssessmentPage`);
+    AssessmentPage(id_patient) {
+      this.$router.push({ name: 'AssessmentPage', params: { id_patient } });
     },
     deletePatient(patientId) {
       this.patientToDelete = patientId;
