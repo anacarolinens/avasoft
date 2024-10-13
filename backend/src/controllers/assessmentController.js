@@ -3,6 +3,7 @@ const Patient = require('../models/patient');
 const Circumference = require('../models/circumference');
 const Skinfold = require('../models/skinfold');
 const Bmi = require('../models/bmi');
+const BodyComposition = require('../models/BodyComposition');
 const { AssessmentService } = require('../services/assessmentService');
 const { PatientHistoryService } = require('../services/patientHistoryService');
 
@@ -28,9 +29,14 @@ exports.getAllAssessments = async (req, res) => {
           model: Bmi,
           as: 'bmi',
         },
+        {
+          model: BodyComposition,
+          as: 'bodyComposition',
+        },
       ],
     });
-    res.json(assessments);
+
+    res.status(200).json(assessments);
   } catch (error) {
     console.error("Error fetching assessments:", error);
     res.status(500).json({ message: "Error fetching assessments.", error: error.message });
@@ -51,23 +57,29 @@ exports.getAssessmentById = async (req, res) => {
         {
           model: Circumference,
           as: 'circumference',
-          attributes: ['id_assessment', 'neck', 'thorax','shoulderBlade', 'waist', 'abdomen', 'hip', 'leftWrist', 'rightWrist', 'leftArm', 'rightArm', 'leftContractedArm', 'rightContractedArm', 'leftForearm', 'rightForearm', 'leftGlutealThigh', 'rightGlutealThigh', 'leftMedialThigh', 'rightMedialThigh', 'leftLeg', 'rightLeg', 'leftAncke', 'rightAncke' ],
+          attributes: ['id_assessment', 'neck', 'thorax', 'shoulderBlade', 'waist', 'abdomen', 'hip', 'leftWrist', 'rightWrist', 'leftArm', 'rightArm', 'leftContractedArm', 'rightContractedArm', 'leftForearm', 'rightForearm', 'leftGlutealThigh', 'rightGlutealThigh', 'leftMedialThigh', 'rightMedialThigh', 'leftLeg', 'rightLeg', 'leftAnkle', 'rightAnkle'],
         },
         {
           model: Skinfold,
           as: 'skinfold',
-          attributes: ['id_assessment' ,'triceps', 'axillary', 'abdominal','thigh', 'calf','subscapular', 'suprailiac', 'pectoral', 'bicep'],
+          attributes: ['id_assessment', 'triceps', 'axillary', 'abdominal', 'thigh', 'calf', 'subscapular', 'suprailiac', 'pectoral', 'bicep'],
         },
         {
           model: Bmi,
           as: 'bmi',
         },
+        {
+          model: BodyComposition,
+          as: 'bodyComposition',
+        },
       ],
     });
+
     if (!assessment) {
-      return res.status(404).json({ message: "Assessment not found." });
+      return res.status(404).json({ message: 'Assessment not found' });
     }
-    res.json(assessment);
+
+    res.status(200).json(assessment);
   } catch (error) {
     console.error("Error fetching assessment:", error);
     res.status(500).json({ message: "Error fetching assessment.", error: error.message });
@@ -110,34 +122,94 @@ exports.createAssessment = async (req, res) => {
       method,
     });
 
-    // Criar dados de circunferência
+    // Define os dados padrão de circunferência e dobras cutâneas como zero
+    const defaultCircumferenceData = {
+      neck: 0, thorax: 0, shoulderBlade: 0, waist: 0, abdomen: 0, hip: 0,
+      leftWrist: 0, rightWrist: 0, leftArm: 0, rightArm: 0, leftContractedArm: 0,
+      rightContractedArm: 0, leftForearm: 0, rightForearm: 0, leftGlutealThigh: 0,
+      rightGlutealThigh: 0, leftMedialThigh: 0, rightMedialThigh: 0, leftLeg: 0,
+      rightLeg: 0, leftAnkle: 0, rightAnkle: 0
+    };
+
+    const defaultSkinfoldData = {
+      triceps: 0, axillary: 0, abdominal: 0, thigh: 0, calf: 0, subscapular: 0,
+      suprailiac: 0, pectoral: 0, bicep: 0
+    };
+
+    // Lógica para preencher somente os dados necessários conforme o método de avaliação
+    let requiredCircumferenceData = { ...defaultCircumferenceData };
+    let requiredSkinfoldData = { ...defaultSkinfoldData };
+
+    switch (method) {
+      case 'McArdle':
+        requiredSkinfoldData = {
+          ...defaultSkinfoldData,
+          triceps: skinfoldData.triceps || 0,
+          abdominal: skinfoldData.abdominal || 0,
+          thigh: skinfoldData.thigh || 0,
+          subscapular: skinfoldData.subscapular || 0,
+          suprailiac: skinfoldData.suprailiac || 0
+        };
+        break;
+      case 'Guedes':
+        requiredSkinfoldData = {
+          ...defaultSkinfoldData,
+          triceps: skinfoldData.triceps || 0,
+          abdominal: skinfoldData.abdominal || 0,
+          suprailiac: skinfoldData.suprailiac || 0,
+          subscapular: gender === 'feminino' ? skinfoldData.subscapular || 0 : 0,
+          thigh: gender === 'feminino' ? skinfoldData.thigh || 0 : 0
+        };
+        break;
+      case 'Jackson & Pollock':
+        requiredSkinfoldData = {
+          ...defaultSkinfoldData,
+          triceps: skinfoldData.triceps || 0,
+          axillary: skinfoldData.axillary || 0,
+          abdominal: skinfoldData.abdominal || 0,
+          thigh: skinfoldData.thigh || 0,
+          suprailiac: skinfoldData.suprailiac || 0,
+          subscapular: skinfoldData.subscapular || 0,
+          pectoral: skinfoldData.pectoral || 0
+        };
+        break;
+      case 'Dados Livres':
+        // Usar os dados diretamente para Dados Livres, sem alterar
+        requiredCircumferenceData = circumferenceData;
+        requiredSkinfoldData = skinfoldData;
+        break;
+      default:
+        // Caso de método inválido ou não tratado
+        return res.status(400).json({ message: 'Método de avaliação inválido.' });
+    }
+
+    // Salva os dados de circunferência e dobras cutâneas
     await Circumference.create({
       id_assessment: assessment.id_assessment,
-      ...circumferenceData,
+      ...requiredCircumferenceData,
     });
 
-    // Criar dados de dobras cutâneas
     await Skinfold.create({
       id_assessment: assessment.id_assessment,
-      ...skinfoldData,
+      ...requiredSkinfoldData,
     });
 
-    // Chamar o serviço de avaliação para calcular e salvar o BMI
+    // Chamar o serviço de avaliação para calcular e salvar a composição corporal
     await AssessmentService({
       id_assessment: assessment.id_assessment,
       weight,
       height,
-      skinfolds: skinfoldData,
+      skinfolds: requiredSkinfoldData,
       method,
       gender,
       age,
       dateRecorded,
     });
 
-    res.status(201).json({ message: 'Avaliação criada com sucesso.', assessment });
+    res.status(201).json({ message: 'Avaliação criada com sucesso!' });
   } catch (error) {
-    console.error('Error creating assessment:', error);
-    res.status(500).json({ message: 'Error creating assessment.', error: error.message });
+    console.error("Error creating assessment:", error);
+    res.status(500).json({ message: "Error creating assessment.", error: error.message });
   }
 };
 

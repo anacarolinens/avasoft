@@ -1,6 +1,5 @@
-// services/assessmentService.js
-
 const Bmi = require('../models/bmi');
+const BodyComposition = require('../models/BodyComposition');
 
 const calculateBMI = (weight, height) => {
   if (height <= 0) return 0; // Para evitar divisão por zero
@@ -14,58 +13,80 @@ const classifyBMI = (bmi) => {
   return 'Obesidade';
 };
 
+// Função para calcular a densidade corporal com base no método selecionado
 const calculateBodyDensity = (method, gender, age, skinfolds) => {
   let DC;
 
   switch (method) {
-    // Implementar os cálculos de densidade corporal com base no método
+    case 'McArdle':
+      if (gender === 'homem' && age >= 18 && age <= 34) {
+        DC = 1.1610 - 0.0632 * Math.log10(skinfolds.bicep + skinfolds.triceps + skinfolds.subscapular + skinfolds.suprailiac);
+      } else if (gender === 'homem' && age >= 18 && age <= 27) {
+        DC = 1.0913 - 0.00116 * (skinfolds.triceps + skinfolds.subscapular);
+      } else if (gender === 'mulher' && age >= 18 && age <= 48) {
+        DC = 1.06234 - 0.00068 * skinfolds.subscapular - 0.00039 * skinfolds.triceps - 0.00025 * skinfolds.thigh;
+      } else if (gender === 'mulher' && age >= 9 && age <= 12) {
+        DC = 1.088 - 0.014 * Math.log10(skinfolds.triceps) - 0.036 * Math.log10(skinfolds.subscapular);
+      } else if (gender === 'mulher' && age >= 13 && age <= 16) {
+        DC = 1.114 - 0.031 * Math.log10(skinfolds.triceps) - 0.041 * Math.log10(skinfolds.subscapular);
+      } else if (gender === 'homem' && age >= 9 && age <= 12) {
+        DC = 1.108 - 0.027 * Math.log10(skinfolds.triceps) - 0.038 * Math.log10(skinfolds.subscapular);
+      } else if (gender === 'homem' && age >= 13 && age <= 16) {
+        DC = 1.130 - 0.055 * Math.log10(skinfolds.triceps) - 0.026 * Math.log10(skinfolds.subscapular);
+      } else {
+        throw new Error('Faixa etária ou gênero não suportado para o método McArdle.');
+      }
+      break;
+    // Adicione outros métodos conforme necessário
     default:
-      DC = 1; // Placeholder
+      throw new Error('Método de avaliação inválido.');
   }
 
   return DC;
 };
 
+// Cálculo do percentual de gordura usando a fórmula de Siri
 const calculateBodyFatPercentage = (density) => {
   return ((4.95 / density) - 4.50) * 100;
 };
 
+// Função para criar ou atualizar o BMI
 const createOrUpdateBMI = async (assessmentId, weight, height, dateRecorded) => {
   const bmiValue = calculateBMI(weight, height);
   const classification = classifyBMI(bmiValue);
 
-  // Verificar se já existe um registro de BMI para esta avaliação
-  let bmiRecord = await Bmi.findOne({ where: { id_assessment: assessmentId } });
-
-  if (bmiRecord) {
-    // Atualizar o registro existente
-    bmiRecord.bmiValue = bmiValue;
-    bmiRecord.classification = classification;
-    bmiRecord.dateRecorded = dateRecorded;
-    await bmiRecord.save();
-  } else {
-    // Criar um novo registro
-    bmiRecord = await Bmi.create({
-      id_assessment: assessmentId,
-      bmiValue,
-      classification,
-      dateRecorded,
-    });
-  }
-
-  return bmiRecord;
+  await Bmi.create({
+    id_assessment: assessmentId,
+    bmiValue,
+    classification,
+    dateRecorded,
+  });
 };
 
+// Função para criar ou atualizar os dados de composição corporal
+const createOrUpdateBodyComposition = async (assessmentId, density, bodyFatPercentage, dateRecorded) => {
+  await BodyComposition.create({
+    id_assessment: assessmentId,
+    body_density: density,
+    body_fat_percentage: bodyFatPercentage,
+    dateRecorded,
+  });
+};
+
+// Serviço principal de avaliação
 const AssessmentService = async (assessmentData) => {
   const { id_assessment, weight, height, skinfolds, method, gender, age, dateRecorded } = assessmentData;
 
-  const density = calculateBodyDensity(method, gender, age, skinfolds);
-  const bodyFatPercentage = calculateBodyFatPercentage(density);
+  try {
+    const density = calculateBodyDensity(method, gender, age, skinfolds);
+    const bodyFatPercentage = calculateBodyFatPercentage(density);
 
-  // Criar ou atualizar BMI no banco de dados
-  await createOrUpdateBMI(id_assessment, weight, height, dateRecorded);
-
-  // Salvar outros dados relacionados à avaliação, se necessário
+    await createOrUpdateBMI(id_assessment, weight, height, dateRecorded);
+    await createOrUpdateBodyComposition(id_assessment, density, bodyFatPercentage, dateRecorded);
+  } catch (error) {
+    console.error("Error in AssessmentService:", error);
+    throw error;
+  }
 };
 
 module.exports = {
