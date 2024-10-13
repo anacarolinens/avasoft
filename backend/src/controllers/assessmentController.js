@@ -84,7 +84,48 @@ exports.getAssessmentById = async (req, res) => {
     console.error("Error fetching assessment:", error);
     res.status(500).json({ message: "Error fetching assessment.", error: error.message });
   }
+}; 
+
+// Get assessments by patient ID
+exports.getAssessmentsByPatientId = async (req, res) => {
+  try {
+    const patientId = req.params.id_patient; // Supondo que o ID do paciente venha dos parâmetros da URL
+    const assessments = await Assessment.findAll({
+      where: { id_patient: patientId }, // Filtra pelo id_patient específico
+      include: [
+        {
+          model: Patient,
+          as: 'patient',
+          attributes: ['id_patient', 'weigth_ini', 'height_ini'],
+        },
+        {
+          model: Circumference,
+          as: 'circumference',
+          attributes: ['id_assessment', 'neck', 'thorax', 'waist', 'hip'],
+        },
+        {
+          model: Skinfold,
+          as: 'skinfold',
+          attributes: ['id_assessment', 'triceps', 'axillary', 'abdominal'],
+        },
+        {
+          model: Bmi,
+          as: 'bmi',
+        },
+      ],
+    });
+
+    if (!assessments || assessments.length === 0) {
+      return res.status(404).json({ message: "No assessments found for this patient." });
+    }
+
+    res.json(assessments);
+  } catch (error) {
+    console.error("Error fetching assessments for patient:", error);
+    res.status(500).json({ message: "Error fetching assessments for patient.", error: error.message });
+  }
 };
+
 
 // Generate patient history PDF
 exports.getPatientHistory = async (req, res) => {

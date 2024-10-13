@@ -11,7 +11,7 @@ require('dotenv').config();//necessario para o envio de email de recuperar senha
 
 const corsOptions = {
     origin: process.env.FRONTEND_URL, // ou um array de domínios permitidos
-    methods: 'GET,POST', // Métodos permitidos
+    methods: 'GET,POST,PUT', // Métodos permitidos
     allowedHeaders: ['Content-Type', 'Authorization'] // Cabeçalhos permitidos
   };
   
@@ -47,6 +47,7 @@ app.delete('/patient/:id', patientController.deletePatient); // Changed from /pa
 // Define routes for assessments
 app.get('/assessments', assessmentController.getAllAssessments);
 app.get('/assessments/:id', assessmentController.getAssessmentById);
+app.get('/assessments/patient/:id_patient', assessmentController.getAssessmentsByPatientId);
 app.post('/assessments', assessmentController.createAssessment);
 app.put('/assessments/:id', assessmentController.updateAssessment);
 app.delete('/assessments/:id', assessmentController.deleteAssessment);
