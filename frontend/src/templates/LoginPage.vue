@@ -29,7 +29,7 @@
         <p class="pt-2">__________ OU __________</p>
 
         <div id="micro-google" class="flex justify-around pt-4">
-          <a href="#" class="flex justify-around  rounded-md items-center w-40"><img src="../assets/img/google.png" alt="">Google</a>
+          <a @click="logingoogle" class="flex justify-around rounded-md items-center w-40"><img src="../assets/img/google.png" alt="">Google</a>
           <a href="#" class="flex justify-around  rounded-md items-center w-40"><img src="../assets/img/microsoft.png" alt="">Microsoft</a>
         </div>
       </div>
@@ -45,12 +45,13 @@
         <img src="@/assets/img/home-icon.svg" class="w-12" alt="">
       </div>
     </router-link>
-
+    <GoogleLogin :callback="callback" prompt auto-login/>
   </div>
 </template>
 
 <script>
-
+import { googleTokenLogin } from "vue3-google-login"
+import { decodeCredential } from "vue3-google-login";
 
 export default {
 
@@ -62,22 +63,42 @@ export default {
   },
 
   mounted() {
+  // Verifica se há um token na URL ao montar o componente
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token');
 
+  if (token) {
+    // Se encontrar um token na URL, armazene-o em localStorage e configure o cabeçalho do Axios
+    localStorage.setItem('authToken', token);
+    this.$axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    
+    // Redirecione para a HomePage
+    this.$router.push('/HomePage');
+  } else {
+    // Caso contrário, verifique se já existe um token no localStorage
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       // Defina o token no cabeçalho de autorização para todas as requisições Axios
       this.$axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
     }
+  }
 
-    document.documentElement.style.overflow = 'hidden';
-  },
-  beforeUnmount() {
-    document.documentElement.style.overflow = '';
-  },
-
-
+  document.documentElement.style.overflow = 'hidden';
+},
+beforeUnmount() {
+  document.documentElement.style.overflow = '';
+},
 
   methods: {
+    callback(response) {
+      const userData = decodeCredential(response.credential)
+      console.log("Handle the userData", userData)
+    },
+    logingoogle(){
+      googleTokenLogin().then((response) => {
+      console.log("Handle the response", response)
+  })
+    },
     async handleLogin() {
       try {
         const response = await this.$axios.post('http://localhost:3000/login', {
@@ -99,6 +120,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <style>
