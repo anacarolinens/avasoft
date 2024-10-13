@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const database = require("../database/db");
-const { DataTypes } = Sequelize;
+const { DataTypes } = Sequelize
+const Patient = require('./patient');
 
 const Assessment = database.define('assessment', {
   id_assessment: {
@@ -9,48 +10,28 @@ const Assessment = database.define('assessment', {
     autoIncrement: true,
     allowNull: false,
   },
-  dataAssessment: {
+  assessmentDate: {
     type: DataTypes.DATE,
-    allowNull: false,
-  },
-  peso: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  altura: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  cc: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  cq: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  peitoral: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  abdomen: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  coxa: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  triceps: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  suprailiaca: {
-    type: DataTypes.FLOAT,
     allowNull: false,
   },
   id_patient: {
     type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Patient,
+      key: 'id_patient',
+    },
+  },
+  height: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  weight: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  method: {
+    type: DataTypes.ENUM('Guedes', 'Pollock', 'Jackson & Pollock', 'McArdle'),
     allowNull: false,
   },
 });

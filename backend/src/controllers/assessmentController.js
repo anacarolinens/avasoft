@@ -1,11 +1,34 @@
 const Assessment = require('../models/assessment');
 const Patient = require('../models/patient');
-const { User } = require('../models/user');
+const Circumference = require('../models/circumference');
+const Skinfold = require('../models/skinfold');
+const Bmi = require('../models/bmi');
+const { AssessmentService } = require('../services/assessmentService');
 
-// Get all assessments
+// Get all assessments with associated data
 exports.getAllAssessments = async (req, res) => {
   try {
-    const assessments = await Assessment.findAll();
+    const assessments = await Assessment.findAll({
+      include: [
+        {
+          model: Patient,
+          as: 'patient',
+          attributes: ['id_patient', 'weigth_ini', 'height_ini'],
+        },
+        {
+          model: Circumference,
+          as: 'circumference',
+        },
+        {
+          model: Skinfold,
+          as: 'skinfold',
+        },
+        {
+          model: Bmi,
+          as: 'bmi',
+        },
+      ],
+    });
     res.json(assessments);
   } catch (error) {
     console.error("Error fetching assessments:", error);
@@ -13,8 +36,7 @@ exports.getAllAssessments = async (req, res) => {
   }
 };
 
-
-// Get assessment by id
+// Get assessment by id with associated data
 exports.getAssessmentById = async (req, res) => {
   try {
     const assessment = await Assessment.findOne({
@@ -24,6 +46,20 @@ exports.getAssessmentById = async (req, res) => {
           model: Patient,
           as: 'patient',
           attributes: ['id_patient', 'weigth_ini', 'height_ini'],
+        },
+        {
+          model: Circumference,
+          as: 'circumference',
+          attributes: ['id_assessment', 'neck', 'thorax','shoulderBlade', 'waist', 'abdomen', 'hip', 'leftWrist', 'rightWrist', 'leftArm', 'rightArm', 'leftContractedArm', 'rightContractedArm', 'leftForearm', 'rightForearm', 'leftGlutealThigh', 'rightGlutealThigh', 'leftMedialThigh', 'rightMedialThigh', 'leftLeg', 'rightLeg', 'leftAncke', 'rightAncke' ],
+        },
+        {
+          model: Skinfold,
+          as: 'skinfold',
+          attributes: ['id_assessment' ,'triceps', 'axillary', 'abdominal','thigh', 'calf','subscapular', 'suprailiac', 'pectoral', 'bicep'],
+        },
+        {
+          model: Bmi,
+          as: 'bmi',
         },
       ],
     });
@@ -37,44 +73,92 @@ exports.getAssessmentById = async (req, res) => {
   }
 };
 
-// Create assessment
+// Create assessment with related data
 exports.createAssessment = async (req, res) => {
-  const { id_patient, dataAssessment, peso, altura, cc, cq, peitoral, abdomen, coxa, triceps, suprailiaca } = req.body;
+  const { id_patient, assessmentDate, weight, height, dateRecorded, circumferenceData, skinfoldData, method, gender, age } = req.body;
+
+  if (!assessmentDate || !method || !dateRecorded) {
+    return res.status(400).json({ message: 'Os campos assessmentDate, method e dateRecorded são obrigatórios.' });
+  }
 
   try {
-    // Criação da avaliação
     const assessment = await Assessment.create({
       id_patient,
-      dataAssessment,
-      peso,
-      altura,
-      cc,
-      cq,
-      peitoral, 
-      abdomen,
-      coxa,
-      triceps,
-      suprailiaca
+      assessmentDate,
+      weight,
+      height,
+      method,
     });
 
-    res.status(201).json({ message: "Assessment created successfully!", assessment });
+    // Criar dados de circunferência
+    await Circumference.create({
+      id_assessment: assessment.id_assessment,
+      ...circumferenceData,
+    });
+
+    // Criar dados de dobras cutâneas
+    await Skinfold.create({
+      id_assessment: assessment.id_assessment,
+      ...skinfoldData,
+    });
+
+    // Chamar o serviço de avaliação para calcular e salvar o BMI
+    await AssessmentService({
+      id_assessment: assessment.id_assessment,
+      weight,
+      height,
+      skinfolds: skinfoldData,
+      method,
+      gender,
+      age,
+      dateRecorded,
+    });
+
+    res.status(201).json({ message: 'Avaliação criada com sucesso.', assessment });
   } catch (error) {
-    console.error("Error creating assessment:", error);
-    res.status(500).json({ message: "Error creating assessment.", error: error.message });
+    console.error('Error creating assessment:', error);
+    res.status(500).json({ message: 'Error creating assessment.', error: error.message });
   }
 };
 
-// Update assessment
+// Update assessment with related data
 exports.updateAssessment = async (req, res) => {
   try {
     const assessmentId = req.params.id;
-    const assessment = await Assessment.findByPk(assessmentId);
+    const { circumferenceData, skinfoldData, method, gender, age } = req.body;
 
+    const assessment = await Assessment.findByPk(assessmentId);
     if (!assessment) {
       return res.status(404).json({ message: "Assessment not found." });
     }
 
     await assessment.update(req.body);
+
+    // Update related circumference and skinfold records
+    if (circumferenceData) {
+      await Circumference.update(circumferenceData, { where: { id_assessment: assessmentId } });
+    }
+
+    if (skinfoldData) {
+      await Skinfold.update(skinfoldData, { where: { id_assessment: assessmentId } });
+    }
+
+    // Reprocess BMI and body fat percentage if method and data are provided
+    if (method && gender && age) {
+      const assessmentData = {
+        dateRecorded: assessment.dateRecorded,
+        weight: assessment.weight,
+        height: assessment.height,
+        skinfolds: skinfoldData,
+        method,
+        id_assessment: assessmentId,
+        gender,
+        age,
+      };
+      
+      await AssessmentService(assessmentData);
+    }
+
     res.json({ message: "Assessment updated successfully!", assessment });
   } catch (error) {
     console.error("Error updating assessment:", error);
@@ -82,7 +166,7 @@ exports.updateAssessment = async (req, res) => {
   }
 };
 
-// Delete assessment
+// Delete assessment with related data
 exports.deleteAssessment = async (req, res) => {
   try {
     const assessmentId = req.params.id;
@@ -92,8 +176,15 @@ exports.deleteAssessment = async (req, res) => {
       return res.status(404).json({ message: "Assessment not found." });
     }
 
+    // Delete related records
+    await Circumference.destroy({ where: { id_assessment: assessmentId } });
+    await Skinfold.destroy({ where: { id_assessment: assessmentId } });
+    await Bmi.destroy({ where: { id_assessment: assessmentId } });
+
+    // Delete assessment
     await assessment.destroy();
-    res.json({ message: "Assessment deleted successfully!" });
+
+    res.json({ message: "Assessment and related records deleted successfully!" });
   } catch (error) {
     console.error("Error deleting assessment:", error);
     res.status(500).json({ message: "Error deleting assessment.", error: error.message });
