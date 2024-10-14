@@ -9,13 +9,9 @@ const assessmentController = require('./src/controllers/assessmentController');
 
 require('dotenv').config();//necessario para o envio de email de recuperar senha
 
-const corsOptions = {
-    origin: process.env.FRONTEND_URL, // ou um array de domínios permitidos
-    methods: 'GET,POST,PUT', // Métodos permitidos
-    allowedHeaders: ['Content-Type', 'Authorization'] // Cabeçalhos permitidos
-  };
-  
-  app.use(cors(corsOptions));app.use(bodyParser.json());
+app.use(cors());
+app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Define routes for users
