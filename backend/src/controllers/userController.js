@@ -354,8 +354,8 @@ exports.updateUser = async (req, res, next) => {
 
     // Repete campos obrigatorios que não foram atualizados
     const { cpf, email, userName } = user;
-    updatedUserData.cpf = cpf; //
-    updatedUserData.email = email;
+    // updatedUserData.cpf = cpf; //
+    // updatedUserData.email = email;
     updatedUserData.userName = userName;
 
     // Verifica se a senha está no corpo da requisição e gera um hash

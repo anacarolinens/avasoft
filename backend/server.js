@@ -15,7 +15,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 require('./src/models/associations'); 
 
-const port = normalizePort('3000');
+const port = normalizePort(process.env.PORT || '3000');
 
 app.set('port', port);
 
