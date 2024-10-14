@@ -36,7 +36,8 @@
         <!-- Seleção do Método de Avaliação -->
         <div class="mb-4">
           <label for="metodo" class="block text-sm font-medium text-gray-700">Método de Avaliação</label>
-          <select v-model="metodo" @change="atualizarCamposNecessarios" class="mt-1 p-2 w-full border-gray-300 rounded-md">
+          <select v-model="metodo" @change="atualizarCamposNecessarios"
+            class="mt-1 p-2 w-full border-gray-300 rounded-md">
             <option value="" disabled selected>Selecione o método</option>
             <option value="Guedes">Guedes</option>
             <option value="Pollock">Pollock</option>
@@ -51,7 +52,9 @@
         <div class="grid grid-cols-3 gap-4">
           <div v-for="(value, key) in skinfoldData" :key="key">
             <label :for="key" class="block text-sm font-medium">{{ traduzirDobrasCutaneas(key) }}</label>
-            <input v-model="skinfoldData[key]" :disabled="!camposNecessarios.includes(key)" :class="{'disabled-input': !camposNecessarios.includes(key)}" type="number" class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+            <input v-model="skinfoldData[key]" :disabled="!camposNecessarios.includes(key)"
+              :class="{ 'disabled-input': !camposNecessarios.includes(key) }" type="number"
+              class="mt-1 p-2 w-full border-gray-300 rounded-md" />
           </div>
         </div>
 
@@ -60,14 +63,17 @@
         <div class="grid grid-cols-3 gap-4">
           <div v-for="(value, key) in circumferenceData" :key="key">
             <label :for="key" class="block text-sm font-medium">{{ traduzirCircunferencia(key) }}</label>
-            <input v-model="circumferenceData[key]" :disabled="!camposNecessarios.includes(key)" :class="{'disabled-input': !camposNecessarios.includes(key)}" type="number" class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+            <input v-model="circumferenceData[key]" :disabled="!camposNecessarios.includes(key)"
+              :class="{ 'disabled-input': !camposNecessarios.includes(key) }" type="number"
+              class="mt-1 p-2 w-full border-gray-300 rounded-md" />
           </div>
         </div>
 
         <!-- Botões -->
         <div class="mt-4 flex space-x-4">
           <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Salvar Avaliação</button>
-          <button type="button" @click="cancelarAvaliacao" class="px-4 py-2 bg-gray-500 text-white rounded-md">Cancelar</button>
+          <button type="button" @click="cancelarAvaliacao"
+            class="px-4 py-2 bg-gray-500 text-white rounded-md">Cancelar</button>
         </div>
       </form>
     </div>
@@ -181,6 +187,11 @@ export default {
         this.camposNecessarios = ['triceps', 'subscapular', 'axillary', 'abdominal', 'thigh', 'suprailiac', 'pectoral'];
       } else if (metodo === 'McArdle') {
         this.camposNecessarios = ['triceps', 'subscapular', 'suprailiac', 'abdominal', 'thigh'];
+      } else if (metodo === 'Dados Livres') {
+        this.camposNecessarios = [
+          ...Object.keys(this.circumferenceData),
+          ...Object.keys(this.skinfoldData)
+        ];
       } else {
         this.camposNecessarios = Object.keys(this.circumferenceData).concat(Object.keys(this.skinfoldData));
       }
