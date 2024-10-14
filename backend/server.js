@@ -1,21 +1,67 @@
 const app = require("./app");
 const http = require("http");
 const debug = require("debug")("nodestr:server");
+const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
+const passportSetup = require('./src/config/passport-setup'); // O arquivo que você criou anteriormente
+const authRoutes = require('./src/routes/authRoutes');
 require("dotenv").config();
 const database = require('./src/database/db');
 const User = require('./src/models/user'); // Caminho correto para o arquivo user.js
 const Patient = require('./src/models/patient'); 
 const Assessment = require('./src/models/assessment'); 
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
 require('./src/models/associations'); 
 
 const port = normalizePort(process.env.PORT || '3000');
+
 app.set('port', port);
+
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0', // Definir a versão do OpenAPI
+    info: {
+      title: 'API Documentada AVASOFT',
+      version: '1.0.0',
+      description: 'Documentação da API utilizando Swagger',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000/', // URL base da sua API
+      },
+    ],
+  },
+  apis: ['./src/controllers/*.js'], // Caminho para os arquivos de rotas a serem documentados
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+}));
 
 const server = http.createServer(app);
 
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+
+
+app.get('/hello', (req, res) => {
+  res.send('Hello, Swagger!');
+});
+
+
+
 
 database.sync().then(() => {
   console.log('Database synchronized');

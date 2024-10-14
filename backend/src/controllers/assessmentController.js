@@ -5,6 +5,8 @@ const Skinfold = require('../models/skinfold');
 const Bmi = require('../models/bmi');
 const BodyComposition = require('../models/BodyComposition');
 const { AssessmentService } = require('../services/assessmentService');
+const PatientHistoryService = require('../services/PatientHistoryService');
+
 
 // Get all assessments with associated data
 exports.getAllAssessments = async (req, res) => {
@@ -83,16 +85,77 @@ exports.getAssessmentById = async (req, res) => {
     console.error("Error fetching assessment:", error);
     res.status(500).json({ message: "Error fetching assessment.", error: error.message });
   }
+}; 
+
+// Get assessments by patient ID
+exports.getAssessmentsByPatientId = async (req, res) => {
+  try {
+    const patientId = req.params.id_patient; // Supondo que o ID do paciente venha dos parâmetros da URL
+    const assessments = await Assessment.findAll({
+      where: { id_patient: patientId }, // Filtra pelo id_patient específico
+      include: [
+        {
+          model: Patient,
+          as: 'patient',
+          attributes: ['id_patient', 'weigth_ini', 'height_ini'],
+        },
+        {
+          model: Circumference,
+          as: 'circumference',
+          attributes: ['id_assessment', 'neck', 'thorax', 'waist', 'hip'],
+        },
+        {
+          model: Skinfold,
+          as: 'skinfold',
+          attributes: ['id_assessment', 'triceps', 'axillary', 'abdominal'],
+        },
+        {
+          model: Bmi,
+          as: 'bmi',
+        },
+      ],
+    });
+
+    if (!assessments || assessments.length === 0) {
+      return res.status(404).json({ message: "No assessments found for this patient." });
+    }
+
+    res.json(assessments);
+  } catch (error) {
+    console.error("Error fetching assessments for patient:", error);
+    res.status(500).json({ message: "Error fetching assessments for patient.", error: error.message });
+  }
+};
+
+
+// Generate patient history PDF
+exports.getPatientHistory = async (req, res) => {
+  try {
+    const patientId = req.params.id;  // ID do paciente recebido pela rota
+    const pdfPath = await PatientHistoryService.generatePatientHistory(patientId);
+
+    // Enviar o PDF como resposta ou para download
+    res.download(pdfPath, (err) => {
+      if (err) {
+        console.error("Error sending the PDF:", err);
+        res.status(500).json({ message: "Error generating the PDF." });
+      }
+    });
+  } catch (error) {
+    console.error('Error generating patient history:', error);
+    res.status(500).json({ message: "Error generating patient history.", error: error.message });
+  }
 };
 
 exports.createAssessment = async (req, res) => {
   const { id_patient, assessmentDate, weight, height, dateRecorded, circumferenceData, skinfoldData, method, gender, age } = req.body;
 
   if (!assessmentDate || !method || !dateRecorded) {
-    return res.status(400).json({ message: 'Os campos assessmentDate, method e dateRecorded são obrigatórios.' });
+    return res.status(400).json({ message: 'The assessmentDate, method and dateRecorded fields are mandatory.' });
   }
 
   try {
+    // Create assessment
     const assessment = await Assessment.create({
       id_patient,
       assessmentDate,
@@ -192,45 +255,87 @@ exports.createAssessment = async (req, res) => {
   }
 };
 
+
 // Update assessment with related data
 exports.updateAssessment = async (req, res) => {
   try {
     const assessmentId = req.params.id;
-    const { circumferenceData, skinfoldData, method, gender, age } = req.body;
+    const { id_patient, assessmentDate, weight, height, circumferenceData, skinfoldData, method, gender, age, dateRecorded } = req.body;
 
+    // Verify if assessment exists
     const assessment = await Assessment.findByPk(assessmentId);
     if (!assessment) {
       return res.status(404).json({ message: "Assessment not found." });
     }
 
-    await assessment.update(req.body);
+    // Update assessment
+    await assessment.update({
+      id_patient,
+      assessmentDate,
+      weight,
+      height,
+      method,
+    });
 
-    // Update related circumference and skinfold records
+    // Update or create circumference data
     if (circumferenceData) {
-      await Circumference.update(circumferenceData, { where: { id_assessment: assessmentId } });
+      const existingCircumference = await Circumference.findOne({ where: { id_assessment: assessmentId } });
+      if (existingCircumference) {
+        await existingCircumference.update(circumferenceData);
+      } else {
+        await Circumference.create({
+          id_assessment: assessmentId,
+          ...circumferenceData,
+        });
+      }
     }
 
+    // Update or create skinfold data
     if (skinfoldData) {
-      await Skinfold.update(skinfoldData, { where: { id_assessment: assessmentId } });
+      const existingSkinfold = await Skinfold.findOne({ where: { id_assessment: assessmentId } });
+      if (existingSkinfold) {
+        await existingSkinfold.update(skinfoldData);
+      } else {
+        await Skinfold.create({
+          id_assessment: assessmentId,
+          ...skinfoldData,
+        });
+      }
     }
 
-    // Reprocess BMI and body fat percentage if method and data are provided
-    if (method && gender && age) {
+    // Reprocess BMI and body fat percentage
+    if (method && gender && age && weight && height) {
       const assessmentData = {
-        dateRecorded: assessment.dateRecorded,
-        weight: assessment.weight,
-        height: assessment.height,
+        id_assessment: assessmentId,
+        weight,
+        height,
         skinfolds: skinfoldData,
         method,
-        id_assessment: assessmentId,
         gender,
         age,
+        dateRecorded,
       };
-      
+
+      // Call assessment service to calculate BMI and body fat percentage
       await AssessmentService(assessmentData);
     }
 
-    res.json({ message: "Assessment updated successfully!", assessment });
+    // Return updated assessment
+    const updatedAssessment = {
+      id_patient,
+      assessmentDate,
+      weight,
+      height,
+      method,
+      dateRecorded,
+      circumferenceData,
+      skinfoldData
+    };
+
+    res.json({
+      message: "Assessment updated successfully!",
+      assessment: updatedAssessment
+    });
   } catch (error) {
     console.error("Error updating assessment:", error);
     res.status(500).json({ message: "Error updating assessment.", error: error.message });

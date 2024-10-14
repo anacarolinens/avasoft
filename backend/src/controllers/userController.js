@@ -6,7 +6,18 @@ const jwt = require("jsonwebtoken");
 const Patient = require("../models/patient");
 const Professional = require("../models/professional");
 
-//Crud all users
+// routes/sample.js
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Returns a sample message
+ *     tags: 
+ *       - Usuários
+ *     responses:
+ *       200:
+ *         description: A successful response
+ */
 exports.getAllUsers = async (req, res, next) => {
   User.findAll()
     .then((users) => {
@@ -18,6 +29,38 @@ exports.getAllUsers = async (req, res, next) => {
 };
 
 //Get user by id
+// routes/sample.js
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     summary: Retorna um usuário pelo ID
+ *     tags: 
+ *       - Usuários
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID do usuário
+ *     responses:
+ *       200:
+ *         description: Usuário encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *       404:
+ *         description: Usuário não encontrado
+ */
 exports.getUserById = async (req, res, next) => {
   const userId = req.params.id;
   User.findByPk(userId)
@@ -33,6 +76,83 @@ exports.getUserById = async (req, res, next) => {
 };
 
 // Create user and generate token
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Cria um novo usuário e gera um token de autenticação
+ *     tags: 
+ *       - Usuários
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fullName:
+ *                 type: string
+ *               cpf:
+ *                 type: string
+ *               dataNasc:
+ *                 type: string
+ *                 format: date
+ *               gender:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               street:
+ *                 type: string
+ *               number:
+ *                 type: number
+ *               complement:
+ *                 type: string
+ *               district:
+ *                 type: string
+ *               city:
+ *                 type: string
+ *               state:
+ *                 type: string
+ *               cep:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [Paciente, Profissional]
+ *               userName:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               confirmPassword:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Usuário criado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     fullName:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *                 token:
+ *                   type: string
+ *       400:
+ *         description: Senhas não coincidem
+ *       500:
+ *         description: Erro na criação do usuário ou na criação do registro associado
+ */
+
 exports.createUser = async (req, res, next) => {
   const {
     fullName,
@@ -118,9 +238,38 @@ exports.createUser = async (req, res, next) => {
 };
 
 //Login user
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Realiza o login de um usuário
+ *     tags: 
+ *       - Usuários
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userName:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Usuário autenticado com sucesso
+ *       401:
+ *         description: Credenciais inválidas
+ *       404:
+ *         description: Usuário não encontrado
+ *       500:
+ *         description: Erro ao realizar login
+ */
+
 exports.loginUser = async (req, res, next) => {
   const { userName, password } = req.body;
-
+  console.log(req)
   try {
     // Find the user in the database
     const user = await User.findOne({ where: { userName: userName } });
@@ -156,6 +305,41 @@ exports.loginUser = async (req, res, next) => {
 };
 
 //Update user
+/**
+ * @swagger
+ * /users/{id}:
+ *   put:
+ *     summary: Atualiza as informações de um usuário
+ *     tags: 
+ *       - Usuários
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID do usuário
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fullName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Usuário atualizado com sucesso
+ *       404:
+ *         description: Usuário não encontrado
+ *       500:
+ *         description: Erro ao atualizar usuário
+ */
 exports.updateUser = async (req, res, next) => {
   try {
     const userId = req.params.id;
@@ -170,8 +354,8 @@ exports.updateUser = async (req, res, next) => {
 
     // Repete campos obrigatorios que não foram atualizados
     const { cpf, email, userName } = user;
-    updatedUserData.cpf = cpf; //
-    updatedUserData.email = email;
+    // updatedUserData.cpf = cpf; //
+    // updatedUserData.email = email;
     updatedUserData.userName = userName;
 
     // Verifica se a senha está no corpo da requisição e gera um hash
@@ -199,6 +383,28 @@ exports.updateUser = async (req, res, next) => {
 };
 
 //Delete user
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     summary: Deleta um usuário
+ *     tags: 
+ *       - Usuários
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID do usuário
+ *     responses:
+ *       200:
+ *         description: Usuário deletado com sucesso
+ *       404:
+ *         description: Usuário não encontrado
+ *       500:
+ *         description: Erro ao deletar usuário
+ */
 exports.deleteUser = async (req, res, next) => {
   const userId = req.params.id;
   User.findByPk(userId)
@@ -226,6 +432,30 @@ exports.deleteUser = async (req, res, next) => {
     });
 };
 
+/**
+ * @swagger
+ * /users/reset-password:
+ *   post:
+ *     summary: Solicita a redefinição de senha
+ *     tags: 
+ *       - Usuários
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Instruções de redefinição enviadas por e-mail
+ *       404:
+ *         description: Usuário não encontrado
+ *       500:
+ *         description: Erro ao solicitar redefinição de senha
+ */
 exports.resetPassword = async (req, res, next) => {
   const { resetToken, newPassword, confirmPassword } = req.body;
 
@@ -268,6 +498,34 @@ exports.resetPassword = async (req, res, next) => {
 };
 
 // reset password request
+/**
+ * @swagger
+ * /users/reset-password-confirm:
+ *   post:
+ *     summary: Redefine a senha do usuário
+ *     tags: 
+ *       - Usuários
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               resetToken:
+ *                 type: string
+ *               newPassword:
+ *                 type: string
+ *               confirmPassword:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Senha redefinida com sucesso
+ *       400:
+ *         description: Token inválido ou expirado
+ *       500:
+ *         description: Erro ao redefinir senha
+ */
 exports.resetPasswordRequest = async (req, res, next) => {
   const { email } = req.body;
 
