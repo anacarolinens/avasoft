@@ -37,7 +37,18 @@ const calculateBodyDensity = (method, gender, age, skinfolds) => {
         throw new Error('Faixa etária ou gênero não suportado para o método McArdle.');
       }
       break;
-    // Adicione outros métodos conforme necessário
+    case 'Guedes':
+      if (gender === 'homem') {
+        DC = 1.17136 - 0.06706 * Math.log10(skinfolds.triceps + skinfolds.suprailiac + skinfolds.abdominal);
+      } else if (gender === 'mulher') {
+        DC = 1.16650 - 0.07063 * Math.log10(skinfolds.coxa + skinfolds.suprailiac + skinfolds.subscapular);
+      } else {
+        throw new Error('Gênero não suportado para o método Guedes.');
+      }
+      break;
+    case 'Dados Livres':
+      // Não faz o cálculo de densidade corporal para Dados Livres
+      return null; // Ou pode retornar 0, caso prefira tratar de forma diferente
     default:
       throw new Error('Método de avaliação inválido.');
   }
@@ -47,6 +58,7 @@ const calculateBodyDensity = (method, gender, age, skinfolds) => {
 
 // Cálculo do percentual de gordura usando a fórmula de Siri
 const calculateBodyFatPercentage = (density) => {
+  if (!density) return null; // Não calcular se a densidade for nula (no caso de "Dados Livres")
   return ((4.95 / density) - 4.50) * 100;
 };
 
@@ -65,12 +77,14 @@ const createOrUpdateBMI = async (assessmentId, weight, height, dateRecorded) => 
 
 // Função para criar ou atualizar os dados de composição corporal
 const createOrUpdateBodyComposition = async (assessmentId, density, bodyFatPercentage, dateRecorded) => {
-  await BodyComposition.create({
-    id_assessment: assessmentId,
-    body_density: density,
-    body_fat_percentage: bodyFatPercentage,
-    dateRecorded,
-  });
+  if (density && bodyFatPercentage) {
+    await BodyComposition.create({
+      id_assessment: assessmentId,
+      body_density: density,
+      body_fat_percentage: bodyFatPercentage,
+      dateRecorded,
+    });
+  }
 };
 
 // Serviço principal de avaliação
@@ -82,7 +96,11 @@ const AssessmentService = async (assessmentData) => {
     const bodyFatPercentage = calculateBodyFatPercentage(density);
 
     await createOrUpdateBMI(id_assessment, weight, height, dateRecorded);
-    await createOrUpdateBodyComposition(id_assessment, density, bodyFatPercentage, dateRecorded);
+
+    // Salvar composição corporal apenas se não for "Dados Livres"
+    if (density && bodyFatPercentage) {
+      await createOrUpdateBodyComposition(id_assessment, density, bodyFatPercentage, dateRecorded);
+    }
   } catch (error) {
     console.error("Error in AssessmentService:", error);
     throw error;

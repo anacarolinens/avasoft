@@ -31,7 +31,7 @@ const Assessment = database.define('assessment', {
     allowNull: true,
   },
   method: {
-    type: DataTypes.ENUM('Guedes', 'Pollock', 'Jackson & Pollock', 'McArdle'),
+    type: DataTypes.ENUM('Guedes', 'Pollock', 'Jackson & Pollock', 'McArdle', 'Dados Livres'),
     allowNull: false,
   },
 });

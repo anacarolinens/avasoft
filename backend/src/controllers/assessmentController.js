@@ -144,53 +144,45 @@ exports.createAssessment = async (req, res) => {
         requiredSkinfoldData = {
           ...defaultSkinfoldData,
           triceps: skinfoldData.triceps || 0,
-          axillary: skinfoldData.axillary || 0,
           abdominal: skinfoldData.abdominal || 0,
           thigh: skinfoldData.thigh || 0,
-          suprailiac: skinfoldData.suprailiac || 0,
-          subscapular: skinfoldData.subscapular || 0,
-          pectoral: skinfoldData.pectoral || 0
+          subscapular: skinfoldData.subscapular || 0
         };
         break;
       case 'Dados Livres':
-        // Usar os dados diretamente para Dados Livres, sem alterar
-        requiredCircumferenceData = circumferenceData;
-        requiredSkinfoldData = skinfoldData;
+        // Usamos todos os valores passados, sem fazer nenhum cálculo adicional
+        requiredCircumferenceData = { ...circumferenceData };
+        requiredSkinfoldData = { ...skinfoldData };
         break;
       default:
-        // Caso de método inválido ou não tratado
         return res.status(400).json({ message: 'Método de avaliação inválido.' });
     }
 
-    // Salva os dados de circunferência e dobras cutâneas
-    await Circumference.create({
-      id_assessment: assessment.id_assessment,
-      ...requiredCircumferenceData,
-    });
-
-    await Skinfold.create({
-      id_assessment: assessment.id_assessment,
-      ...requiredSkinfoldData,
-    });
+    // Cria os registros de circunferência e dobras cutâneas
+    await Circumference.create({ id_assessment: assessment.id_assessment, ...requiredCircumferenceData });
+    await Skinfold.create({ id_assessment: assessment.id_assessment, ...requiredSkinfoldData });
 
     // Chamar o serviço de avaliação para calcular e salvar a composição corporal
-    await AssessmentService({
-      id_assessment: assessment.id_assessment,
-      weight,
-      height,
-      skinfolds: requiredSkinfoldData,
-      method,
-      gender,
-      age,
-      dateRecorded,
-    });
+    if (method !== 'Dados Livres') {
+      await AssessmentService({
+        id_assessment: assessment.id_assessment,
+        weight,
+        height,
+        skinfolds: requiredSkinfoldData,
+        method,
+        gender,
+        age,
+        dateRecorded,
+      });
+    }
 
     res.status(201).json({ message: 'Avaliação criada com sucesso!' });
   } catch (error) {
-    console.error("Error creating assessment:", error);
-    res.status(500).json({ message: "Error creating assessment.", error: error.message });
+    console.error('Error creating assessment:', error);
+    res.status(500).json({ message: 'Error creating assessment.', error: error.message });
   }
 };
+
 
 // Update assessment with related data
 exports.updateAssessment = async (req, res) => {
