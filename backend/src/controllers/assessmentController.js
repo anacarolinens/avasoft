@@ -5,7 +5,7 @@ const Skinfold = require('../models/skinfold');
 const Bmi = require('../models/bmi');
 const BodyComposition = require('../models/BodyComposition');
 const { AssessmentService } = require('../services/assessmentService');
-const { PatientHistoryService } = require('../services/patientHistoryService');
+const PatientHistoryService = require('../services/PatientHistoryService');
 
 
 // Get all assessments with associated data
