@@ -160,6 +160,7 @@ export default {
         rightAnkle: 'Tornozelo Direito',
       };
       return traducoes[key] || key;
+
     },
     traduzirDobrasCutaneas(key) {
       const traducoes = {
@@ -175,6 +176,7 @@ export default {
       };
       return traducoes[key] || key;
     },
+
     atualizarCamposNecessarios() {
       const metodo = this.metodo;
       if (metodo === 'Guedes') {
@@ -194,6 +196,7 @@ export default {
         this.camposNecessarios = Object.keys(this.circumferenceData).concat(Object.keys(this.skinfoldData));
       }
     },
+
     mapearGenero(genero) {
       const mapaGenero = {
         masculino: 'homem',
@@ -222,6 +225,7 @@ export default {
         console.error('Erro ao salvar avaliação:', error);
       }
     },
+
     cancelarAvaliacao() {
       this.sexo = '';
       this.idade = null;

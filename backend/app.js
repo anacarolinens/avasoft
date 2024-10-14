@@ -43,6 +43,8 @@ app.delete('/patient/:id', patientController.deletePatient); // Changed from /pa
 // Define routes for assessments
 app.get('/assessments', assessmentController.getAllAssessments);
 app.get('/assessments/:id', assessmentController.getAssessmentById);
+app.get('/assessments/patient/:id_patient', assessmentController.getAssessmentsByPatientId);
+app.get('/assessments/patient/:id/history', assessmentController.getPatientHistory);
 app.post('/assessments', assessmentController.createAssessment);
 app.put('/assessments/:id', assessmentController.updateAssessment);
 app.delete('/assessments/:id', assessmentController.deleteAssessment);

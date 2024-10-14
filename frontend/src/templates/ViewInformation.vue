@@ -1,7 +1,7 @@
 <template>
   <div class="p-6 min-h-screen">
     <h1 class="text-3xl font-bold text-center mb-6">Informações do Paciente</h1>
-    
+
     <div v-if="patient && user" class="bg-white shadow-md rounded-lg p-6">
       <h2 class="text-2xl font-semibold text-gray-800 mb-4">Dados do Usuário</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -24,27 +24,68 @@
         <p><strong>Peso Inicial:</strong> {{ patient.weigth_ini }} kg</p>
         <p><strong>Altura Inicial:</strong> {{ patient.height_ini }} m</p>
       </div>
+
+      <h2 class="text-2xl font-semibold text-gray-800 mt-6 mb-4">Avaliações</h2>
+      <div class="flex flex-col">
+        <div class="-m-1.5 overflow-x-auto">
+          <div class="p-1.5 min-w-full inline-block align-middle">
+            <div class="border rounded-lg shadow overflow-hidden  dark:shadow-gray-400">
+              <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-400">
+                <thead class="bg-gray-100">
+                  <tr>
+                    <th scope="col"
+                      class="px-6 py-3 text-start text-xs font-medium text-gray-900 uppercase dark:text-neutral-500">
+                      ID</th>
+                    <th scope="col"
+                      class="px-6 py-3 text-start text-xs font-medium text-gray-900 uppercase dark:text-neutral-500">
+                      Data</th>
+                    <th scope="col"
+                      class="px-6 py-3 text-end text-xs font-medium text-gray-900 uppercase dark:text-neutral-500">Ações
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-neutral-400">
+                  <tr v-for="assessment in assessments" :key="assessment.id_assessment">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-500">
+                      {{ assessment.id_assessment }} </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-500">{{ 
+                      formatDate(assessment.assessmentDate)}}</td>
+
+                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                      <button type="button"
+                        class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400">Visualizar</button>
+                      <button type="button"
+                        class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400">Editar</button>
+                      <button type="button"
+                        class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-none focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none dark:text-red-500 dark:hover:text-red-400 dark:focus:text-red-400">Excluir</button>
+                    </td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    
+
     <div v-else class="text-center text-gray-600 mt-6">
       <p>Carregando informações...</p>
     </div>
 
     <div class="mt-6 flex justify-between">
-      <button 
-        @click="goBack" 
+      <button @click="goBack"
         class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
         Voltar
       </button>
       <div>
-        <button 
-          @click="editUserData" 
-          class="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 transition duration-200 mr-2" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-scale-animation-modal"
+        <button @click="editUserData"
+          class="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 transition duration-200 mr-2"
+          aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-scale-animation-modal"
           data-hs-overlay="#hs-scale-animation-modal">
           Editar Dados
         </button>
-        <button 
-          @click="newEvaluation" 
+        <button @click="newEvaluation"
           class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-200">
           Nova Avaliação
         </button>
@@ -220,6 +261,7 @@ export default {
       patient: null,
       user: null,
       showEditModal: false,
+      assessments: [], // Defina a variável assessments para armazenar as avaliações
       patientToEdit: {
         user_id: '',
         fullName: '',
@@ -243,6 +285,28 @@ export default {
         console.error('Erro ao buscar dados do paciente:', error);
       }
     },
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return date instanceof Date && !isNaN(date) ? date.toLocaleDateString() : 'Data inválida';
+    },
+    async fetchAssessments() {
+      try {
+        const patientId = this.$route.params.id;
+        const response = await axios.get(`http://localhost:3000/assessments/patient/${patientId}`);
+        console.log(response.data);
+        this.assessments = response.data;
+      } catch (error) {
+        console.error("Error fetching assessments:", error);
+      }
+    },
+    async deleteAssessment(id) {
+      try {
+        await axios.delete(`http://localhost:3000/assessments/${id}`);
+        this.fetchAssessments(); // Recarregue as avaliações após a exclusão
+      } catch (error) {
+        console.error('Erro ao deletar avaliação:', error);
+      }
+    },
     goBack() {
       this.$router.push('/patientlist');
     },
@@ -250,12 +314,10 @@ export default {
       const patientId = this.$route.params.id;
       this.$router.push(`/new-evaluation/${patientId}`);
     },
-    // Função para carregar dados no modal de edição
     editUserData() {
       this.patientToEdit = { ...this.user, user_id: this.user.id_user || this.patient.user_id };
       this.showEditModal = true;
     },
-    // Função para salvar os dados editados
     async updatePatient() {
       try {
         if (!this.patientToEdit.user_id) {
@@ -263,7 +325,7 @@ export default {
         }
 
         await axios.put(`http://localhost:3000/users/${this.patientToEdit.user_id}`, this.patientToEdit);
-        
+
         // Atualizar a exibição com os novos dados
         this.fetchPatientData();
         this.showEditModal = false;
@@ -274,6 +336,7 @@ export default {
   },
   mounted() {
     this.fetchPatientData();
+    this.fetchAssessments();
   },
 };
 </script>
