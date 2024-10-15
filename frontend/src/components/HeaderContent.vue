@@ -73,7 +73,7 @@
 
         <router-link to="/"
           class="flex items-center text-gray-300 hover:text-white hover:bg-red-600 rounded-md px-3 py-2 text-sm font-medium transition duration-150 ease-in-out"
-          active-class="bg-red-700 text-white">
+          active-class="bg-red-700 text-white" aria-label="Close" data-hs-overlay="#hs-header-base-offcanvas" >
           Sair
         </router-link>
       </nav>
