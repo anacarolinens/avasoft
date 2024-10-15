@@ -12,7 +12,7 @@ import PasswordResetConfirm from './templates/PasswordResetConfirm.vue';
 import PatientRegister from './templates/PatientRegister.vue';
 import PatientList from './templates/PatientList.vue';
 import ViewInformation from './templates/ViewInformation.vue';
-
+import ProfessionalRegister from './templates/ProfessionalRegister.vue';
 const routes = [
     {
         path: '/',
@@ -73,6 +73,11 @@ const routes = [
         path: '/PatientRegister',
         component: PatientRegister,
         name: 'PatientRegister'
+    },
+    {
+        path: '/ProfessionalRegister',
+        component: ProfessionalRegister,
+        name: 'ProfessionalRegister'
     },
     {
         path: '/patientlist',

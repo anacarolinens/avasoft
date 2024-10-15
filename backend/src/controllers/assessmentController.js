@@ -6,7 +6,8 @@ const Bmi = require('../models/bmi');
 const BodyComposition = require('../models/BodyComposition');
 const User = require('../models/user'); // Certifique-se de que o modelo User está sendo importado corretamente
 const { AssessmentService } = require('../services/assessmentService');
-const PatientHistoryService = require('../services/PatientHistoryService');
+const PatientHistoryService = require('../services/patientHistoryService');
+
 
 
 // Get all assessments with associated data
@@ -81,6 +82,7 @@ exports.getAssessmentById = async (req, res) => {
           model: BodyComposition,
           as: 'bodyComposition',
         },
+        
       ],
     });
 
