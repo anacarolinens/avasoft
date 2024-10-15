@@ -8,6 +8,7 @@ const { AssessmentService } = require('../services/assessmentService');
 const PatientHistoryService = require('../services/patientHistoryService');
 
 
+
 // Get all assessments with associated data
 exports.getAllAssessments = async (req, res) => {
   try {
@@ -73,11 +74,7 @@ exports.getAssessmentById = async (req, res) => {
           model: BodyComposition,
           as: 'bodyComposition',
         },
-        {
-          model: Professional, 
-          as: 'professional', 
-          attributes: ['fullName', 'experience', 'registry_professional'], 
-        },
+        
       ],
     });
 
