@@ -133,6 +133,11 @@ export default {
     // Obter o id_patient da rota
     this.id_patient = this.$route.params.id_patient;
   },
+  watch: {
+    sexo() {
+      this.atualizarCamposNecessarios();
+    },
+  },
   methods: {
     traduzirCircunferencia(key) {
       const traducoes = {
@@ -179,8 +184,13 @@ export default {
 
     atualizarCamposNecessarios() {
       const metodo = this.metodo;
+      const genero = this.sexo;
       if (metodo === 'Guedes') {
-        this.camposNecessarios = ['triceps', 'suprailiac', 'abdominal', 'subscapular', 'thigh'];
+        if (genero === 'masculino') {
+          this.camposNecessarios = ['triceps', 'suprailiac', 'abdominal'];
+        } else if (genero === 'feminino') {
+          this.camposNecessarios = ['thigh', 'suprailiac', 'subscapular'];
+        }
       } else if (metodo === 'Pollock') {
         this.camposNecessarios = ['triceps', 'suprailiac', 'abdominal', 'thigh', 'pectoral'];
       } else if (metodo === 'Jackson & Pollock') {

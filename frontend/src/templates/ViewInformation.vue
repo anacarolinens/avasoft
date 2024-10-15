@@ -25,6 +25,7 @@
         <p><strong>Altura Inicial:</strong> {{ patient.height_ini }} m</p>
       </div>
 
+      <!-- tebal de avaliaçãoes -->
       <h2 class="text-2xl font-semibold text-gray-800 mt-6 mb-4">Avaliações</h2>
       <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto">
@@ -48,16 +49,20 @@
                   <tr v-for="assessment in assessments" :key="assessment.id_assessment">
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-500">
                       {{ assessment.id_assessment }} </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-500">{{ 
-                      formatDate(assessment.assessmentDate)}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-500">{{
+                      formatDate(assessment.assessmentDate) }}</td>
 
                     <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                       <button type="button"
-                        class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400">Visualizar</button>
+                        class="bg-blue-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent"
+                        aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-large-modal"
+                        data-hs-overlay="#hs-large-modal" @click="openModal(assessment.id_assessment)">
+                        Visualizar
+                      </button>
                       <button type="button"
-                        class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400">Editar</button>
+                        class="bg-yellow-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent">Editar</button>
                       <button type="button"
-                        class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-none focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none dark:text-red-500 dark:hover:text-red-400 dark:focus:text-red-400">Excluir</button>
+                        class="bg-red-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent">Excluir</button>
                     </td>
 
                   </tr>
@@ -67,6 +72,92 @@
           </div>
         </div>
       </div>
+
+      <!-- Modal de visualização -->
+      <div id="hs-large-modal"
+        class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto" role="dialog"
+        tabindex="-1" aria-labelledby="hs-large-modal-label">
+        <div
+          class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-4xl lg:w-full m-3 h-[calc(100%-3.5rem)] lg:mx-auto">
+          <div
+            class="flex flex-col max-h-full overflow-hidden bg-white border shadow-sm rounded-xl pointer-events-auto">
+            <div class="flex justify-between items-center py-3 px-4 border-b">
+              <h3 id="hs-large-modal-label" class="font-bold text-gray-800" v-if="selectedAssessment">
+                Avaliação {{ selectedAssessment.id_assessment }}
+              </h3>
+              <button type="button"
+                class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
+                aria-label="Close" data-hs-overlay="#hs-large-modal" @click="closeModal">
+                <span class="sr-only">Close</span>
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M18 6 6 18"></path>
+                  <path d="m6 6 12 12"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div class="p-4 overflow-y-auto" v-if="selectedAssessment">
+              <div class="grid grid-cols-2 gap-4">
+                <p><strong>Data da Avaliação:</strong> {{ formatDate(selectedAssessment.assessmentDate) }}</p>
+                <p><strong>Peso:</strong> {{ selectedAssessment.weight }} kg</p>
+                <p><strong>Altura:</strong> {{ selectedAssessment.height }} cm</p>
+                <p><strong>Método:</strong> {{ selectedAssessment.method }}</p>
+              </div>
+      
+              <h4 class="my-4 font-bold text-black">Circunferências (cm)</h4>
+              <div class="grid grid-cols-2 gap-4">
+                <p><strong>Pescoço:</strong> {{ selectedAssessment.circumference.neck }} cm</p>
+                <p><strong>Tórax:</strong> {{ selectedAssessment.circumference.thorax }} cm</p>
+                <p><strong>Cintura:</strong> {{ selectedAssessment.circumference.waist }} cm</p>
+                <p><strong>Abdômen:</strong> {{ selectedAssessment.circumference.abdomen }} cm</p>
+                <p><strong>Quadril:</strong> {{ selectedAssessment.circumference.hip }} cm</p>
+                <p><strong>Braço Esquerdo:</strong> {{ selectedAssessment.circumference.leftArm }} cm</p>
+                <p><strong>Braço Direito:</strong> {{ selectedAssessment.circumference.rightArm }} cm</p>
+                <p><strong>Antebraço Esquerdo:</strong> {{ selectedAssessment.circumference.leftForearm }} cm</p>
+                <p><strong>Antebraço Direito:</strong> {{ selectedAssessment.circumference.rightForearm }} cm</p>
+                <p><strong>Coxa Esquerda:</strong> {{ selectedAssessment.circumference.leftGlutealThigh }} cm</p>
+                <p><strong>Coxa Direita:</strong> {{ selectedAssessment.circumference.rightGlutealThigh }} cm</p>
+                <p><strong>Perna Esquerda:</strong> {{ selectedAssessment.circumference.leftLeg }} cm</p>
+                <p><strong>Perna Direita:</strong> {{ selectedAssessment.circumference.rightLeg }} cm</p>
+                <p><strong>Punho Esquerdo:</strong> {{ selectedAssessment.circumference.leftWrist }} cm</p>
+                <p><strong>Punho Direito:</strong> {{ selectedAssessment.circumference.rightWrist }} cm</p>
+              </div>
+      
+              <h4 class="my-4 font-bold text-black">Dobras Cutâneas (mm)</h4>
+              <div class="grid grid-cols-2 gap-4">
+                <p><strong>Tríceps:</strong> {{ selectedAssessment.skinfold.triceps }} mm</p>
+                <p><strong>Abdominal:</strong> {{ selectedAssessment.skinfold.abdominal }} mm</p>
+                <p><strong>Subescapular:</strong> {{ selectedAssessment.skinfold.subscapular }} mm</p>
+                <p><strong>Supra-ilíaca:</strong> {{ selectedAssessment.skinfold.suprailiac }} mm</p>
+                <p><strong>Coxa:</strong> {{ selectedAssessment.skinfold.thigh }} mm</p>
+              </div>
+      
+              <template v-if="selectedAssessment.method !== 'Dados Livres'">
+                <h4 class="mt-4 font-bold">IMC</h4>
+                <p v-if="selectedAssessment.bmi"><strong>Valor do IMC:</strong> {{ selectedAssessment.bmi.bmiValue }}</p>
+                <p v-if="selectedAssessment.bmi"><strong>Classificação:</strong> {{ selectedAssessment.bmi.classification }}</p>
+      
+                <h4 class="mt-4 font-bold">Composição Corporal</h4>
+                <p v-if="selectedAssessment.bodyComposition"><strong>Densidade Corporal:</strong>
+                  {{ selectedAssessment.bodyComposition.body_density }}</p>
+                <p v-if="selectedAssessment.bodyComposition"><strong>Percentual de Gordura Corporal:</strong>
+                  {{ selectedAssessment.bodyComposition.body_fat_percentage }}%</p>
+              </template>
+            </div>
+
+            <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
+              <button type="button"
+                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                aria-label="Close" data-hs-overlay="#hs-large-modal" @click="closeModal">
+                Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div v-else class="text-center text-gray-600 mt-6">
@@ -86,7 +177,7 @@
           Editar Dados
         </button>
         <button @click="newEvaluation"
-          class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-200">
+          class="bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-200">
           Nova Avaliação
         </button>
       </div>
@@ -262,6 +353,7 @@ export default {
       user: null,
       showEditModal: false,
       assessments: [], // Defina a variável assessments para armazenar as avaliações
+      selectedAssessment: null,
       patientToEdit: {
         user_id: '',
         fullName: '',
@@ -298,6 +390,24 @@ export default {
       } catch (error) {
         console.error("Error fetching assessments:", error);
       }
+    },
+    async fetchAssessmentById(id) {
+      try {
+        const response = await fetch(`http://localhost:3000/assessments/${id}`);
+        const data = await response.json();
+        this.selectedAssessment = data;
+      } catch (error) {
+        console.error("Error fetching assessment:", error);
+      }
+    },
+    openModal(id) {
+      this.fetchAssessmentById(id);
+      const modal = document.getElementById('hs-large-modal');
+      modal.classList.remove('hidden');
+    },
+    closeModal() {
+      const modal = document.getElementById('hs-large-modal');
+      modal.classList.add('hidden');
     },
     async deleteAssessment(id) {
       try {
