@@ -1,4 +1,5 @@
 <template>
+  <ToastComponent v-if="showToast" :message="toastMessage" :type="toastType" />
   <div class="p-6 min-h-screen">
     <h1 class="text-3xl font-bold text-center mb-6">Informações do Paciente</h1>
 
@@ -176,7 +177,7 @@
           data-hs-overlay="#hs-scale-animation-modal">
           Editar Dados
         </button>
-        <button @click="newEvaluation"
+        <button @click="AssessmentPage(patient.id_patient)"
           class="bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-200">
           Nova Avaliação
         </button>
@@ -344,15 +345,22 @@
 
 <script>
 import axios from 'axios';
+import ToastComponent from '../components/ToastNotification.vue'
 
 export default {
   name: 'ViewInformation',
+  components: {
+    ToastComponent,
+  },
   data() {
     return {
       patient: null,
       user: null,
       showEditModal: false,
       assessments: [], // Defina a variável assessments para armazenar as avaliações
+      toastMessage: '',
+      toastType: 'success',
+      showToast: false,
       selectedAssessment: null,
       patientToEdit: {
         user_id: '',
@@ -420,9 +428,8 @@ export default {
     goBack() {
       this.$router.push('/patientlist');
     },
-    newEvaluation() {
-      const patientId = this.$route.params.id;
-      this.$router.push(`/new-evaluation/${patientId}`);
+    AssessmentPage(id_patient) {
+      this.$router.push({ name: 'AssessmentPage', params: { id_patient } });
     },
     editUserData() {
       this.patientToEdit = { ...this.user, user_id: this.user.id_user || this.patient.user_id };
@@ -435,13 +442,22 @@ export default {
         }
 
         await axios.put(`http://localhost:3000/users/${this.patientToEdit.user_id}`, this.patientToEdit);
-
         // Atualizar a exibição com os novos dados
         this.fetchPatientData();
         this.showEditModal = false;
+        this.showToastMessage('Dados atualizados com sucesso!', 'success');
       } catch (error) {
         console.error('Erro ao atualizar o paciente:', error);
+        this.showToastMessage('Erro ao atualizar os dados do paciente', 'error');
       }
+    },
+    showToastMessage(message, type) {
+      this.toastMessage = message;
+      this.toastType = type;
+      this.showToast = false;
+      this.$nextTick(() => {
+        this.showToast = true;
+      });
     },
   },
   mounted() {

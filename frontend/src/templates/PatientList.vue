@@ -1,4 +1,5 @@
 <template>
+  <ToastComponent v-if="showToast" :message="toastMessage" :type="toastType" />
   <div class=" flex flex-col justify-start items-center min-h-screen px-4">
 
     <!-- Título da página -->
@@ -93,12 +94,12 @@
             </div>
 
             <div class="flex justify-end items-center gap-x-2 py-3 px-4 bg-gray-50 border-t">
-              <button type="button"
+              <button @click="cancelDelete" type="button"
                 class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50"
-                data-hs-overlay="#hs-danger-alert" @click="cancelDelete">
+                aria-label="Close" data-hs-overlay="#hs-danger-alert" >
                 Cancelar
               </button>
-              <button @click="confirmDeletePatient"
+              <button @click="confirmDeletePatient" type="button"
                 class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 disabled:opacity-50 disabled:pointer-events-none"
                 aria-label="Close" data-hs-overlay="#hs-danger-alert">
                 Excluir
@@ -256,7 +257,8 @@
               Cancelar
             </button>
             <button @click="updatePatient" type="submit"
-              class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg text-white bg-blue-600 shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none focus:ring-offset-white dark:focus:ring-offset-neutral-800">
+              class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg text-white bg-blue-600 shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none focus:ring-offset-white dark:focus:ring-offset-neutral-800"
+              aria-label="Close" data-hs-overlay="#hs-scale-animation-modal">
               Atualizar
             </button>
           </div>
@@ -271,13 +273,20 @@
 
 <script>
 import axios from 'axios';
+import ToastComponent from '../components/ToastNotification.vue';
 
 export default {
+  components: {
+    ToastComponent
+  },
   data() {
     return {
       searchQuery: '',
       patients: [],
       patientToDelete: null,
+      showToast: false,
+      toastMessage: '',
+      toastType: 'success',
       patientToEdit: {
         user_id: '', // Alterado para 'user_id'
         fullName: '',
@@ -332,11 +341,13 @@ export default {
         }
         // Use o user_id para fazer a requisição PUT
         await axios.put(`http://localhost:3000/users/${this.patientToEdit.user_id}`, this.patientToEdit);
+        this.showToastMessage('Paciente atualizado com sucesso', 'success');
         // Atualizar a lista de pacientes
         this.fetchPatients();
         document.getElementById('hs-scale-animation-modal').classList.add('hidden'); // Fechar o modal
       } catch (error) {
         console.error('Erro ao atualizar o paciente:', error);
+        this.showToastMessage('Erro ao atualizar paciente', 'error');
       }
     },
 
@@ -354,11 +365,21 @@ export default {
         await axios.delete(`http://localhost:3000/patient/${this.patientToDelete}`);
         this.patients = this.patients.filter(patient => patient.id_patient !== this.patientToDelete);
         this.patientToDelete = null;
+        this.showToastMessage('Paciente excluído com sucesso', 'success');
         document.getElementById('hs-danger-alert').classList.add('hidden');
       } catch (error) {
         console.error(error);
+        this.showToastMessage('Erro ao excluir paciente', 'error');
         // Exibir mensagem de erro
       }
+    },
+    showToastMessage(message, type) {
+      this.toastMessage = message;
+      this.toastType = type;
+      this.showToast = false;
+      this.$nextTick(() => {
+        this.showToast = true;
+      });
     },
     cancelDelete() {
       this.patientToDelete = null;
