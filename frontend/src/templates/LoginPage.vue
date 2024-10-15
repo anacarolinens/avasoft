@@ -25,7 +25,7 @@
         <button type="button" class="button-login" @click="handleLogin">Entrar</button>
       </div>
       <div class="text-center text-white pt-2">
-        <p>Não tem uma conta? <a href="#" class="text-orange-400 hover:underline">Registre-se aqui!</a></p>
+        <p>Não tem uma conta? <a href="#" class="text-orange-400 hover:underline" ><router-link to="/ProfessionalRegister">Registre-se aqui!</router-link></a></p>
         <p class="pt-2">__________ OU __________</p>
 
         <div id="micro-google" class="flex justify-around pt-4">
@@ -101,7 +101,7 @@ beforeUnmount() {
     },
     async handleLogin() {
       try {
-        const response = await this.$axios.post('http://localhost:3000/login', {
+        const response = await this.$axios.post('http://localhost:5434/login', {
           userName: this.userName,
           password: this.password,
         });
