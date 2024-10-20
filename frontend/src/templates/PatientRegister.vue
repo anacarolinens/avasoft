@@ -200,7 +200,6 @@ export default {
       } catch (error) {
         console.error('Erro ao cadastrar paciente:', error);
 
-        // Verifica se há uma mensagem específica no erro
         if (error.response && error.response.data && error.response.data.message) {
           this.showToastMessage(`Erro ao cadastrar paciente: ${error.response.data.message}`, 'error');
         } else {

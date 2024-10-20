@@ -165,8 +165,7 @@
         }
   
         try {
-          // Envia a requisição com as senhas corretas
-          await axios.post('http://localhost:5434/register', {
+          await axios.post('http://localhost:3000/register', {
             fullName: this.fullName,
             cpf: this.cpf,
             dataNasc: this.dataNasc,
@@ -182,8 +181,8 @@
             cep: this.cep,
             role: 'Profissional',
             userName: this.userName,
-            password: this.password, // Use a senha correta
-            confirmPassword: this.confirmPassword, // Inclua o confirmPassword
+            password: this.password, 
+            confirmPassword: this.confirmPassword, 
             resetPasswordToken: null,
           });
           alert('Profissional cadastrado com sucesso!');

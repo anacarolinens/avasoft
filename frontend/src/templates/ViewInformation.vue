@@ -61,9 +61,14 @@
                         Visualizar
                       </button>
                       <button type="button"
-                        class="bg-yellow-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent">Editar</button>
+                        class="bg-yellow-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent disabled">Editar</button>
                       <button type="button"
-                        class="bg-red-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent">Excluir</button>
+                        class="bg-red-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent disabled">Excluir</button>
+                      <button type="button"
+                        class="bg-green-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent"
+                        @click="generatePdf(patient.id_patient)">
+                        Gerar PDF
+                      </button>
                     </td>
 
                   </tr>
@@ -106,7 +111,7 @@
                 <p><strong>Altura:</strong> {{ selectedAssessment.height }} cm</p>
                 <p><strong>Método:</strong> {{ selectedAssessment.method }}</p>
               </div>
-      
+
               <h4 class="my-4 font-bold text-black">Circunferências (cm)</h4>
               <div class="grid grid-cols-2 gap-4">
                 <p><strong>Pescoço:</strong> {{ selectedAssessment.circumference.neck }} cm</p>
@@ -125,7 +130,7 @@
                 <p><strong>Punho Esquerdo:</strong> {{ selectedAssessment.circumference.leftWrist }} cm</p>
                 <p><strong>Punho Direito:</strong> {{ selectedAssessment.circumference.rightWrist }} cm</p>
               </div>
-      
+
               <h4 class="my-4 font-bold text-black">Dobras Cutâneas (mm)</h4>
               <div class="grid grid-cols-2 gap-4">
                 <p><strong>Tríceps:</strong> {{ selectedAssessment.skinfold.triceps }} mm</p>
@@ -134,12 +139,14 @@
                 <p><strong>Supra-ilíaca:</strong> {{ selectedAssessment.skinfold.suprailiac }} mm</p>
                 <p><strong>Coxa:</strong> {{ selectedAssessment.skinfold.thigh }} mm</p>
               </div>
-      
+
               <template v-if="selectedAssessment.method !== 'Dados Livres'">
                 <h4 class="mt-4 font-bold">IMC</h4>
-                <p v-if="selectedAssessment.bmi"><strong>Valor do IMC:</strong> {{ selectedAssessment.bmi.bmiValue }}</p>
-                <p v-if="selectedAssessment.bmi"><strong>Classificação:</strong> {{ selectedAssessment.bmi.classification }}</p>
-      
+                <p v-if="selectedAssessment.bmi"><strong>Valor do IMC:</strong> {{ selectedAssessment.bmi.bmiValue }}
+                </p>
+                <p v-if="selectedAssessment.bmi"><strong>Classificação:</strong> {{
+                  selectedAssessment.bmi.classification }}</p>
+
                 <h4 class="mt-4 font-bold">Composição Corporal</h4>
                 <p v-if="selectedAssessment.bodyComposition"><strong>Densidade Corporal:</strong>
                   {{ selectedAssessment.bodyComposition.body_density }}</p>
@@ -357,7 +364,7 @@ export default {
       patient: null,
       user: null,
       showEditModal: false,
-      assessments: [], // Defina a variável assessments para armazenar as avaliações
+      assessments: [], 
       toastMessage: '',
       toastType: 'success',
       showToast: false,
@@ -370,7 +377,7 @@ export default {
         phone: '',
         email: '',
         street: '',
-        // Outros campos
+
       },
     };
   },
@@ -420,7 +427,7 @@ export default {
     async deleteAssessment(id) {
       try {
         await axios.delete(`http://localhost:3000/assessments/${id}`);
-        this.fetchAssessments(); // Recarregue as avaliações após a exclusão
+        this.fetchAssessments(); 
       } catch (error) {
         console.error('Erro ao deletar avaliação:', error);
       }
@@ -442,13 +449,29 @@ export default {
         }
 
         await axios.put(`http://localhost:3000/users/${this.patientToEdit.user_id}`, this.patientToEdit);
-        // Atualizar a exibição com os novos dados
         this.fetchPatientData();
         this.showEditModal = false;
         this.showToastMessage('Dados atualizados com sucesso!', 'success');
       } catch (error) {
         console.error('Erro ao atualizar o paciente:', error);
         this.showToastMessage('Erro ao atualizar os dados do paciente', 'error');
+      }
+    },
+    async generatePdf(patientId) {
+      try {
+        const response = await axios.get(`http://localhost:3000/assessments/patient/${patientId}/history`, {
+          responseType: 'blob',
+        });
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `Paciente_${patientId}_Historico.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Remove o link após o download
+        window.URL.revokeObjectURL(url); // Libera o objeto URL
+      } catch (error) {
+        console.error('Erro ao gerar PDF:', error);
       }
     },
     showToastMessage(message, type) {
@@ -459,6 +482,7 @@ export default {
         this.showToast = true;
       });
     },
+
   },
   mounted() {
     this.fetchPatientData();
