@@ -57,10 +57,8 @@ export default {
                 });
 
                 console.log('Senha redefinida com sucesso:', response.data);
-                // Redirecionar para a página de login ou mostrar uma mensagem de sucesso
             } catch (error) {
                 console.error('Erro ao redefinir a senha:', error);
-                // Trate o erro, exiba uma mensagem de erro, etc.
             }
         },
     },

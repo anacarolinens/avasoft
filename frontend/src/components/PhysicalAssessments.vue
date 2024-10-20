@@ -27,8 +27,10 @@
                 data-hs-overlay="#hs-large-modal" @click="openModal(assessment.id_assessment)">
                 Visualizar
               </button>
-              <button @click="editAssessment(assessment.id_assessment)" class="bg-yellow-500 text-white py-1 px-2 rounded">Editar</button>
-              <button @click="deleteAssessment(assessment.id_assessment)" class="bg-red-500 text-white py-1 px-2 rounded">Excluir</button>
+
+              <button @click="editAssessment(assessment.id_assessment)" class="bg-yellow-500 text-white py-1 px-2 rounded disabled">Editar</button>
+              <button @click="deleteAssessment(assessment.id_assessment)" class="bg-red-500 text-white py-1 px-2 rounded disabled">Excluir</button>
+
             </td>
           </tr>
         </tbody>
@@ -197,6 +199,13 @@ export default {
 
 <style scoped>
 /* Estilos da tabela */
+
+.disabled {
+  pointer-events: none; 
+  opacity: 0.5; 
+  cursor: not-allowed; 
+}
+
 table {
     width: 100%;
     border-collapse: collapse;

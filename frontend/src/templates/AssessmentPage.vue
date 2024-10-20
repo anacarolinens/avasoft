@@ -74,8 +74,7 @@
         <!-- Botões -->
         <div class="mt-4 flex space-x-4">
           <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Salvar Avaliação</button>
-          <button type="button" @click="cancelarAvaliacao"
-            class="px-4 py-2 bg-gray-500 text-white rounded-md">Cancelar</button>
+          <button type="button" @click="goBack" class="bg-gray-500 text-white p-3 rounded">Voltar</button>
         </div>
       </form>
     </div>
@@ -300,6 +299,9 @@ export default {
       };
       console.log('Formulário cancelado e resetado!');
     },
+    goBack() {
+      this.$router.go(-1);
+    }
   },
 };
 </script>

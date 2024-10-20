@@ -288,7 +288,7 @@ export default {
       toastMessage: '',
       toastType: 'success',
       patientToEdit: {
-        user_id: '', // Alterado para 'user_id'
+        user_id: '',
         fullName: '',
         cpf: '',
         dataNasc: '',
@@ -310,7 +310,7 @@ export default {
   computed: {
     filteredPatients() {
       return this.patients.filter(patient => {
-        const name = patient.user.fullName || ''; // Garante que 'name' não seja undefined
+        const name = patient.user.fullName || '';
         return name.toLowerCase().includes(this.searchQuery.toLowerCase());
       });
     }
@@ -327,22 +327,17 @@ export default {
     },
     // Editar paciente
     editPatient(patient) {
-      // Carregar os dados do paciente no modal
       this.patientToEdit = { ...patient.user };
-      this.patientToEdit.user_id = patient.user_id; // Use 'user_id' do objeto principal paciente      
+      this.patientToEdit.user_id = patient.user_id; 
     },
 
-    // Função para salvar as edições do paciente
     async updatePatient() {
       try {
-        // Verifique se o user_id está presente
         if (!this.patientToEdit.user_id) {
           throw new Error('ID do usuário não definido');
         }
-        // Use o user_id para fazer a requisição PUT
         await axios.put(`http://localhost:3000/users/${this.patientToEdit.user_id}`, this.patientToEdit);
         this.showToastMessage('Paciente atualizado com sucesso', 'success');
-        // Atualizar a lista de pacientes
         this.fetchPatients();
         document.getElementById('hs-scale-animation-modal').classList.add('hidden'); // Fechar o modal
       } catch (error) {
@@ -395,7 +390,7 @@ export default {
 
 
 <style scoped>
-/* Adicione os estilos necessários aqui */
+
 
 button {
   cursor: pointer;
