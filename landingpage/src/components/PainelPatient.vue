@@ -40,7 +40,7 @@
       };
     },
     mounted() {
-      this.renderChart();
+      
     },
   };
   </script>
