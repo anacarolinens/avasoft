@@ -15,15 +15,16 @@
           <label for="pass">Senha</label>
           <input type="password" id="pass" v-model="password" class="mt-2 mb-5 rounded border border-stone-700 p-2" placeholder="Digite sua senha aqui..." required>
         </div>
+
+        <p class="text-end text-sm">
+          <a href="#">Esqueceu a senha?</a>
+        </p>
+        <div class="flex justify-center mt-10">
+          <Button type="submit" class="bg-[#FF8139] px-12 py-3 text-white rounded-md hover:bg-[#FF5C00]">
+            Entrar
+          </Button>
+        </div>
       </form>
-      <p class="text-end text-sm">
-        <a href="#">Esqueceu a senha?</a>
-      </p>
-      <div class="flex justify-center mt-10">
-        <Button type="submit" class="bg-[#FF8139] px-12 py-3 text-white rounded-md hover:bg-[#FF5C00]">
-          Entrar
-        </Button>
-      </div>
     </div>
   </div>
 </template>
@@ -53,7 +54,7 @@ export default {
     },
     handleLogin() {
       if (this.userName && this.password) {
-        this.$router.push('/loginPatient');
+        this.$router.push('/homePatient');
         this.close();
       }
     }
