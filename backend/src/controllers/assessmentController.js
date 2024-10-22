@@ -4,6 +4,7 @@ const Circumference = require('../models/circumference');
 const Skinfold = require('../models/skinfold');
 const Bmi = require('../models/bmi');
 const BodyComposition = require('../models/BodyComposition');
+const User = require('../models/user'); // Certifique-se de que o modelo User está sendo importado corretamente
 const { AssessmentService } = require('../services/assessmentService');
 const PatientHistoryService = require('../services/patientHistoryService');
 
@@ -18,6 +19,13 @@ exports.getAllAssessments = async (req, res) => {
           model: Patient,
           as: 'patient',
           attributes: ['id_patient', 'weigth_ini', 'height_ini'],
+          include: [
+            {
+              model: User,
+              as: 'user',
+              attributes: ['fullName']
+            }
+          ]
         },
         {
           model: Circumference,

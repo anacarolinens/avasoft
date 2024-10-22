@@ -1,4 +1,5 @@
 <template>
+  <ToastComponent v-if="showToast" :message="toastMessage" :type="toastType" />
   <div class="container-login">
 
     <link rel="stylesheet"
@@ -29,7 +30,7 @@
         <p class="pt-2">__________ OU __________</p>
 
         <div id="micro-google" class="flex justify-around pt-4">
-          <a @click="logingoogle" class="flex justify-around rounded-md items-center w-40"><img src="../assets/img/google.png" alt="">Google</a>
+          <GoogleLogin :callback="callback" prompt auto-login/>
           <a href="#" class="flex justify-around  rounded-md items-center w-40"><img src="../assets/img/microsoft.png" alt="">Microsoft</a>
         </div>
       </div>
@@ -39,46 +40,43 @@
 
     <img id="logo" src="../assets/img/logo.svg" alt="logo avasoft" class="fixed top-1/2 right-0 transform -translate-y-1/2 max-w-[100%] max-h-[100%] opacity-50 z-[-1] md:max-w-[100%] md:max-h-[100%] sm:max-w-[100%] sm:max-h-[100%]" />
 
-    <router-link to="/HomePage" class="router-link">
-      <div class="link-content"> 
-        Home
-        <img src="@/assets/img/home-icon.svg" class="w-12" alt="">
-      </div>
-    </router-link>
-    <GoogleLogin :callback="callback" prompt auto-login/>
   </div>
 </template>
 
 <script>
 import { googleTokenLogin } from "vue3-google-login"
 import { decodeCredential } from "vue3-google-login";
+import ToastComponent from '../components/ToastNotification.vue'; 
+
 
 export default {
+  components: {
+    
+    ToastComponent
+  },
 
   data() {
     return {
       userName: '',
-      password: ''
+      password: '',
+      showToast: false,
+      toastMessage: '',
+      toastType: 'success',
     }
   },
 
   mounted() {
-  // Verifica se há um token na URL ao montar o componente
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get('token');
 
   if (token) {
-    // Se encontrar um token na URL, armazene-o em localStorage e configure o cabeçalho do Axios
     localStorage.setItem('authToken', token);
     this.$axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     
-    // Redirecione para a HomePage
     this.$router.push('/HomePage');
   } else {
-    // Caso contrário, verifique se já existe um token no localStorage
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
-      // Defina o token no cabeçalho de autorização para todas as requisições Axios
       this.$axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
     }
   }
@@ -101,22 +99,27 @@ beforeUnmount() {
     },
     async handleLogin() {
       try {
-        const response = await this.$axios.post('http://localhost:5434/login', {
+        const response = await this.$axios.post('http://localhost:3000/login', {
           userName: this.userName,
           password: this.password,
         });
-
         const { token } = response.data;
-
         // Armazene o token em localStorage
         localStorage.setItem('authToken', token);
-
-        // Redirecione para a HomePage ou faça outras ações necessárias após o login
+        this.showToastMessage('Login efetuado com sucesso!', 'success');
         this.$router.push('/HomePage');
       } catch (error) {
         console.error('Erro ao fazer login:', error);
-        // Trate o erro, exiba uma mensagem de erro, etc.
+        this.showToastMessage('Erro ao fazer login! Revise sua senha e nome de usuario', 'error');
       }
+    },
+    showToastMessage(message, type) {
+      this.toastMessage = message;
+      this.toastType = type;
+      this.showToast = false;
+      this.$nextTick(() => {
+        this.showToast = true;
+      });
     },
   },
 };

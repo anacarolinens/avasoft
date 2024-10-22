@@ -1,5 +1,7 @@
 <template>
+  <ToastComponent v-if="showToast" :message="toastMessage" :type="toastType" />
   <div class="flex p-6 max-w-6xl mx-auto bg-white rounded-xl shadow-md space-x-6">
+
     <!-- Formulário -->
     <div class="w-2/3">
       <h1 class="text-2xl font-bold text-center mb-2" style="color: black;">Avaliação Antropométrica</h1>
@@ -40,8 +42,8 @@
             class="mt-1 p-2 w-full border-gray-300 rounded-md">
             <option value="" disabled selected>Selecione o método</option>
             <option value="Guedes">Guedes</option>
-            <option value="Pollock">Pollock</option>
-            <option value="Jackson & Pollock">Jackson & Pollock</option>
+            <option value="Pollock" disabled>Pollock</option>
+            <option value="Jackson & Pollock" disabled>Jackson & Pollock</option>
             <option value="McArdle">McArdle</option>
             <option value="Dados Livres">Dados Livres</option>
           </select>
@@ -72,8 +74,7 @@
         <!-- Botões -->
         <div class="mt-4 flex space-x-4">
           <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Salvar Avaliação</button>
-          <button type="button" @click="cancelarAvaliacao"
-            class="px-4 py-2 bg-gray-500 text-white rounded-md">Cancelar</button>
+          <button type="button" @click="goBack" class="bg-gray-500 text-white p-3 rounded">Voltar</button>
         </div>
       </form>
     </div>
@@ -82,8 +83,12 @@
 
 <script>
 import axios from 'axios';
+import ToastComponent from '../components/ToastNotification.vue';
 
 export default {
+  components: {
+    ToastComponent,
+  },
   data() {
     return {
       sexo: '',
@@ -91,6 +96,9 @@ export default {
       peso: null,
       altura: null,
       metodo: '',
+      showToast: false,
+      toastMessage: '',
+      toastType: 'success',
       camposNecessarios: [],
       circumferenceData: {
         neck: null,
@@ -132,6 +140,11 @@ export default {
   created() {
     // Obter o id_patient da rota
     this.id_patient = this.$route.params.id_patient;
+  },
+  watch: {
+    sexo() {
+      this.atualizarCamposNecessarios();
+    },
   },
   methods: {
     traduzirCircunferencia(key) {
@@ -179,8 +192,13 @@ export default {
 
     atualizarCamposNecessarios() {
       const metodo = this.metodo;
+      const genero = this.sexo;
       if (metodo === 'Guedes') {
-        this.camposNecessarios = ['triceps', 'suprailiac', 'abdominal', 'subscapular', 'thigh'];
+        if (genero === 'masculino') {
+          this.camposNecessarios = ['triceps', 'suprailiac', 'abdominal'];
+        } else if (genero === 'feminino') {
+          this.camposNecessarios = ['thigh', 'suprailiac', 'subscapular'];
+        }
       } else if (metodo === 'Pollock') {
         this.camposNecessarios = ['triceps', 'suprailiac', 'abdominal', 'thigh', 'pectoral'];
       } else if (metodo === 'Jackson & Pollock') {
@@ -221,9 +239,20 @@ export default {
       try {
         const response = await axios.post('http://localhost:3000/assessments', assessmentData);
         console.log('Avaliação salva!', response.data);
+        this.showToastMessage('Avaliação salva com sucesso!', 'success');
       } catch (error) {
         console.error('Erro ao salvar avaliação:', error);
+        this.showToastMessage('Erro ao salvar avaliação!', 'error');
       }
+    },
+
+    showToastMessage(message, type) {
+      this.toastMessage = message;
+      this.toastType = type;
+      this.showToast = false;
+      this.$nextTick(() => {
+        this.showToast = true;
+      });
     },
 
     cancelarAvaliacao() {
@@ -270,6 +299,9 @@ export default {
       };
       console.log('Formulário cancelado e resetado!');
     },
+    goBack() {
+      this.$router.go(-1);
+    }
   },
 };
 </script>

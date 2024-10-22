@@ -1,4 +1,5 @@
 <template>
+  <ToastComponent v-if="showToast" :message="toastMessage" :type="toastType" />
   <div class="container flex flex-col justify-start items-center min-h-screen text-white px-4">
     <!-- Título do formulário -->
     <h2 class="text-2xl mb-6">Cadastro de Pacientes</h2>
@@ -23,8 +24,7 @@
         <!-- Data de Nascimento -->
         <div class="flex flex-col mx-4">
           <label for="dataNasc" class="mb-2 text-white">Data de Nascimento</label>
-          <input type="date" id="dataNasc" v-model="dataNasc"
-            class="w-full p-3 rounded focus:border-orange-500">
+          <input type="date" id="dataNasc" v-model="dataNasc" class="w-full p-3 rounded focus:border-orange-500">
         </div>
 
         <!-- Gênero -->
@@ -122,16 +122,23 @@
         </div>
       </div>
 
-      <!-- Botão de envio -->
-      <button type="submit" class="mt-6 bg-orange-500 text-white p-3 rounded">Cadastrar</button>
+      <!-- Botões de envio e voltar -->
+      <div class="flex justify-between my-6">
+        <button type="button" @click="goBack" class="bg-gray-500 text-white p-3 rounded">Voltar</button>
+        <button type="submit" class="bg-orange-500 text-white p-3 rounded">Cadastrar</button>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import ToastComponent from '../components/ToastNotification.vue'
 
 export default {
+  components: {
+    ToastComponent,
+  },
   data() {
     return {
       fullName: '',
@@ -152,6 +159,9 @@ export default {
       userName: '',
       password: '',
       confirmPassword: '',
+      toastMessage: '',
+      toastType: 'success',
+      showToast: false,
     };
   },
   methods: {
@@ -186,16 +196,28 @@ export default {
           weigth_ini: this.weigth_ini,
           height_ini: this.height_ini,
         });
-        alert('Paciente cadastrado com sucesso!');
+        this.showToastMessage('Paciente cadastrado com sucesso!', 'success');
       } catch (error) {
         console.error('Erro ao cadastrar paciente:', error);
+
         if (error.response && error.response.data && error.response.data.message) {
-          alert(`Erro ao cadastrar paciente: ${error.response.data.message}`);
+          this.showToastMessage(`Erro ao cadastrar paciente: ${error.response.data.message}`, 'error');
         } else {
-          alert('Erro ao cadastrar paciente.');
+          this.showToastMessage('Erro ao cadastrar paciente.', 'error');
         }
       }
     },
+    showToastMessage(message, type) {
+      this.toastMessage = message;
+      this.toastType = type;
+      this.showToast = false;
+      this.$nextTick(() => {
+        this.showToast = true;
+      });
+    },
+    goBack() {
+      this.$router.go(-1);
+    }
   }
 };
 </script>
