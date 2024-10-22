@@ -6,7 +6,7 @@
         <!-- Menu Hambúrguer e Logo -->
         <div class="flex items-center px-16">
           <!-- Botão Hambúrguer -->
-          <button @click="toggleMenu" class="mr-4 focus:outline-none">
+          <button @click="$emit('toggle-menu')" class="mr-4 focus:outline-none">
             <svg v-if="!menuOpen" class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
@@ -49,43 +49,25 @@
         </div>
       </div>
     </div>
-
-    <!-- Sidebar -->
-    <SideBarPatient :isOpen="menuOpen" />
-
-    <!-- Modal de Login do Paciente -->
-    <LoginPatientModal :isOpen="showModal" @close="closeModal" />
   </div>
 </template>
 
 <script>
-import SideBarPatient from '../components/SideBarPatient.vue';
-import LoginPatientModal from '../components/LoginPatientModal.vue';
-
 export default {
-  components: {
-    SideBarPatient,
-    LoginPatientModal
+  props: {
+    menuOpen: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
-      menuOpen: false,
       isDropdownOpen: false,
-      showModal: false,
     };
   },
   methods: {
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-    },
     toggleDropdown() {
       this.isDropdownOpen = !this.isDropdownOpen;
-    },
-    openModal() {
-      this.showModal = true;
-    },
-    closeModal() {
-      this.showModal = false;
     },
     logout() {
       this.$router.push('/');
