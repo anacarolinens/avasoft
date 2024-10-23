@@ -4,7 +4,7 @@
     <div class="relative flex h-16 items-center bg-[#131212] w-full">
       <div class="flex flex-1 items-center justify-between">
         <!-- Menu Hambúrguer e Logo -->
-        <div class="flex items-center px-16">
+        <div class="flex items-center px-8">
           <!-- Botão Hambúrguer -->
           <button @click="$emit('toggle-menu')" class="mr-4 focus:outline-none">
             <svg v-if="!menuOpen" class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -16,7 +16,7 @@
           </button>
           <!-- Logo -->
           <div class="flex-shrink-0">
-            <img class="h-15 md:h-12 w-auto ml-5" src="../assets/avasoft.svg" alt="Avasoft Company Logo" />
+            <img class="h-15 md:h-12 w-auto ml-3" src="../assets/avasoft.svg" alt="Avasoft Company Logo" />
           </div>
         </div>
 
@@ -25,8 +25,8 @@
           <div class="flex items-center gap-4">
             <!-- Informação do usuário -->
             <div class="font-medium text-white">
-              <div>Brenda Fernanda</div>
-              <div class="text-sm text-gray-400">Paciente</div>
+              <div v-if="user" >{{ user.fullName }}</div>
+              <div v-if="user"  class="text-sm text-gray-400">{{ user.role }}</div>
             </div>
 
             <!-- Imagem do usuário -->
@@ -53,6 +53,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   props: {
     menuOpen: {
@@ -63,6 +65,10 @@ export default {
   data() {
     return {
       isDropdownOpen: false,
+      user: {
+        fullName: '',
+        role: '',
+      },
     };
   },
   methods: {
@@ -71,7 +77,35 @@ export default {
     },
     logout() {
       this.$router.push('/');
+    }, 
+
+    
+
+    async getUserInfo() {
+      try {
+        const id_user = this.$route.params.patient.id_user;
+        if (id_user) {
+          const response = await axios.get(`http://localhost:5434/users${this.id_user}`);
+          this.patient.fullName = response.data.fullName;
+          this.patient.role = response.data.role;
+        } else {
+          console.error('ID de usuário não encontrado.');
+        }
+      } catch (error) {
+        console.error('Erro ao obter informações do usuário:', error);
+      }
+    },
+  },
+  watch: {
+    '$route.params.id_user': {
+      immediate: true,
+      handler() {
+        this.getUserInfo();
+      }
     }
   }
 };
 </script>
+
+<style scoped>
+</style>
