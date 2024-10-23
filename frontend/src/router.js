@@ -13,6 +13,9 @@ import PatientRegister from './templates/PatientRegister.vue';
 import PatientList from './templates/PatientList.vue';
 import ViewInformation from './templates/ViewInformation.vue';
 import ProfessionalRegister from './templates/ProfessionalRegister.vue';
+import EditAssessment from './templates/EditAssessment.vue';
+
+
 const routes = [
     {
         path: '/',
@@ -47,6 +50,12 @@ const routes = [
         name: 'AssessmentPage',
         props: true, // Permite passar o parâmetro id como prop para o componente
     },
+    {
+        path: '/assessments/:id', // Rota para a edição de uma avaliação específica
+        name: 'EditAssessment',
+        component: EditAssessment,
+        props: true, // Permite que os parâmetros da rota sejam passados como props para o componente
+      },
     {
         path: '/AssessmentUser',
         component: AssessmentUser,

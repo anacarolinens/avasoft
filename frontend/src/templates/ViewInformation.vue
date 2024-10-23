@@ -61,7 +61,10 @@
                         Visualizar
                       </button>
                       <button type="button"
-                        class="bg-yellow-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent disabled">Editar</button>
+                        class="bg-yellow-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent"
+                        @click="editAssessment(assessment.id_assessment)">
+                        Editar
+                      </button>
                       <button type="button"
                         class="bg-red-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent disabled">Excluir</button>
                       <button type="button"
@@ -364,7 +367,7 @@ export default {
       patient: null,
       user: null,
       showEditModal: false,
-      assessments: [], 
+      assessments: [],
       toastMessage: '',
       toastType: 'success',
       showToast: false,
@@ -427,7 +430,7 @@ export default {
     async deleteAssessment(id) {
       try {
         await axios.delete(`http://localhost:3000/assessments/${id}`);
-        this.fetchAssessments(); 
+        this.fetchAssessments();
       } catch (error) {
         console.error('Erro ao deletar avaliação:', error);
       }
@@ -481,6 +484,9 @@ export default {
       this.$nextTick(() => {
         this.showToast = true;
       });
+    },
+    editAssessment(id_assessment) {
+      this.$router.push(`/assessments/${id_assessment}`); 
     },
 
   },
