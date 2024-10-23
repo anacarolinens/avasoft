@@ -11,98 +11,98 @@
             <div class="flex flex-col mx-4">
               <label for="fullName" class="mb-2 text-white">Nome completo</label>
               <input type="text" id="fullName" placeholder="Digite seu nome completo aqui..." v-model="fullName"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- CPF -->
             <div class="flex flex-col mx-4">
               <label for="cpf" class="mb-2 text-white">CPF</label>
               <input type="text" id="cpf" placeholder="Digite seu CPF aqui..." v-model="cpf"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Telefone -->
             <div class="flex flex-col mx-4">
               <label for="phone" class="mb-2 text-white">Telefone</label>
               <input type="text" id="phone" placeholder="Digite seu telefone aqui..." v-model="phone"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Email -->
             <div class="flex flex-col mx-4">
               <label for="email" class="mb-2 text-white">Email</label>
               <input type="email" id="email" placeholder="Digite seu email aqui..." v-model="email"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Nome de Usuário -->
             <div class="flex flex-col mx-4">
               <label for="userName" class="mb-2 text-white">Nome de Usuário</label>
               <input type="text" id="userName" placeholder="Digite seu nome de usuário aqui..." v-model="userName"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Rua -->
             <div class="flex flex-col mx-4">
               <label for="street" class="mb-2 text-white">Rua</label>
               <input type="text" id="street" placeholder="Digite sua rua aqui..." v-model="street"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Número -->
             <div class="flex flex-col mx-4">
               <label for="number" class="mb-2 text-white">Número</label>
               <input type="number" id="number" placeholder="Digite o número aqui..." v-model="number"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Complemento -->
             <div class="flex flex-col mx-4">
               <label for="complement" class="mb-2 text-white">Complemento</label>
               <input type="text" id="complement" placeholder="Digite o complemento aqui..." v-model="complement"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Bairro -->
             <div class="flex flex-col mx-4">
               <label for="district" class="mb-2 text-white">Bairro</label>
               <input type="text" id="district" placeholder="Digite seu bairro aqui..." v-model="district"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Cidade -->
             <div class="flex flex-col mx-4">
               <label for="city" class="mb-2 text-white">Cidade</label>
               <input type="text" id="city" placeholder="Digite sua cidade aqui..." v-model="city"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Estado -->
             <div class="flex flex-col mx-4">
               <label for="state" class="mb-2 text-white">Estado</label>
               <input type="text" id="state" placeholder="Digite seu estado aqui..." v-model="state"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- CEP -->
             <div class="flex flex-col mx-4">
               <label for="cep" class="mb-2 text-white">CEP</label>
               <input type="text" id="cep" placeholder="Digite seu CEP aqui..." v-model="cep"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Senha Atual -->
             <div class="flex flex-col mx-4">
               <label for="currentPassword" class="mb-2 text-white">Senha Atual</label>
               <input type="password" id="currentPassword" placeholder="Digite sua senha atual aqui..." v-model="currentPassword"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
     
             <!-- Nova Senha -->
             <div class="flex flex-col mx-4">
               <label for="newPassword" class="mb-2 text-white">Nova Senha</label>
               <input type="password" id="newPassword" placeholder="Digite sua nova senha aqui..." v-model="newPassword"
-                class="w-full p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
+                class="w-full text-white p-3 rounded focus:border-orange-500 bg-input-color bg-[#3E3E3E]">
             </div>
           </div>
     
@@ -122,8 +122,79 @@
   </template>
 
 <script>
+import axios from 'axios';
 
+export default {
+  data() {
+    return {
+      fullName: '',
+      cpf: '',
+      phone: '',
+      email: '',
+      userName: '',
+      street: '',
+      number: '',
+      complement: '',
+      district: '',
+      city: '',
+      state: '',
+      cep: '',
+      currentPassword: '',
+      newPassword: '',
+    };
+  },
+  async mounted() {
+    try {
+      const response = await axios.get(`http://localhost:5434/users/${id_user}`);
+      const userData = response.data;
+
+      this.fullName = userData.fullName;
+      this.cpf = userData.cpf;
+      this.phone = userData.phone;
+      this.email = userData.email;
+      this.userName = userData.userName;
+      this.street = userData.street;
+      this.number = userData.number;
+      this.complement = userData.complement;
+      this.district = userData.district;
+      this.city = userData.city;
+      this.state = userData.state;
+      this.cep = userData.cep;
+      this.currentPassword = userData.currentPassword;
+      this.newPassword = userData.newPassword;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  methods: {
+    async handleRegister() {
+      try {
+        const id_user = localStorage.getItem('id_user');
+        const response = await axios.put(`http://localhost:5434/users/${id_user}`, {
+          fullName: this.fullName,
+          cpf: this.cpf,
+          phone: this.phone,
+          email: this.email,
+          userName: this.userName,
+          street: this.street,
+          number: this.number,
+          complement: this.complement,
+          district: this.district,
+          city: this.city,
+          state: this.state,
+          cep: this.cep,
+          currentPassword: this.currentPassword,
+          newPassword: this.newPassword,
+        });
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
+
 </style>
