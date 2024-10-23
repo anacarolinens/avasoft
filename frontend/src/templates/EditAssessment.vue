@@ -10,7 +10,17 @@
                 <div class="grid grid-cols-2 gap-4">
                     <label for="assessmentDate">Data da Avaliação:</label>
                     <p>{{ formatDate(selectedAssessment.assessmentDate) }}</p>
+                    <!-- <label for="gender">Sexo:</label>
+                    <select v-model="selectedAssessment.gender" id="gender" class="border p-2 rounded" required>
+                        <option value="" disabled selected>Selecione o sexo</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                        <option value="Outro">Outro</option>
+                    </select>
 
+                    <label for="age">Idade (anos):</label>
+                    <input type="number" v-model="selectedAssessment.age" id="age" class="border p-2 rounded"
+                        required /> -->
                     <label for="weight">Peso (kg):</label>
                     <input type="number" v-model="selectedAssessment.weight" id="weight" class="border p-2 rounded"
                         required />
@@ -211,7 +221,7 @@ export default {
                 this.showToast = true;
                 this.toastMessage = 'Avaliação atualizada com sucesso!';
                 this.toastType = 'success';
-                this.$router.go(-1); // Redirecionar após a atualização
+             // Redirecionar após a atualização
             } catch (error) {
                 console.error('Erro ao atualizar avaliação:', error);
                 this.showToast = true;
