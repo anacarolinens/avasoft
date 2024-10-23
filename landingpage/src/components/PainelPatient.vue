@@ -6,7 +6,7 @@
     <!-- Seção do gráfico -->
     <div class="max-w-4xl p-4 rounded-lg ml-30 min-w-full">
       <!-- Botões de navegação para os gráficos -->
-      <p class="mb-5 text-2xl">GRÁFICO</p>
+      <p class="mb-5 text-2xl text-center sm:text-left">GRÁFICO</p>
       <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
         <Button
           v-for="(tab, index) in tabs"

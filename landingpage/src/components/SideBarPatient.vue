@@ -1,9 +1,6 @@
 <template>
-  <aside :class="sidebarClass" class="">
-    <nav class=" h-full bg-[#131212] shadow">
-      <a class="px-4 flex items-center bg-[#131212] py-8">
-        
-      </a>
+  <aside :class="sidebarClass">
+    <nav class="h-full bg-[#131212] shadow pt-16">
       <a href="#" @click.prevent="selectMenu('painel')" class="py-2 px-4 flex items-center" :class="menuClass('painel')">
         <img class="h-6 w-6 mr-3" src="../assets/painel.png" alt="Simbolo painel">
         Início/ Painel
@@ -17,6 +14,18 @@
         Configurações
       </a>
     </nav>
+    <!-- Conteúdo adicional para telas menores -->
+    <div class="sm:hidden flex items-center gap-4 p-4">
+      <!-- Informação do usuário -->
+      <div class="font-medium text-white">
+        <div>Brenda Fernanda</div>
+        <div class="text-sm text-gray-400">Paciente</div>
+      </div>
+      <!-- Imagem do usuário -->
+      <div @click="toggleDropdown" class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 cursor-pointer">
+        <img class="w-full h-full object-cover rounded-full" src="https://via.placeholder.com/150" alt="User Image" />
+      </div>
+    </div>
   </aside>
 </template>
 
