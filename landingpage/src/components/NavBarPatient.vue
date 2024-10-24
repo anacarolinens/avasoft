@@ -25,8 +25,8 @@
           <div class="flex items-center gap-4">
             <!-- Informação do usuário -->
             <div class="font-medium text-white">
-              <div v-if="user" >{{ user.fullName }}</div>
-              <div v-if="user"  class="text-sm text-gray-400">{{ user.role }}</div>
+              <div v-if="user">{{ user.fullName }}</div>
+              <div v-if="user" class="text-sm text-gray-400">{{ user.role }}</div>
             </div>
 
             <!-- Imagem do usuário -->
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '../plugins/config';
 
 export default {
   props: {
@@ -76,33 +76,21 @@ export default {
       this.isDropdownOpen = !this.isDropdownOpen;
     },
     logout() {
+      localStorage.removeItem('authToken');
       this.$router.push('/');
-    }, 
-
-    
-
+    },
     async getUserInfo() {
       try {
-        const id_user = this.$route.params.patient.id_user;
-        if (id_user) {
-          const response = await axios.get(`http://localhost:5434/users${this.id_user}`);
-          this.patient.fullName = response.data.fullName;
-          this.patient.role = response.data.role;
-        } else {
-          console.error('ID de usuário não encontrado.');
-        }
+          const response = await axios.get('/users/me');
+          this.user.fullName = response.data.user.fullName;
+          this.user.role = response.data.user.role;
       } catch (error) {
-        console.error('Erro ao obter informações do usuário:', error);
-      }
+          console.error(error);
+      }       
     },
   },
-  watch: {
-    '$route.params.id_user': {
-      immediate: true,
-      handler() {
-        this.getUserInfo();
-      }
-    }
+  mounted() {
+    this.getUserInfo(); 
   }
 };
 </script>

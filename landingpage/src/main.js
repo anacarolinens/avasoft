@@ -2,12 +2,10 @@ import './index.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import axios from 'axios'
+import './plugins/config'
 
 
 const app = createApp(App);
-
-app.config.globalProperties.$axios = axios;
 
 app.use(router);
 app.mount('#app');

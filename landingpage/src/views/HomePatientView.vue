@@ -12,7 +12,6 @@
         <main class="py-4 px-2 max-w-7xl mb-12 mx-auto">
           <div class="relative isolate overflow-hidden">
             <div class="mx-auto justify-center lg:flex flex-col items-center">
-              <!-- Conteúdo principal aqui -->
               <PainelPatient v-if="selectedMenu === 'painel'" />
               <HistoryPatient v-else-if="selectedMenu === 'historico'" />
               <ConfigPatient v-else-if="selectedMenu === 'configuracoes'" />

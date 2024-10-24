@@ -15,4 +15,10 @@ router.post("/reset-password-confirm", UserController.resetPassword);
 app.get('/api/private', (req, res) => {
     res.json({ message: 'Rota privada' });
   });
+
+
+// Rota para obter informações do usuário logado
+router.get('/me', authMiddleware.authenticateUser, userController.getUserInfo);
+
+
 module.exports = router;
