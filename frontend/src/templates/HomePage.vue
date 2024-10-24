@@ -272,7 +272,7 @@ export default {
     },
     async confirmDeleteAssessment() {
       try {
-        await axios.delete(`http://localhost:3000/assessments/${this.assessmentToDelete}`);;
+        await axios.delete(`http://localhost:3000/assessments/${this.assessmentToDelete}`);
         this.assessments = this.assessments.filter(assessment => assessment.id_assessment !== this.assessmentToDelete);
         this.assessmentToDelete = null;
         this.showToastMessage('Avaliação excluída com sucesso', 'success');
