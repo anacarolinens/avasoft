@@ -29,7 +29,7 @@
               </button>
 
               <button @click="editAssessment(assessment.id_assessment)" class="bg-yellow-500 text-white py-1 px-2 rounded ">Editar</button>
-              <button @click="deleteAssessment(assessment.id_assessment)" class="bg-red-500 text-white py-1 px-2 rounded " aria-haspopup="dialog" aria-expanded="false"
+              <button @click="OpenModaldeleteAssessment(assessment.id_assessment)" class="bg-red-500 text-white py-1 px-2 rounded " aria-haspopup="dialog" aria-expanded="false"
               aria-controls="hs-danger-alert" data-hs-overlay="#hs-danger-alert">Excluir</button>
 
             </td>
@@ -240,7 +240,7 @@ export default {
     editAssessment(id_assessment) {
       this.$router.push(`/assessments/${id_assessment}`);
     },
-    deleteAssessment(assessmentId) {
+    OpenModaldeleteAssessment(assessmentId) {
       this.assessmentToDelete = assessmentId;
     },
     async confirmDeleteAssessment() {

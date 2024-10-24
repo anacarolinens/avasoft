@@ -66,7 +66,7 @@
                         Editar
                       </button>
                       
-                      <button @click="deleteAssessment(assessment.id_assessment)"
+                      <button @click="OpenModaldeleteAssessment(assessment.id_assessment)"
                       class="bg-red-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent" aria-haspopup="dialog" aria-expanded="false"
                         aria-controls="hs-danger-alert" data-hs-overlay="#hs-danger-alert">Excluir</button>
                       <button type="button"
@@ -549,7 +549,7 @@ export default {
     editAssessment(id_assessment) {
       this.$router.push(`/assessments/${id_assessment}`);
     },
-    deleteAssessment(assessmentId) {
+    OpenModaldeleteAssessment(assessmentId) {
       this.assessmentToDelete = assessmentId;
     },
     async confirmDeleteAssessment() {
