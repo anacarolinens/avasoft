@@ -6,7 +6,7 @@ import LoginPatientModal from "./components/LoginPatientModal.vue";
 
 const routes = [
   {
-    path: "/avasoft",
+    path: "/",
     name: "home",
     component: HomeView,
     meta: { showNavbar: false },

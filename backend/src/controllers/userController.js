@@ -75,6 +75,25 @@ exports.getUserById = async (req, res, next) => {
     });
 };
 
+exports.getUserInfo = async (req, res, next) => {
+  const userId = req.userData.id_user;
+  console.log('User ID from token:', userId); 
+  User.findByPk(userId)
+    .then((user) => {
+      if (!user) {
+        console.log('User not found'); 
+        return res.status(404).json({ message: "User Not Found" });
+      }
+      console.log('User found:', user); 
+      res.status(200).json({ user: user });
+    })
+    .catch((err) => {
+      console.error('Error fetching user info:', err); 
+      res.status(500).json({ message: "Error -> " + err });
+    });
+};
+
+
 // Create user and generate token
 /**
  * @swagger

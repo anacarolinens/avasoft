@@ -31,7 +31,7 @@
 
 <script>
 import Button from '../components/Button.vue';
-import axios from 'axios';
+import axios from '../plugins/config';
 
 export default {
   components: {
@@ -49,38 +49,22 @@ export default {
       password: ''
     };
   },
-  mounted() {
-    // Verifique se há um token no localStorage e configure o Axios
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    }
-  },
   methods: {
     close() {
       this.$emit('close');
     },
     async handleLogin() {
       try {
-        const response = await axios.post('http://localhost:5434/login', {
+        console.log('userName:', this.userName);
+        console.log('password:', this.password);
+        const response = await axios.post('/login', { 
           userName: this.userName,
           password: this.password,
         });
-
-        const { token } = response.data;
-
-        // Armazene o token em localStorage
-        localStorage.setItem('authToken', token);
-
-        // Defina o token no cabeçalho de autorização para todas as requisições Axios
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-        // Redirecione para a HomePage ou faça outras ações necessárias após o login
         this.$router.push('/homePatient');
         this.close();
       } catch (error) {
         console.error('Erro ao fazer login:', error);
-        // Trate o erro, exiba uma mensagem de erro, etc.
       }
     }
   }

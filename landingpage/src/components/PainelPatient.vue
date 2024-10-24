@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center text-white mt-10">
     <!-- Título de boas-vindas -->
-    <h1 class="text-3xl mb-12 ">Bem-vindo(a) Fernanda!</h1>
+    <h1 class="text-3xl mb-12 ">Bem-vindo(a) {{ fullName }}!</h1>
 
     <!-- Seção do gráfico -->
     <div class="max-w-4xl p-4 rounded-lg ml-30 min-w-full">
