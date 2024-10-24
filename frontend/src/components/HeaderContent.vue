@@ -19,9 +19,12 @@
       <!-- End Offcanvas Toggle -->
       
       <!-- Brand Name -->
-      <a class="flex-none font-semibold text-4xl ml-3 text-black focus:outline-none focus:opacity-80" href="#"
-        aria-label="Brand">AVA<span class="text-white">SOFT</span></a>
       
+        <router-link to="/HomePage"
+         >
+          <a class="flex-none font-semibold text-4xl ml-3 text-black focus:outline-none focus:opacity-80" href="#"
+          aria-label="Brand">AVA<span class="text-white">SOFT</span></a>
+        </router-link>
     </nav>
   </header>
   <!-- ========== END HEADER ========== -->

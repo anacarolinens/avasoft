@@ -1,15 +1,13 @@
 <template>
     <ToastComponent v-if="showToast" :message="toastMessage" :type="toastType" />
     <div class="flex p-6 max-w-6xl mx-auto bg-white rounded-xl shadow-md space-x-6">
-        <h3 class="font-bold text-gray-800" v-if="selectedAssessment">
+        
+        <div class="w-3/3">
+            <h3 class="font-bold text-gray-800" v-if="selectedAssessment">
             Edição da Avaliação {{ selectedAssessment.id_assessment }}
         </h3>
-        <div class="w-2/3">
-
             <div v-if="selectedAssessment" class="p-4">
                 <form @submit.prevent="updateAssessment">
-                    <label for="assessmentDate">Data da Avaliação:</label>
-                    <p>{{ formatDate(selectedAssessment.assessmentDate) }}</p>
                     <div class="mb-4 flex space-x-4">
                         <div class="w-1/2">
                             <label for="weight" class="block text-sm font-medium text-gray-700">Peso (kg)</label>
@@ -52,7 +50,7 @@
                     </div>
 
                     <!-- Circunferências -->
-                    <legend class="text-lg font-medium text-gray-700">Circunferências (cm)</legend>
+                    <legend class="text-lg font-medium text-gray-700 mt-4">Circunferências (cm)</legend>
                     <div v-if="selectedAssessment && selectedAssessment.skinfold" class="grid grid-cols-3 gap-4">
                         <div v-for="(value, key) in circumferenceData" :key="key">
                             <label :for="key" class="block text-sm font-medium">{{ traduzirCircunferencia(key)
