@@ -1,4 +1,5 @@
 <template>
+  <ToastComponent v-if="showToast" :message="toastMessage" :type="toastType" />
   <div class="container mx-auto md:px-20">
     <h1 class="text-2xl sm:text-3xl md:text-4xl text-center mt-5 mb-5 font-bold">
       Bem vindo (Profissional de Saude)
@@ -214,13 +215,20 @@
 
 <script>
 import axios from 'axios';
+import ToastComponent from '../components/ToastNotification.vue'
 
 export default {
+  components: {
+    ToastComponent,
+  },
   data() {
     return {
       assessmentToDelete: null,
       selectedAssessment: null,
       assessments: [],
+      toastMessage: '',
+      toastType: 'success',
+      showToast: false,
     };
   },
   mounted() {
@@ -285,6 +293,14 @@ export default {
     cancelDelete() {
       this.assessmentToDelete = null;
       document.getElementById('hs-danger-alert').classList.add('hidden');
+    },
+    showToastMessage(message, type) {
+      this.toastMessage = message;
+      this.toastType = type;
+      this.showToast = false;
+      this.$nextTick(() => {
+        this.showToast = true;
+      });
     },
   },
 };
