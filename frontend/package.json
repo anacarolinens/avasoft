@@ -1,6 +1,9 @@
 {
   "name": "AVASOFT",
   "version": "0.1.0",
+  "main": "background.js",
+  "description": "Avaliação antropométrica",
+  "author": "A mão de Deus sobre esses pobres estudantes lascados",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,7 +14,6 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
-  "main": "background.js",
   "dependencies": {
     "axios": "^1.6.7",
     "core-js": "^3.8.3",
@@ -30,11 +32,17 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "autoprefixer": "^10.4.19",
-    "electron": "^13.0.0",
-    "electron-devtools-installer": "^3.1.0",
+    "browserify-fs": "^1.0.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "electron": "^28.3.3",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "https-browserify": "^1.0.0",
+    "path-browserify": "^1.0.1",
     "postcss": "^8.4.38",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
     "tailwindcss": "^3.4.3",
     "vue-cli-plugin-electron-builder": "~2.1.1"
   },

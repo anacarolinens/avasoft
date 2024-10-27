@@ -1,80 +1,58 @@
 "use strict";
 
-import { app, protocol, BrowserWindow, globalShortcut } from "electron";
-import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
-const isDevelopment = process.env.NODE_ENV !== "production";
+const { app, BrowserWindow, globalShortcut, protocol } = require("electron");
+const path = require("path");
+const url = require("url");
 
-protocol.registerSchemesAsPrivileged([
-  { scheme: "app", privileges: { secure: true, standard: true } },
-]);
-
-async function createWindow() {
+function createWindow() {
   const win = new BrowserWindow({
     width: 1080,
     height: 720,
     webPreferences: {
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
+      preload: path.join(__dirname, 'preload.js'), // Ajuste o caminho para o preload.js
+      nodeIntegration: false, // Boa prática: mantenha false para maior segurança
+      contextIsolation: true, // Isolamento do contexto
     },
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
-    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
-    //if (!process.env.IS_TEST) win.webContents.openDevTools() // DevTools não abre automaticamente
+    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
   } else {
-    createProtocol("app");
-    win.loadURL("app://./index.html");
+    win.loadURL(url.format({
+      pathname: path.join(__dirname, 'index.html'),
+      protocol: 'file:',
+      slashes: true
+    }));
   }
+  
   win.maximize();
 }
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
-
-app.on("activate", () => {
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
-});
-
-app.on("ready", async () => {
-  if (isDevelopment && !process.env.IS_TEST) {
-    // Instalar Vue Devtools
-    try {
-      await installExtension(VUEJS3_DEVTOOLS);
-    } catch (e) {
-      console.error("Vue Devtools failed to install:", e.toString());
-    }
-  }
+app.on("ready", () => {
+  // Registra o protocolo app:// para os recursos estáticos
+  protocol.registerFileProtocol("app", (request, callback) => {
+    const url = request.url.replace("app://./", "");
+    const filePath = path.join(__dirname, url);
+    callback({ path: filePath });
+  });
 
   createWindow();
 
-  // Registrar o atalho para abrir/fechar o DevTools manualmente
+  // Atalho para abrir DevTools com Ctrl+Shift+I ou Command+Shift+I (macOS)
   globalShortcut.register("CommandOrControl+Shift+I", () => {
-    const win = BrowserWindow.getFocusedWindow(); // Obtém a janela que está em foco
-    if (win) {
-      win.webContents.toggleDevTools(); // Abre ou fecha o DevTools
-    }
+    const win = BrowserWindow.getFocusedWindow();
+    if (win) win.webContents.toggleDevTools();
+  });
+
+  app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
-app.on("will-quit", () => {
-  // Desregistrar todos os atalhos antes de sair
-  globalShortcut.unregisterAll();
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
 });
 
-if (isDevelopment) {
-  if (process.platform === "win32") {
-    process.on("message", (data) => {
-      if (data === "graceful-exit") {
-        app.quit();
-      }
-    });
-  } else {
-    process.on("SIGTERM", () => {
-      app.quit();
-    });
-  }
-}
+app.on("will-quit", () => {
+  globalShortcut.unregisterAll();
+});

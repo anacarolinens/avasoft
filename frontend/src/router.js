@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import HomePage from './templates/HomePage.vue';
 import LoginPage from './templates/LoginPage.vue';
 import RegisterUser from './components/RegisterUser.vue';
@@ -14,7 +14,6 @@ import PatientList from './templates/PatientList.vue';
 import ViewInformation from './templates/ViewInformation.vue';
 import ProfessionalRegister from './templates/ProfessionalRegister.vue';
 import EditAssessment from './templates/EditAssessment.vue';
-
 
 const routes = [
     {
@@ -98,11 +97,10 @@ const routes = [
         component: ViewInformation,
         name: 'ViewInformation'
     },
-
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes
 });
 
