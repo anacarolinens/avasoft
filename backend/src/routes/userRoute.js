@@ -17,8 +17,4 @@ app.get('/api/private', (req, res) => {
   });
 
 
-// Rota para obter informações do usuário logado
-router.get('/me', authMiddleware.authenticateUser, userController.getUserInfo);
-
-
 module.exports = router;

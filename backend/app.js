@@ -7,9 +7,25 @@ const professionalController = require('./src/controllers/professionalController
 const patientController = require('./src/controllers/patientController');
 const assessmentController = require('./src/controllers/assessmentController');
 
-require('dotenv').config();//necessario para o envio de email de recuperar senha
 
-app.use(cors());
+require('dotenv').config();
+
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    process.env.VITE_LANDINGPAGE_API_URL
+]
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
