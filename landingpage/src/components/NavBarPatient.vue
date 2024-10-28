@@ -6,7 +6,7 @@
         <!-- Menu Hambúrguer e Logo -->
         <div class="flex items-center px-8">
           <!-- Botão Hambúrguer -->
-          <button @click="$emit('toggle-menu')" class="mr-4 focus:outline-none">
+          <button @click="$emit('toggle-menu')" class="flex items-center mr-4 focus:outline-none">
             <svg v-if="!menuOpen" class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
@@ -82,6 +82,7 @@ export default {
     async getUserInfo() {
       try {
           const response = await axios.get('/users/me');
+          console.log(response.data); 
           this.user.fullName = response.data.user.fullName;
           this.user.role = response.data.user.role;
       } catch (error) {

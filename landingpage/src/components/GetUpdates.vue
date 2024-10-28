@@ -8,19 +8,12 @@
                 placeholder="Digite seu email aqui...">
         </div>
         <div class="flex justify-center mt-10">
-            <Button class="ml-5 bg-[#FF8139] px-4 lg:px-6 py-3 text-white rounded-md hover:bg-[#FF5C00]">Inscreva-se</Button>
+            <button class="ml-5 bg-[#FF8139] px-4 lg:px-6 py-3 text-white rounded-md hover:bg-[#FF5C00]">Inscreva-se</button>
         </div>
     </div>
 </template>
 
 <script>
-import Button from '../components/Button.vue';
-
-export default {
-    components: {
-        Button
-    }
-}
 </script>
 
 <style scoped>

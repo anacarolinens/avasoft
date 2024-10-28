@@ -20,9 +20,9 @@
           <a href="#">Esqueceu a senha?</a>
         </p>
         <div class="flex justify-center mt-10">
-          <Button type="submit" class="bg-[#FF8139] px-12 py-3 text-white rounded-md hover:bg-[#FF5C00]">
+          <button type="submit" class="flex items-center bg-[#FF8139] px-12 py-3 text-white rounded-md hover:bg-[#FF5C00]">
             Entrar
-          </Button>
+          </button>
         </div>
       </form>
     </div>
@@ -30,13 +30,9 @@
 </template>
 
 <script>
-import Button from '../components/Button.vue';
-import axios from '../plugins/config';
+import axios from 'axios';
 
 export default {
-  components: {
-    Button
-  },
   props: {
     isOpen: {
       type: Boolean,
@@ -55,8 +51,6 @@ export default {
     },
     async handleLogin() {
       try {
-        console.log('userName:', this.userName);
-        console.log('password:', this.password);
         const response = await axios.post('/login', { 
           userName: this.userName,
           password: this.password,
@@ -64,7 +58,13 @@ export default {
         this.$router.push('/homePatient');
         this.close();
       } catch (error) {
-        console.error('Erro ao fazer login:', error);
+        if (error.response) {
+          console.error('Erro ao fazer login:', error.response.data);
+        } else if (error.request) {
+          console.error('Erro ao fazer login: Nenhuma resposta do servidor');
+        } else {
+          console.error('Erro ao fazer login:', error.message);
+        }
       }
     }
   }

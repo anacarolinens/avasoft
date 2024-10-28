@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <button @click="toggleDropdown" class="ml-0.5 bg-[#FF8139] rounded-r-lg px-3 py-2 hover:bg-[#FF5C00]">
+    <button @click="toggleDropdown" class="flex items-center ml-0.5 bg-[#FF8139] rounded-r-lg px-3 py-2 hover:bg-[#FF5C00]">
       <img src="../assets/seta.png" alt="Seta dropdown">
     </button>
   </div>
