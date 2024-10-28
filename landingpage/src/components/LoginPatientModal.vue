@@ -51,10 +51,12 @@ export default {
     },
     async handleLogin() {
       try {
-        const response = await axios.post('/login', { 
+        const {data:{data}} = await axios.post('/login', { 
           userName: this.userName,
           password: this.password,
         });
+        localStorage.setItem('name', data.name);
+        localStorage.setItem('role', data.role);
         this.$router.push('/homePatient');
         this.close();
       } catch (error) {

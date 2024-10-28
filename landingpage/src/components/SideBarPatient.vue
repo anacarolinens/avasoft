@@ -15,25 +15,25 @@
           Configurações
         </a>
       </div>
-      <!-- Conteúdo adicional para telas menores -->
-      <div class="md:hidden flex flex-col gap-4 p-4 relative">
+      <!-- Conteúdo adicional para telas menores ou iguais a 1023px -->
+      <div class="lg:hidden flex flex-col gap-4 p-4 relative">
         <!-- Informação do usuário e imagem lado a lado -->
         <div class="flex items-center gap-4">
           <!-- Informação do usuário -->
           <div class="font-medium text-white">
-            <div>Brenda Fernanda</div>
-            <div class="text-sm text-gray-400">Paciente</div>
+        <div>{{ name }}</div>
+        <div class="text-sm text-gray-400">{{ role }}</div>
           </div>
           <!-- Imagem do usuário -->
           <div @click="toggleDropdown" class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 cursor-pointer">
-            <img class="w-full h-full object-cover rounded-full" src="https://via.placeholder.com/150" alt="User Image" />
+        <img class="w-full h-full object-cover rounded-full" src="https://via.placeholder.com/150" alt="User Image" />
           </div>
         </div>
         <!-- Botão Sair fixo -->
         <div class="w-full">
           <a @click="logout" class="flex items-center justify-end px-4 py-2 text-sm text-white hover:bg-gray-700 cursor-pointer">
-            <span class="mr-2">Sair</span>
-            <img src="../assets/exit.png" alt="Logout Icon" class="w-4 h-4">
+        <span class="mr-2">Sair</span>
+        <img src="../assets/exit.png" alt="Logout Icon" class="w-4 h-4">
           </a>
         </div>
       </div>
@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       selectedMenu: 'painel',
-      isDropdownOpen: false // Adicionando a propriedade isDropdownOpen
+      isDropdownOpen: false
     };
   },
   computed: {
@@ -63,6 +63,12 @@ export default {
         'transform translate-x-0': this.isOpen,
         '-translate-x-full': !this.isOpen
       };
+    },
+    name() {
+      return localStorage.getItem('name');
+    },
+    role() {
+      return localStorage.getItem('role');
     }
   },
   methods: {

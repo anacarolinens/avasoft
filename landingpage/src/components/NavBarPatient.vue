@@ -25,8 +25,8 @@
           <div class="flex items-center gap-4">
             <!-- Informação do usuário -->
             <div class="font-medium text-white">
-              <div v-if="user">{{ user.fullName }}</div>
-              <div v-if="user" class="text-sm text-gray-400">{{ user.role }}</div>
+              <div>{{ name }}</div>
+              <div class="text-sm text-gray-400">{{ role }}</div>
             </div>
 
             <!-- Imagem do usuário -->
@@ -70,6 +70,14 @@ export default {
         role: '',
       },
     };
+  },
+  computed: {
+    name() {
+      return localStorage.getItem('name');
+    },
+    role() {
+      return localStorage.getItem('role');
+    }
   },
   methods: {
     toggleDropdown() {
