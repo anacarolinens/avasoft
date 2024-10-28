@@ -12,10 +12,10 @@
                     com facilidade e precisão.
                 </p>
                 <div class="flex justify-center lg:justify-start">
-                    <Button class="ml-5 bg-[#FF8139] px-4 lg:px-6 py-3 text-white rounded-md hover:bg-[#FF5C00]">
+                    <button class="flex items-center ml-5 bg-[#FF8139] px-4 lg:px-6 py-3 text-white rounded-md hover:bg-[#FF5C00]">
                     Baixar agora
                     <img src="../assets/download.png" alt="Ícone de download" class="h-5 w-5 ml-2">
-                    </Button>
+                    </button>
                 </div>
                 
             </div>
@@ -24,13 +24,6 @@
 </template>
 
 <script>
-import Button from '../components/Button.vue';
-
-export default {
-    components: {
-        Button
-    }
-}
 
 </script>
 

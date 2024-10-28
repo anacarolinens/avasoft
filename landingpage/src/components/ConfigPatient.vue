@@ -105,78 +105,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
 
-export default {
-  data() {
-    return {
-      fullName: '',
-      cpf: '',
-      phone: '',
-      email: '',
-      userName: '',
-      street: '',
-      number: '',
-      complement: '',
-      district: '',
-      city: '',
-      state: '',
-      cep: '',
-      currentPassword: '',
-      newPassword: '',
-    };
-  },
-  async mounted() {
-    try {
-      const id_user = localStorage.getItem('id_user');
-      const response = await axios.get(`http://localhost:5434/users/${id_user}`);
-      const userData = response.data;
-
-      this.fullName = userData.fullName;
-      this.cpf = userData.cpf;
-      this.phone = userData.phone;
-      this.email = userData.email;
-      this.userName = userData.userName;
-      this.street = userData.street;
-      this.number = userData.number;
-      this.complement = userData.complement;
-      this.district = userData.district;
-      this.city = userData.city;
-      this.state = userData.state;
-      this.cep = userData.cep;
-      this.currentPassword = userData.currentPassword;
-      this.newPassword = userData.newPassword;
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  methods: {
-    async handleRegister() {
-      try {
-        const id_user = localStorage.getItem('id_user');
-        const response = await axios.put(`http://localhost:5434/users/${id_user}`, {
-          fullName: this.fullName,
-          cpf: this.cpf,
-          phone: this.phone,
-          email: this.email,
-          userName: this.userName,
-          street: this.street,
-          number: this.number,
-          complement: this.complement,
-          district: this.district,
-          city: this.city,
-          state: this.state,
-          cep: this.cep,
-          currentPassword: this.currentPassword,
-          newPassword: this.newPassword,
-        });
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  },
-};
 </script>
 
 <style scoped>

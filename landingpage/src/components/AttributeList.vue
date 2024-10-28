@@ -15,7 +15,7 @@
                             <img :src="imagePath(feature.src)" class="feature-icon">
                         </div>
                         <p
-                            :class="['text-sm font-medium mt-4 text-base', clickedFeature === feature ? 'font-semibold text-[#FF8139]' : 'text-[#A7A7A7]']">
+                            :class="['font-medium mt-4 text-base', clickedFeature === feature ? 'font-semibold text-[#FF8139]' : 'text-[#A7A7A7]']">
                             {{ feature.title }}
                         </p>
                     </div>
