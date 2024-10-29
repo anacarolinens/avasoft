@@ -31,6 +31,7 @@
 
 <script>
 import axios from 'axios';
+import { useToast } from 'vue-toastification';
 
 export default {
   props: {
@@ -50,6 +51,7 @@ export default {
       this.$emit('close');
     },
     async handleLogin() {
+      const toast = useToast();
       try {
         const {data:{data}} = await axios.post('/login', { 
           userName: this.userName,
@@ -61,10 +63,13 @@ export default {
         this.close();
       } catch (error) {
         if (error.response) {
+          toast.error('Usuário ou senha incorretos. Tente novamente.');
           console.error('Erro ao fazer login:', error.response.data);
         } else if (error.request) {
+          toast.error('Erro ao fazer login: Nenhuma resposta do servidor.');
           console.error('Erro ao fazer login: Nenhuma resposta do servidor');
         } else {
+          toast.error('Erro ao fazer login.');
           console.error('Erro ao fazer login:', error.message);
         }
       }

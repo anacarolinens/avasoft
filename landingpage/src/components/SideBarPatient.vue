@@ -80,6 +80,7 @@ export default {
       return this.selectedMenu === menu ? 'bg-[#FF8139]' : 'bg-[#131212] hover:bg-gray-700';
     },
     logout() {
+      localStorage.removeItem('authToken');
       this.$router.push('/');
     }
   }

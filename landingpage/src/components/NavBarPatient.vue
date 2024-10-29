@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import axios from '../plugins/config';
 
 export default {
   props: {
@@ -86,20 +85,7 @@ export default {
     logout() {
       localStorage.removeItem('authToken');
       this.$router.push('/');
-    },
-    async getUserInfo() {
-      try {
-          const response = await axios.get('/users/me');
-          console.log(response.data); 
-          this.user.fullName = response.data.user.fullName;
-          this.user.role = response.data.user.role;
-      } catch (error) {
-          console.error(error);
-      }       
-    },
-  },
-  mounted() {
-    this.getUserInfo(); 
+    }
   }
 };
 </script>
