@@ -1,7 +1,7 @@
 <template>
 
   <!-- ========== HEADER ========== -->
-  <header class="flex flex-wrap w-full md:justify-start md:flex-nowrap z-50 bg-orange-500">
+  <header class="fixed top-0 left-0 w-full flex flex-wrap md:justify-start md:flex-nowrap z-50 bg-orange-500">
     <nav class="relative max-w-[110rem] w-full mx-auto flex items-center justify-start gap-3 py-2 px-4 sm:px-6 lg:px-8">
   
       <!-- Offcanvas Toggle -->
@@ -52,25 +52,25 @@
       <nav class="space-y-2">
         <router-link to="/HomePage"
           class="flex items-center text-gray-300 hover:text-white hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium transition duration-150 ease-in-out"
-          active-class="bg-gray-800 text-white">
+          active-class="bg-gray-800 text-white" aria-label="Close" data-hs-overlay="#hs-header-base-offcanvas">
           Home
         </router-link>
 
         <router-link to="/PatientRegister"
           class="flex items-center text-gray-300 hover:text-white hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium transition duration-150 ease-in-out"
-          active-class="bg-gray-800 text-white">
+          active-class="bg-gray-800 text-white" aria-label="Close" data-hs-overlay="#hs-header-base-offcanvas">
           Cadastrar Paciente
         </router-link>
 
         <router-link to="/PhysicalAssessments"
           class="flex items-center text-gray-300 hover:text-white hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium transition duration-150 ease-in-out"
-          active-class="bg-gray-800 text-white">
+          active-class="bg-gray-800 text-white" aria-label="Close" data-hs-overlay="#hs-header-base-offcanvas">
           Avaliação Física
         </router-link>
 
         <router-link to="/patientlist"
           class="flex items-center text-gray-300 hover:text-white hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium transition duration-150 ease-in-out"
-          active-class="bg-gray-800 text-white">
+          active-class="bg-gray-800 text-white" aria-label="Close" data-hs-overlay="#hs-header-base-offcanvas">
           Lista de Pacientes
         </router-link>
 
