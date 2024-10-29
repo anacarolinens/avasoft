@@ -75,22 +75,21 @@ exports.getUserById = async (req, res, next) => {
     });
 };
 
-exports.getUserInfo = async (req, res, next) => {
-  const userId = req.userData.id_user;
+exports.getUserInfo = async (req, res) => {
+  const userId = req.userData.userId; 
   console.log('User ID from token:', userId); 
-  User.findByPk(userId)
-    .then((user) => {
-      if (!user) {
-        console.log('User not found'); 
-        return res.status(404).json({ message: "User Not Found" });
-      }
-      console.log('User found:', user); 
-      res.status(200).json({ user: user });
-    })
-    .catch((err) => {
-      console.error('Error fetching user info:', err); 
-      res.status(500).json({ message: "Error -> " + err });
-    });
+  try {
+    const user = await User.findByPk(userId); 
+    if (!user) {
+      console.log('User not found'); 
+      return res.status(404).json({ message: 'User not found' });
+    }
+    console.log('User found:', user); 
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error('Error fetching user info:', error); 
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 
@@ -288,37 +287,52 @@ exports.createUser = async (req, res, next) => {
 
 exports.loginUser = async (req, res, next) => {
   const { userName, password } = req.body;
-  console.log(req)
+
   try {
     // Find the user in the database
     const user = await User.findOne({ where: { userName: userName } });
 
     if (!user) {
-      return res.status(404).json({ message: "User Not Found" });
+      return res.status(404).json({ 
+        message: "User Not Found",
+        data: {
+          userName: userName,
+        } 
+      });
     }
 
-    // Compare the password with the hash stored in the database
+    // Compare the provided password with the stored hashed password
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid Password" });
+      return res.status(401).json({ 
+        message: "Invalid credentials",
+      });
     }
 
     // Generate authentication token
     const token = jwt.sign(
-      { userId: user.id, userName: user.userName },
-      process.env.JWT_SECRET, // Secret key from .env file
-      { expiresIn: "1h" } // Token expiration time
+      { 
+        userId: user.id, 
+        fullName: user.fullName,
+        role: user.role, 
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
     );
 
     res.status(200).json({
       message: "User logged in successfully!",
-      user: user,
-      token: token,
+      data: {
+        token,
+        name: user.fullName,
+        role: user.role,
+      },
     });
   } catch (error) {
+    console.error("Error logging in:", error);
     res.status(500).json({
-      message: "Error logging in -> " + error,
+      message: "Internal server error",
     });
   }
 };

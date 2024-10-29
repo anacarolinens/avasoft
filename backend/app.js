@@ -7,7 +7,10 @@ const professionalController = require('./src/controllers/professionalController
 const patientController = require('./src/controllers/patientController');
 const assessmentController = require('./src/controllers/assessmentController');
 
-require('dotenv').config();//necessario para o envio de email de recuperar senha
+
+require('dotenv').config();
+
+
 
 app.use(cors());
 app.use(bodyParser.json());

@@ -25,8 +25,8 @@
           <div class="flex items-center gap-4">
             <!-- Informação do usuário -->
             <div class="font-medium text-white">
-              <div v-if="user">{{ user.fullName }}</div>
-              <div v-if="user" class="text-sm text-gray-400">{{ user.role }}</div>
+              <div>{{ name }}</div>
+              <div class="text-sm text-gray-400">{{ role }}</div>
             </div>
 
             <!-- Imagem do usuário -->
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import axios from '../plugins/config';
 
 export default {
   props: {
@@ -71,6 +70,14 @@ export default {
       },
     };
   },
+  computed: {
+    name() {
+      return localStorage.getItem('name');
+    },
+    role() {
+      return localStorage.getItem('role');
+    }
+  },
   methods: {
     toggleDropdown() {
       this.isDropdownOpen = !this.isDropdownOpen;
@@ -78,20 +85,7 @@ export default {
     logout() {
       localStorage.removeItem('authToken');
       this.$router.push('/');
-    },
-    async getUserInfo() {
-      try {
-          const response = await axios.get('/users/me');
-          console.log(response.data); 
-          this.user.fullName = response.data.user.fullName;
-          this.user.role = response.data.user.role;
-      } catch (error) {
-          console.error(error);
-      }       
-    },
-  },
-  mounted() {
-    this.getUserInfo(); 
+    }
   }
 };
 </script>
