@@ -26,18 +26,22 @@
         <p><strong>Altura Inicial:</strong> {{ patient.height_ini }} m</p>
       </div>
 
-      <!-- tebal de avaliaçãoes -->
+      <!-- tabela de avaliaçãoes -->
       <h2 class="text-2xl font-semibold text-gray-800 mt-6 mb-4">Avaliações</h2>
       <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto">
           <div class="p-1.5 min-w-full inline-block align-middle">
-            <div class="border rounded-lg shadow overflow-hidden  dark:shadow-gray-400">
+            <div class="border rounded-lg shadow overflow-hidden dark:shadow-gray-400">
               <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-400">
                 <thead class="bg-gray-100">
                   <tr>
                     <th scope="col"
                       class="px-6 py-3 text-start text-xs font-medium text-gray-900 uppercase dark:text-neutral-500">
-                      ID</th>
+                      <input type="checkbox" @change="toggleSelectAll" />
+                    </th>
+                    <th scope="col"
+                      class="px-6 py-3 text-start text-xs font-medium text-gray-900 uppercase dark:text-neutral-500">ID
+                    </th>
                     <th scope="col"
                       class="px-6 py-3 text-start text-xs font-medium text-gray-900 uppercase dark:text-neutral-500">
                       Data</th>
@@ -49,10 +53,12 @@
                 <tbody class="divide-y divide-gray-200 dark:divide-neutral-400">
                   <tr v-for="assessment in assessments" :key="assessment.id_assessment">
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-500">
-                      {{ assessment.id_assessment }} </td>
+                      <input type="checkbox" v-model="selectedAssessments" :value="assessment.id_assessment" />
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-500">{{
+                      assessment.id_assessment }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-500">{{
                       formatDate(assessment.assessmentDate) }}</td>
-
                     <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                       <button type="button"
                         class="bg-blue-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent"
@@ -65,13 +71,14 @@
                         @click="editAssessment(assessment.id_assessment)">
                         Editar
                       </button>
-                      
+
                       <button @click="OpenModaldeleteAssessment(assessment.id_assessment)"
-                      class="bg-red-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent" aria-haspopup="dialog" aria-expanded="false"
-                        aria-controls="hs-danger-alert" data-hs-overlay="#hs-danger-alert">Excluir</button>
+                        class="bg-red-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent"
+                        aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-danger-alert"
+                        data-hs-overlay="#hs-danger-alert">Excluir</button>
                       <button type="button"
                         class="bg-green-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent"
-                        @click="generatePdf(patient.id_patient)">
+                        @click="generatePdf(assessment.id_assessment)">
                         Gerar PDF
                       </button>
                     </td>
@@ -83,6 +90,12 @@
           </div>
         </div>
       </div>
+
+      <button type="button"
+        class="bg-green-500 text-white py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent"
+        @click="generateComparisonPdf">
+        Gerar PDF de comparação
+      </button>
 
       <!-- Modal de visualização -->
       <div id="hs-large-modal"
@@ -170,6 +183,12 @@
           </div>
         </div>
       </div>
+
+      <div v-if="isLoading">Gerando PDF...</div>
+      <PdfselectedAssessments :assessments="selectedAssessmentsData" ref="pdfSelectedAssessments" />
+
+      <div v-if="isLoading">Gerando PDF...</div>
+      <PdfAssessment v-else :selectedAssessment="selectedAssessment" ref="pdfContent" />
 
     </div>
 
@@ -414,13 +433,19 @@
 
 
 <script>
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import axios from 'axios';
 import ToastComponent from '../components/ToastNotification.vue'
+import PdfAssessment from '../components/PdfAssessment.vue';
+import PdfselectedAssessments from '../components/PdfselectedAssessments.vue';
 
 export default {
   name: 'ViewInformation',
   components: {
     ToastComponent,
+    PdfAssessment,
+    PdfselectedAssessments,
   },
   data() {
     return {
@@ -429,6 +454,7 @@ export default {
       user: null,
       showEditModal: false,
       assessments: [],
+      selectedAssessments: [],
       toastMessage: '',
       toastType: 'success',
       showToast: false,
@@ -444,6 +470,11 @@ export default {
 
       },
     };
+  },
+  computed: {
+    selectedAssessmentsData() {
+      return this.assessments.filter(assessment => this.selectedAssessments.includes(assessment.id_assessment));
+    },
   },
   methods: {
     async fetchPatientData() {
@@ -521,19 +552,83 @@ export default {
         this.showToastMessage('Erro ao atualizar os dados do paciente', 'error');
       }
     },
+    toggleSelectAll(event) {
+      if (event.target.checked) {
+        this.selectedAssessments = this.assessments.map(assessment => assessment.id_assessment);
+      } else {
+        this.selectedAssessments = [];
+      }
+    },
     async generatePdf(patientId) {
       try {
-        const response = await axios.get(`http://localhost:3000/assessments/patient/${patientId}/history`, {
-          responseType: 'blob',
+        const assessment = this.assessments.find(a => a.id_assessment === patientId);
+        this.selectedAssessment = assessment;
+        this.$nextTick(async () => {
+          const pdfElement = this.$refs.pdfContent.$el;
+
+          // Captura o elemento com uma escala maior sem especificar largura e altura fixas
+          const canvas = await html2canvas(pdfElement, {
+            scale: 2,
+          });
+
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF('portrait', 'mm', 'a4');
+
+          // Calcule a posição central para alinhar a imagem na página
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          const imgWidth = pageWidth - -50; // ajuste de margem lateral
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          const positionY = (pageHeight - imgHeight) / 2; // centralizar verticalmente
+          const positionX = (pageWidth - imgWidth) / 2; // centralizar horizontalmente
+
+          pdf.addImage(imgData, 'PNG', positionX, positionY, imgWidth, imgHeight);
+
+          pdf.save(`Paciente_${patientId}_Avaliacao.pdf`);
         });
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `Paciente_${patientId}_Historico.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link); // Remove o link após o download
-        window.URL.revokeObjectURL(url); // Libera o objeto URL
+      } catch (error) {
+        console.error('Erro ao gerar PDF:', error);
+      }
+    },
+    async generateComparisonPdf() {
+      try {
+        const pdf = new jsPDF('portrait', 'mm', 'a4');
+
+        // Adicionar a página do gráfico de comparação
+        await this.$nextTick();
+        const chartElement = this.$refs.pdfSelectedAssessments.$el.querySelector('#hs-single-bar-chart');
+        const chartCanvas = await html2canvas(chartElement, { scale: 2 });
+        const chartImgData = chartCanvas.toDataURL('image/png');
+        const chartPageWidth = pdf.internal.pageSize.getWidth();
+        const chartPageHeight = pdf.internal.pageSize.getHeight();
+        const chartImgWidth = chartPageWidth - 20; // ajuste de margem lateral
+        const chartImgHeight = (chartCanvas.height * chartImgWidth) / chartCanvas.width;
+        const chartPositionY = (chartPageHeight - chartImgHeight) / 2; // centralizar verticalmente
+        const chartPositionX = (chartPageWidth - chartImgWidth) / 2; // centralizar horizontalmente
+
+        pdf.addImage(chartImgData, 'PNG', chartPositionX, chartPositionY, chartImgWidth, chartImgHeight);
+        pdf.addPage();
+
+        // Adicionar as páginas das avaliações
+        for (const assessment of this.selectedAssessmentsData) {
+          this.selectedAssessment = assessment;
+          await this.$nextTick();
+          const pdfElement = this.$refs.pdfSelectedAssessments.$el.querySelector(`[data-assessment-id="${assessment.id_assessment}"]`);
+          const canvas = await html2canvas(pdfElement, { scale: 2 });
+          const imgData = canvas.toDataURL('image/png');
+
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          const imgWidth = pageWidth - -150; // ajuste de margem lateral
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          const positionY = (pageHeight - imgHeight) / 2; // centralizar verticalmente
+          const positionX = (pageWidth - imgWidth) / 2; // centralizar horizontalmente
+
+          pdf.addImage(imgData, 'PNG', positionX, positionY, imgWidth, imgHeight);
+          pdf.addPage();
+        }
+        pdf.deletePage(pdf.getNumberOfPages()); // Remove a última página em branco
+        pdf.save(`Paciente_${this.patient.id_patient}_Comparacao.pdf`);
       } catch (error) {
         console.error('Erro ao gerar PDF:', error);
       }
