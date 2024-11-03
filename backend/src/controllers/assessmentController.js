@@ -100,9 +100,9 @@ exports.getAssessmentById = async (req, res) => {
 // Get assessments by patient ID
 exports.getAssessmentsByPatientId = async (req, res) => {
   try {
-    const patientId = req.params.id_patient; // Supondo que o ID do paciente venha dos parâmetros da URL
+    const patientId = req.params.id_patient;
     const assessments = await Assessment.findAll({
-      where: { id_patient: patientId }, // Filtra pelo id_patient específico
+      where: { id_patient: patientId },
       include: [
         {
           model: Patient,
@@ -112,16 +112,20 @@ exports.getAssessmentsByPatientId = async (req, res) => {
         {
           model: Circumference,
           as: 'circumference',
-          attributes: ['id_assessment', 'neck', 'thorax', 'waist', 'hip'],
+          attributes: ['id_assessment', 'neck', 'thorax', 'shoulderBlade', 'waist', 'abdomen', 'hip', 'leftWrist', 'rightWrist', 'leftArm', 'rightArm', 'leftContractedArm', 'rightContractedArm', 'leftForearm', 'rightForearm', 'leftGlutealThigh', 'rightGlutealThigh', 'leftMedialThigh', 'rightMedialThigh', 'leftLeg', 'rightLeg', 'leftAnkle', 'rightAnkle'],
         },
         {
           model: Skinfold,
           as: 'skinfold',
-          attributes: ['id_assessment', 'triceps', 'axillary', 'abdominal'],
+          attributes: ['id_assessment', 'triceps', 'axillary', 'abdominal', 'thigh', 'calf', 'subscapular', 'suprailiac', 'pectoral', 'bicep'],
         },
         {
           model: Bmi,
           as: 'bmi',
+        },
+        {
+          model: BodyComposition,
+          as: 'bodyComposition',
         },
       ],
     });
