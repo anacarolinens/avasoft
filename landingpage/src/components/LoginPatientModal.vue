@@ -56,11 +56,10 @@ export default {
         const {data:{data}} = await axios.post('/login', { 
           userName: this.userName,
           password: this.password,
-        });                                                                                                                                                                                     localStorage.setItem('authToken', data.token);       
+        });                                                                                                                
         localStorage.setItem('name', data.name);
         localStorage.setItem('role', data.role);
         localStorage.setItem('userId', data.userId);
-        console.log(localStorage.getItem('userId'));
         this.$router.push('/homePatient');
         this.close();
       } catch (error) {

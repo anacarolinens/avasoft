@@ -97,7 +97,7 @@
         <button type="button" @click="resetForm" class="w-full sm:w-auto min-w-[200px] h-12 px-4 py-3 bg-transparent text-white border border-white rounded">
           Limpar
         </button>
-        <button type="submit" class="w-full sm:w-auto min-w-[200px] h-12 bg-[#FF8139] text-white p-3 rounded">
+        <button type="submit" @click="saveData" class="w-full sm:w-auto min-w-[200px] h-12 bg-[#FF8139] text-white p-3 rounded">
           Salvar
         </button>
       </div>
@@ -107,6 +107,7 @@
 
 <script>
 import axios from '../plugins/config'
+import { useToast } from 'vue-toastification';
 
 export default {
   data() {
@@ -131,7 +132,7 @@ export default {
     const userId = localStorage.getItem('userId');
     if (userId) {
       try {
-        const response = await axios.get(`/patient/${userId}`);
+        const response = await axios.get(`/users/${userId}`);
         const userData = response.data;
         this.fullName = userData.user.fullName;
         this.cpf = userData.user.cpf;
@@ -157,7 +158,7 @@ export default {
       const userId = localStorage.getItem('userId');
       if (userId) {
         try {
-          const response = await axios.put(`/patient/${userId}`, {
+          const response = await axios.put(`/users/${userId}`, {
             fullName: this.fullName,
             cpf: this.cpf,
             phone: this.phone,
@@ -196,6 +197,10 @@ export default {
       this.cep = '';
       this.currentPassword = '';
       this.newPassword = '';
+    },
+    saveData() {
+      const toast = useToast();
+      toast.success('Dados salvos com sucesso!');
     }
   }
 }
