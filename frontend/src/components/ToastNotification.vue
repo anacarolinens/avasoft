@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="visible"
-    :class="toastClass"
+    :class="[toastClass, 'toast']"
     role="alert"
     tabindex="-1"
   >
@@ -65,3 +65,10 @@ export default {
 };
 </script>
 
+<style scoped>
+.toast {
+  z-index: 1000;
+  margin-top: 60px; /* Um valor maior que o da navbar */
+}
+
+</style>

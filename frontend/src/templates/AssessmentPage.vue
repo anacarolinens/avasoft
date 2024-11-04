@@ -19,7 +19,7 @@
           </div>
           <div class="w-1/2">
             <label for="idade" class="block text-sm font-medium text-gray-700">Idade</label>
-            <input v-model="idade" type="number" class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+            <input v-model="idade" type="number" min="9" class="mt-1 p-2 w-full border-gray-300 rounded-md" />
           </div>
         </div>
 
@@ -27,11 +27,11 @@
         <div class="mb-4 flex space-x-4">
           <div class="w-1/2">
             <label for="peso" class="block text-sm font-medium text-gray-700">Peso (kg)</label>
-            <input v-model="peso" type="number" class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+            <input v-model="peso" type="number" min="0" class="mt-1 p-2 w-full border-gray-300 rounded-md" />
           </div>
           <div class="w-1/2">
             <label for="altura" class="block text-sm font-medium text-gray-700">Altura (cm)</label>
-            <input v-model="altura" type="number" class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+            <input v-model="altura" type="number"  class="mt-1 p-2 w-full border-gray-300 rounded-md" />
           </div>
         </div>
 
@@ -55,8 +55,8 @@
           <div v-for="(value, key) in skinfoldData" :key="key">
             <label :for="key" class="block text-sm font-medium">{{ traduzirDobrasCutaneas(key) }}</label>
             <input v-model="skinfoldData[key]" :disabled="!camposNecessarios.includes(key)"
-              :class="{ 'disabled-input': !camposNecessarios.includes(key) }" type="number"
-              class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+              :class="{ 'disabled-input': !camposNecessarios.includes(key) }" type="number" 
+              class="mt-1 p-2 w-full border-gray-300 rounded-md" min="0"/>
           </div>
         </div>
 
@@ -66,8 +66,8 @@
           <div v-for="(value, key) in circumferenceData" :key="key">
             <label :for="key" class="block text-sm font-medium">{{ traduzirCircunferencia(key) }}</label>
             <input v-model="circumferenceData[key]" :disabled="!camposNecessarios.includes(key)"
-              :class="{ 'disabled-input': !camposNecessarios.includes(key) }" type="number"
-              class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+              :class="{ 'disabled-input': !camposNecessarios.includes(key) }" type="number" 
+              class="mt-1 p-2 w-full border-gray-300 rounded-md" min="0"/>
           </div>
         </div>
 

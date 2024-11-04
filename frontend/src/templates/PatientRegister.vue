@@ -15,7 +15,7 @@
           </label>
           <input type="text" id="fullName" placeholder="Digite seu nome completo aqui..." v-model="fullName"
             class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="!fullName" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+         
         </div>
 
 
@@ -26,9 +26,9 @@
           </label>
           <input type="text" id="cpf" placeholder="Digite seu CPF aqui..." v-model="cpf"
             class="w-full p-3 rounded focus:border-orange-500">
-            <span class="text-gray-500 text-sm mt-1">Somente números</span>
+          <span class="text-gray-500 text-sm mt-1">Somente números</span>
           <span v-if="cpf && !ValidaCPF(cpf)" class="text-red-500 text-sm mt-1">CPF inválido.</span>
-          <span v-if="!cpf" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+         
         </div>
 
         <!-- Data de Nascimento -->
@@ -37,9 +37,8 @@
             Data de Nascimento <span class="text-red-500">*</span>
           </label>
           <input type="date" id="dataNasc" v-model="dataNasc" class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="dataNasc && !isDateValid(dataNasc)" class="text-red-500 text-sm mt-1">Data inválida ou no
-            futuro.</span>
-          <span v-if="!dataNasc" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+          <span v-if="dataNasc && !isDateValid(dataNasc)" class="text-red-500 text-sm mt-1">Data inválida </span>
+         
         </div>
 
         <!-- Gênero -->
@@ -52,7 +51,7 @@
             <option value="Masculino">Masculino</option>
             <option value="Feminino">Feminino</option>
           </select>
-          <span v-if="!gender" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+         
         </div>
 
 
@@ -62,7 +61,7 @@
           </label>
           <input type="text" id="phone" placeholder="Digite seu telefone aqui..." v-model="phone"
             class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="!phone" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+         
         </div>
 
         <div class="flex flex-col mx-4">
@@ -72,7 +71,7 @@
           <input type="email" id="email" placeholder="Digite seu email aqui..." v-model="email"
             class="w-full p-3 rounded focus:border-orange-500">
           <span v-if="email && !ValidaEmail(email)" class="text-red-500 text-sm mt-1">Email inválido.</span>
-          <span v-if="!email" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+          
         </div>
 
         <div class="flex flex-col mx-4">
@@ -82,7 +81,7 @@
           <input type="text" id="cep" placeholder="Digite seu CEP aqui..." v-model="cep"
             class="w-full p-3 rounded focus:border-orange-500">
           <span v-if="cep && !ValidaCEP(cep)" class="text-red-500 text-sm mt-1">CEP inválido.</span>
-          <span v-if="!cep" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+         
         </div>
 
         <div class="flex flex-col mx-4">
@@ -91,7 +90,7 @@
           </label>
           <input type="text" id="street" placeholder="Digite sua rua aqui..." v-model="street"
             class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="!street" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+          
         </div>
 
         <div class="flex flex-col mx-4">
@@ -100,7 +99,7 @@
           </label>
           <input type="number" id="number" placeholder="Digite o número aqui..." v-model="number"
             class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="!number" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+          
         </div>
 
         <div class="flex flex-col mx-4">
@@ -109,7 +108,7 @@
           </label>
           <input type="text" id="district" placeholder="Digite seu bairro aqui..." v-model="district"
             class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="!district" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+         
         </div>
 
         <div class="flex flex-col mx-4">
@@ -118,7 +117,7 @@
           </label>
           <input type="text" id="city" placeholder="Digite sua cidade aqui..." v-model="city"
             class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="!city" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+          
         </div>
 
         <div class="flex flex-col mx-4">
@@ -127,7 +126,7 @@
           </label>
           <input type="text" id="state" placeholder="Digite seu estado aqui..." v-model="state"
             class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="!state" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+         
         </div>
 
         <div class="flex flex-col mx-4 col-span-2">
@@ -142,23 +141,23 @@
           </label>
           <input type="text" id="userName" placeholder="Digite seu nome de usuário aqui..." v-model="userName"
             class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="!userName" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+         
         </div>
 
         <!-- Peso Inicial -->
         <div class="flex flex-col mx-4">
           <label for="weigth_ini" class="mb-2 ">Peso Inicial<span class="text-red-500">*</span></label>
-          <input type="number" id="weigth_ini" placeholder="Digite seu peso inicial aqui..." v-model="weigth_ini"
+          <input type="number" id="weigth_ini" min="1" placeholder="Digite seu peso inicial aqui..." v-model="weigth_ini"
             class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="!weigth_ini" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+         
         </div>
 
         <!-- Altura Inicial -->
         <div class="flex flex-col mx-4">
-          <label for="height_ini" class="mb-2 text-white">Altura Inicial<span class="text-red-500">*</span></label>
-          <input type="number" id="height_ini" placeholder="Digite sua altura inicial aqui..." v-model="height_ini"
+          <label for="height_ini" class="mb-2 ">Altura Inicial<span class="text-red-500">*</span></label>
+          <input type="number" id="height_ini" min="1" placeholder="Digite sua altura inicial aqui..." v-model="height_ini"
             class="w-full p-3 rounded focus:border-orange-500">
-          <span v-if="!height_ini" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
+         
         </div>
       </div>
 
@@ -206,35 +205,63 @@ export default {
   },
   methods: {
     ValidaCPF(strCPF) {
-      var Soma;
-      var Resto;
-      Soma = 0;
-      if (strCPF === "00000000000") return false;
+      // Verifica se o CPF tem exatamente 11 caracteres
+      if (strCPF.length !== 11) return false;
 
-      for (let i = 1; i <= 9; i++) Soma += parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+      // Verifica se todos os caracteres são iguais, como "11111111111" ou "00000000000"
+      if (/^(\d)\1{10}$/.test(strCPF)) return false;
+
+      let Soma = 0;
+      let Resto;
+
+      // Calcula o primeiro dígito verificador
+      for (let i = 1; i <= 9; i++) {
+        Soma += parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+      }
       Resto = (Soma * 10) % 11;
-
       if (Resto === 10 || Resto === 11) Resto = 0;
       if (Resto !== parseInt(strCPF.substring(9, 10))) return false;
 
+      // Calcula o segundo dígito verificador
       Soma = 0;
-      for (let i = 1; i <= 10; i++) Soma += parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+      for (let i = 1; i <= 10; i++) {
+        Soma += parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+      }
       Resto = (Soma * 10) % 11;
-
       if (Resto === 10 || Resto === 11) Resto = 0;
+
       return Resto === parseInt(strCPF.substring(10, 11));
     },
+
     ValidaEmail(email) {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return regex.test(email);
     },
     ValidaCEP(cep) {
+      // Expressão regular para o formato de CEP: XXXXX-XXX ou XXXXXXXX
       const regex = /^[0-9]{5}-?[0-9]{3}$/;
-      return regex.test(cep);
+
+      // Verifica o formato inicial do CEP (com ou sem hífen)
+      if (!regex.test(cep)) return false;
+
+      // Remove o hífen, se houver, para facilitar a validação numérica
+      const numericCEP = cep.replace('-', '');
+
+      // Verifica se o CEP é formado por números repetidos, como "11111111"
+      if (/^(\d)\1+$/.test(numericCEP)) return false;
+
+      // Extrai o primeiro dígito para verificar a região postal
+      const firstDigit = parseInt(numericCEP.charAt(0));
+
+      // Verifica se o primeiro dígito está no intervalo válido de 0 a 9
+      if (firstDigit < 0 || firstDigit > 9) return false;
+
+      // O CEP passou por todas as verificações e é considerado válido
+      return true;
     },
 
     isDateValid(date) {
-      // Verifica se a data está no formato YYYY-MM-DD (o formato típico de input type="date")
+      // Verifica se a data está no formato YYYY-MM-DD
       const regex = /^\d{4}-\d{2}-\d{2}$/;
       if (!regex.test(date)) {
         return false;
@@ -242,24 +269,36 @@ export default {
 
       // Tenta criar um objeto Date com a data fornecida
       const parsedDate = new Date(date);
-      // Verifica se a data é válida (o objeto Date não é "Invalid Date")
+      // Verifica se a data é válida
       if (isNaN(parsedDate.getTime())) {
         return false;
       }
 
-      // Opcional: Verificar se a data não é futura
+      // Verifica se a data não é futura
       const today = new Date();
       if (parsedDate > today) {
         return false;
       }
 
-      return true;
+      // Calcula a idade a partir da data fornecida
+      const birthDate = parsedDate;
+      let age = today.getFullYear() - birthDate.getFullYear(); // Alterado para let
+      const monthDifference = today.getMonth() - birthDate.getMonth();
+
+      // Ajusta a idade se o aniversário ainda não ocorreu este ano
+      if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+
+      // Verifica se a idade é menor que 15 anos
+      return age >= 9;
     },
+
     async handleRegister() {
       // Verificação dos campos obrigatórios
       if (!this.fullName || !this.cpf || !this.dataNasc || !this.gender || !this.phone || !this.email ||
         !this.street || !this.number || !this.district || !this.city || !this.state || !this.cep ||
-        !this.userName ) {
+        !this.userName) {
         this.showToastMessage('Por favor, preencha todos os campos onrigatórios', 'error');
         return;
       }

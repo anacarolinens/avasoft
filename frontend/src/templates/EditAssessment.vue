@@ -12,13 +12,13 @@
                         <div class="w-1/2">
                             <label for="weight" class="block text-sm font-medium text-gray-700">Peso (kg)</label>
 
-                            <input class="mt-1 p-2 w-full border-gray-300 rounded-md" type="number"
+                            <input class="mt-1 p-2 w-full border-gray-300 rounded-md" type="number" min="0"
                                 v-model="selectedAssessment.weight" id="weight" required />
                         </div>
                         <div class="w-1/2">
                             <label for="altura" class="block text-sm font-medium text-gray-700">Altura (cm)</label>
 
-                            <input type="number" v-model="selectedAssessment.height" id="height"
+                            <input type="number" min="0" v-model="selectedAssessment.height" id="height"
                                 class="mt-1 p-2 w-full border-gray-300 rounded-md" required />
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                             <input v-model="selectedAssessment.skinfold[key]"
                                 :disabled="!camposNecessarios.includes(key)"
                                 :class="{ 'disabled-input': !camposNecessarios.includes(key) }" type="number"
-                                class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+                                class="mt-1 p-2 w-full border-gray-300 rounded-md" min="0"/>
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@
                             <input v-model="selectedAssessment.circumference[key]"
                                 :disabled="!camposNecessarios.includes(key)"
                                 :class="{ 'disabled-input': !camposNecessarios.includes(key) }" type="number"
-                                class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+                                class="mt-1 p-2 w-full border-gray-300 rounded-md" min="0" />
                         </div>
                     </div>
 
