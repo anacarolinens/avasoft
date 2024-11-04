@@ -1,11 +1,11 @@
 <template>
     <ToastComponent v-if="showToast" :message="toastMessage" :type="toastType" />
     <div class="flex p-6 max-w-6xl mx-auto bg-white rounded-xl shadow-md space-x-6">
-        
+
         <div class="w-3/3">
             <h3 class="font-bold text-gray-800" v-if="selectedAssessment">
-            Edição da Avaliação {{ selectedAssessment.id_assessment }}
-        </h3>
+                Edição da Avaliação {{ selectedAssessment.id_assessment }}
+            </h3>
             <div v-if="selectedAssessment" class="p-4">
                 <form @submit.prevent="updateAssessment">
                     <div class="mb-4 flex space-x-4">
@@ -24,10 +24,10 @@
                     </div>
                     <!-- Seleção do Método de Avaliação -->
                     <div class="mb-4">
-                        <label for="method" class="block text-sm font-medium text-gray-700" >Método de
+                        <label for="method" class="block text-sm font-medium text-gray-700">Método de
                             Avaliação</label>
                         <select v-model="selectedAssessment.method" id="method"
-                            class="mt-1 p-2 w-full border-gray-300 rounded-md" disabled >
+                            class="mt-1 p-2 w-full border-gray-300 rounded-md" disabled>
                             <option value="" disabled selected>Selecione o método</option>
                             <option value="Guedes">Guedes</option>
                             <option value="Pollock" disabled>Pollock</option>
@@ -38,7 +38,7 @@
                     </div>
                     <!-- Dobras Cutâneas -->
                     <legend class="text-lg font-medium text-gray-700">Dobras Cutâneas (mm)</legend>
-                    <div v-if="selectedAssessment && selectedAssessment.skinfold"  class="grid grid-cols-3 gap-4">
+                    <div v-if="selectedAssessment && selectedAssessment.skinfold" class="grid grid-cols-3 gap-4">
                         <div v-for="(value, key) in skinfoldData" :key="key">
                             <label :for="key" class="block text-sm font-medium">{{ traduzirDobrasCutaneas(key)
                                 }}</label>
@@ -212,8 +212,8 @@ export default {
                 // Atualiza os campos necessários após carregar os dados da avaliação
                 this.atualizarCamposNecessarios();
                 this.selectedAssessment = response.data;
-        this.selectedAssessment.skinfold = this.selectedAssessment.skinfold || {};
-        this.selectedAssessment.circumference = this.selectedAssessment.circumference || {};
+                this.selectedAssessment.skinfold = this.selectedAssessment.skinfold || {};
+                this.selectedAssessment.circumference = this.selectedAssessment.circumference || {};
             } catch (error) {
                 console.error('Erro ao buscar avaliação:', error);
             }
@@ -287,6 +287,16 @@ export default {
         'selectedAssessment.method': 'atualizarCamposNecessarios',
     },
     mounted() {
+        // Verifica se a página já foi recarregada
+        if (!localStorage.getItem('pageReloaded')) {
+            // Marca que a página foi recarregada
+            localStorage.setItem('pageReloaded', 'true');
+            // Recarrega a página
+            window.location.reload();
+        } else {
+            // Remove a marcação para futuras visitas
+            localStorage.removeItem('pageReloaded');
+        }
         this.atualizarCamposNecessarios();
         this.fetchAssessmentById();
     },

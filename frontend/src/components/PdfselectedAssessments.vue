@@ -1,7 +1,9 @@
 <template>
   <div ref="pdfSelectedAssessments">
-    <div id="hs-single-bar-chart"></div>
-    <div v-for="assessment in assessments" :key="assessment.id_assessment" :data-assessment-id="assessment.id_assessment" class="min-h-screen p-8 font-sans">
+    <div ref="chartContainer"></div>
+
+    <div v-for="assessment in assessments" :key="assessment.id_assessment"
+      :data-assessment-id="assessment.id_assessment" class="min-h-screen p-8 font-sans">
       <div class="card-container max-w-3xl mx-auto bg-white shadow-lg">
         <div class="card-header bg-gradient-to-r from-orange-500 to-orange-200 text-white p-4">
           <h1 class="text-2xl font-bold">Avaliação Antropométrica</h1>
@@ -57,7 +59,8 @@
 
             <h4 class="mt-4 font-bold">Composição Corporal</h4>
             <p v-if="assessment.bodyComposition">Densidade Corporal: {{ assessment.bodyComposition.body_density }}</p>
-            <p v-if="assessment.bodyComposition">Percentual de Gordura Corporal: {{ assessment.bodyComposition.body_fat_percentage }}%</p>
+            <p v-if="assessment.bodyComposition">Percentual de Gordura Corporal: {{
+              assessment.bodyComposition.body_fat_percentage }}%</p>
           </template>
         </div>
       </div>
@@ -74,7 +77,9 @@ export default {
     assessments: Array,
   },
   mounted() {
-    this.renderChart();
+    this.$nextTick(() => {
+      this.renderChart();
+    });
   },
   methods: {
     formatDate(dateString) {
@@ -86,12 +91,8 @@ export default {
         chart: {
           type: 'bar',
           height: 300,
-          toolbar: {
-            show: false
-          },
-          zoom: {
-            enabled: false
-          }
+          toolbar: { show: false },
+          zoom: { enabled: false }
         },
         series: [
           {
@@ -106,12 +107,8 @@ export default {
             borderRadius: 0
           }
         },
-        legend: {
-          show: false
-        },
-        dataLabels: {
-          enabled: false
-        },
+        legend: { show: false },
+        dataLabels: { enabled: false },
         stroke: {
           show: true,
           width: 8,
@@ -119,28 +116,12 @@ export default {
         },
         xaxis: {
           categories: [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
+            'January', 'February', 'March', 'April', 'May', 'June', 'July',
+            'August', 'September', 'October', 'November', 'December'
           ],
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false
-          },
-          crosshairs: {
-            show: false
-          },
+          axisBorder: { show: false },
+          axisTicks: { show: false },
+          crosshairs: { show: false },
           labels: {
             style: {
               colors: '#9ca3af',
@@ -168,10 +149,7 @@ export default {
         },
         states: {
           hover: {
-            filter: {
-              type: 'darken',
-              value: 0.9
-            }
+            filter: { type: 'darken', value: 0.9 }
           }
         },
         tooltip: {
@@ -182,17 +160,9 @@ export default {
         responsive: [{
           breakpoint: 568,
           options: {
-            chart: {
-              height: 300
-            },
-            plotOptions: {
-              bar: {
-                columnWidth: '14px'
-              }
-            },
-            stroke: {
-              width: 8
-            },
+            chart: { height: 300 },
+            plotOptions: { bar: { columnWidth: '14px' } },
+            stroke: { width: 8 },
             labels: {
               style: {
                 colors: '#9ca3af',
@@ -221,16 +191,19 @@ export default {
         }]
       };
 
-      const chart = new ApexCharts(document.querySelector("#hs-single-bar-chart"), options);
+      // Utiliza o `this.$refs` para acessar o contêiner
+      const chart = new ApexCharts(this.$refs.chartContainer, options);
       chart.render();
-    }
+    },
+
   },
 };
 </script>
 
 <style scoped>
 .card-container {
-  max-width: 595px; /* largura da página A4 em px a 72 DPI */
+  max-width: 595px;
+  /* largura da página A4 em px a 72 DPI */
   margin: 0 auto;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 40%);

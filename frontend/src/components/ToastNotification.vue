@@ -66,9 +66,10 @@ export default {
 </script>
 
 <style scoped>
+
 .toast {
   z-index: 1000;
   margin-top: 60px; /* Um valor maior que o da navbar */
 }
-
 </style>
+

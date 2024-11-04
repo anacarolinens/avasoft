@@ -96,7 +96,7 @@
             <div class="flex justify-end items-center gap-x-2 py-3 px-4 bg-gray-50 border-t">
               <button @click="cancelDelete" type="button"
                 class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50"
-                aria-label="Close" data-hs-overlay="#hs-danger-alert" >
+                aria-label="Close" data-hs-overlay="#hs-danger-alert">
                 Cancelar
               </button>
               <button @click="confirmDeletePatient" type="button"
@@ -328,7 +328,7 @@ export default {
     // Editar paciente
     editPatient(patient) {
       this.patientToEdit = { ...patient.user };
-      this.patientToEdit.user_id = patient.user_id; 
+      this.patientToEdit.user_id = patient.user_id;
     },
 
     async updatePatient() {
@@ -382,6 +382,16 @@ export default {
     }
   },
   mounted() {
+    // Verifica se a página já foi recarregada
+    if (!localStorage.getItem('pageReloaded')) {
+      // Marca que a página foi recarregada
+      localStorage.setItem('pageReloaded', 'true');
+      // Recarrega a página
+      window.location.reload();
+    } else {
+      // Remove a marcação para futuras visitas
+      localStorage.removeItem('pageReloaded');
+    }
     this.fetchPatients(); // Busca os pacientes ao montar o componente
   }
 };
@@ -390,8 +400,6 @@ export default {
 
 
 <style scoped>
-
-
 button {
   cursor: pointer;
   transition: color 0.2s;

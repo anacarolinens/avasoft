@@ -666,6 +666,16 @@ export default {
 
   },
   mounted() {
+    // Verifica se a página já foi recarregada
+    if (!localStorage.getItem('pageReloaded')) {
+      // Marca que a página foi recarregada
+      localStorage.setItem('pageReloaded', 'true');
+      // Recarrega a página
+      window.location.reload();
+    } else {
+      // Remove a marcação para futuras visitas
+      localStorage.removeItem('pageReloaded');
+    }
     this.fetchPatientData();
     this.fetchAssessments();
   },

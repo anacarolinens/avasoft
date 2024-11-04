@@ -335,7 +335,7 @@ export default {
       if (!this.fullName || !this.cpf || !this.dataNasc || !this.gender || !this.phone || !this.email ||
         !this.street || !this.number || !this.district || !this.city || !this.state || !this.cep ||
         !this.userName || !this.password || !this.confirmPassword) {
-        this.showToastMessage('Por favor, preencha todos os campos onrigatórios', 'error');
+        this.showToastMessage('Por favor, preencha todos os campos obrigatórios', 'error');
         return;
       }
       // Verificação da robustez da senha
@@ -418,7 +418,19 @@ export default {
         this.showToast = true;
       });
     },
-  }
+  },
+  mounted() {
+    // Verifica se a página já foi recarregada
+    if (!localStorage.getItem('pageReloaded')) {
+      // Marca que a página foi recarregada
+      localStorage.setItem('pageReloaded', 'true');
+      // Recarrega a página
+      window.location.reload();
+    } else {
+      // Remove a marcação para futuras visitas
+      localStorage.removeItem('pageReloaded');
+    }
+  },
 };
 </script>
 
