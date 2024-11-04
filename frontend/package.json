@@ -20,6 +20,7 @@
     "core-js": "^3.8.3",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.2",
+    "lodash": "^4.17.21",
     "preline": "^2.4.1",
     "vue": "^3.4.20",
     "vue-router": "^4.3.0",

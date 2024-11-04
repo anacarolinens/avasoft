@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="visible"
-    :class="toastClass"
+    :class="['toast-notification', toastClass]"
     role="alert"
     tabindex="-1"
   >
@@ -65,3 +65,8 @@ export default {
 };
 </script>
 
+<style scoped>
+.toast-notification {
+  z-index: 30; /* ou qualquer valor maior que 20 */
+}
+</style>

@@ -20,25 +20,28 @@
         <input type="password" id="pass" placeholder="" v-model="password">
       </div>
 
-      <p class="text-end text-white pt-2"><a class="text-orange-400 hover:underline"><router-link to="/PasswordReset">Esqueceu a senha?</router-link></a></p>
+      <p class="text-end text-white pt-2"><a class="text-orange-400 hover:underline"><router-link
+            to="/PasswordReset">Esqueceu a senha?</router-link></a></p>
 
       <div class="flex justify-center">
         <button type="button" class="button-login" @click="handleLogin">Entrar</button>
       </div>
       <div class="text-center text-white pt-2">
-        <p>Não tem uma conta? <a href="#" class="text-orange-400 hover:underline" ><router-link to="/ProfessionalRegister">Registre-se aqui!</router-link></a></p>
-        <p class="pt-2">__________ OU __________</p>
+        <p>Não tem uma conta? <a href="#" class="text-orange-400 hover:underline"><router-link
+              to="/ProfessionalRegister">Registre-se aqui!</router-link></a></p>
+        <!-- <p class="pt-2">__________ OU __________</p>
 
         <div id="micro-google" class="flex justify-around pt-4">
           <GoogleLogin :callback="callback" prompt auto-login/>
           <a href="#" class="flex justify-around  rounded-md items-center w-40"><img src="../assets/img/microsoft.png" alt="">Microsoft</a>
-        </div>
+        </div> -->
       </div>
 
 
     </form>
 
-    <img id="logo" src="../assets/img/logo.svg" alt="logo avasoft" class="fixed top-1/2 right-0 transform -translate-y-1/2 max-w-[100%] max-h-[100%] opacity-50 z-[-1] md:max-w-[100%] md:max-h-[100%] sm:max-w-[100%] sm:max-h-[100%]" />
+    <img id="logo" src="../assets/img/logo.svg" alt="logo avasoft"
+      class="fixed top-1/2 right-0 transform -translate-y-1/2 max-w-[100%] max-h-[100%] opacity-50 z-[-1] md:max-w-[100%] md:max-h-[100%] sm:max-w-[100%] sm:max-h-[100%]" />
 
   </div>
 </template>
@@ -46,12 +49,12 @@
 <script>
 import { googleTokenLogin } from "vue3-google-login"
 import { decodeCredential } from "vue3-google-login";
-import ToastComponent from '../components/ToastNotification.vue'; 
+import ToastComponent from '../components/ToastNotification.vue';
 
 
 export default {
   components: {
-    
+
     ToastComponent
   },
 
@@ -66,36 +69,47 @@ export default {
   },
 
   mounted() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const token = urlParams.get('token');
-
-  if (token) {
-    localStorage.setItem('authToken', token);
-    this.$axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    
-    this.$router.push('/HomePage');
-  } else {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      this.$axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+    // Verifica se a página já foi recarregada
+    if (!localStorage.getItem('pageReloaded')) {
+      // Marca que a página foi recarregada
+      localStorage.setItem('pageReloaded', 'true');
+      // Recarrega a página
+      window.location.reload();
+    } else {
+      // Remove a marcação para futuras visitas
+      localStorage.removeItem('pageReloaded');
     }
-  }
 
-  document.documentElement.style.overflow = 'hidden';
-},
-beforeUnmount() {
-  document.documentElement.style.overflow = '';
-},
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    if (token) {
+      localStorage.setItem('authToken', token);
+      this.$axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      this.$router.push('/HomePage');
+    } else {
+      const authToken = localStorage.getItem('authToken');
+      if (authToken) {
+        this.$axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+      }
+    }
+
+    document.documentElement.style.overflow = 'hidden';
+  },
+  beforeUnmount() {
+    document.documentElement.style.overflow = '';
+  },
 
   methods: {
     callback(response) {
       const userData = decodeCredential(response.credential)
       console.log("Handle the userData", userData)
     },
-    logingoogle(){
+    logingoogle() {
       googleTokenLogin().then((response) => {
-      console.log("Handle the response", response)
-  })
+        console.log("Handle the response", response)
+      })
     },
     async handleLogin() {
       try {
@@ -127,8 +141,6 @@ beforeUnmount() {
 </script>
 
 <style>
-
-
 #label-name,
 #label-pass {
   color: #ffffff;
@@ -195,7 +207,7 @@ span {
   height: auto;
 }
 
-#micro-google a{
+#micro-google a {
   background-color: #555555;
   color: #ffffff;
   padding: 0.5em 1em 0.5em 1em;
@@ -210,7 +222,7 @@ span {
   background-color: #ff8818;
   border-radius: 5px;
   border-width: 0;
- /*box-shadow: rgba(255, 157, 0, 0.2) 0 2px 4px, rgba(66, 55, 35, 0.15) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;*/
+  /*box-shadow: rgba(255, 157, 0, 0.2) 0 2px 4px, rgba(66, 55, 35, 0.15) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;*/
   box-sizing: border-box;
   color: #ffffff;
   cursor: pointer;

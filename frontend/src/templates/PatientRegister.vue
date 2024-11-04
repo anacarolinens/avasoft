@@ -26,7 +26,7 @@
           </label>
           <input type="text" id="cpf" placeholder="Digite seu CPF aqui..." v-model="cpf"
             class="w-full p-3 rounded focus:border-orange-500">
-            <span class="text-gray-500 text-sm mt-1">Somente números</span>
+          <span class="text-gray-500 text-sm mt-1">Somente números</span>
           <span v-if="cpf && !ValidaCPF(cpf)" class="text-red-500 text-sm mt-1">CPF inválido.</span>
           <span v-if="!cpf" class="text-red-500 text-sm mt-1">Este campo é obrigatório.</span>
         </div>
@@ -259,8 +259,8 @@ export default {
       // Verificação dos campos obrigatórios
       if (!this.fullName || !this.cpf || !this.dataNasc || !this.gender || !this.phone || !this.email ||
         !this.street || !this.number || !this.district || !this.city || !this.state || !this.cep ||
-        !this.userName ) {
-        this.showToastMessage('Por favor, preencha todos os campos onrigatórios', 'error');
+        !this.userName) {
+        this.showToastMessage('Por favor, preencha todos os campos obrigatórios', 'error');
         return;
       }
 
@@ -339,7 +339,19 @@ export default {
     goBack() {
       this.$router.go(-1);
     }
-  }
+  },
+  mounted() {
+    // Verifica se a página já foi recarregada
+    if (!localStorage.getItem('pageReloaded')) {
+      // Marca que a página foi recarregada
+      localStorage.setItem('pageReloaded', 'true');
+      // Recarrega a página
+      window.location.reload();
+    } else {
+      // Remove a marcação para futuras visitas
+      localStorage.removeItem('pageReloaded');
+    }
+  },
 };
 </script>
 
