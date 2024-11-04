@@ -3,7 +3,7 @@
         <h1 class="text-3xl text-white mb-16 mt-10 text-center">HISTORICO DE AVALIAÇÕES</h1>
         
         <div class="flex justify-center items-center">
-            <table class="w-3/4 border-collapse rounded">
+            <table class="w-3/4 border-collapse rounded" style="border-collapse: separate; border-spacing: 0 10px;">
                 <thead>
                     <tr class="rounded-t-lg">
                         <th class="bg-[#FF8139] text-white py-3 px-6 text-center rounded-tl-lg">NOME</th>
@@ -12,10 +12,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(avaliacao, index) in avaliacoes" :key="index" class="spaced-row bg-[#3E3E3E] border-b border-gray-600 text-center">
-                        <td class="py-2 px-6 text-white">{{ avaliacao.nome }}</td>
+                    <tr v-for="(avaliacao, index) in avaliacoes" :key="index" class="spaced-row border-b border-gray-600 text-center">
+                        <td :class="['py-2 px-6 text-white', { 'rounded-bl-lg': index === avaliacoes.length - 1 }]">{{ avaliacao.nome }}</td>
                         <td class="py-2 px-6 text-white">{{ avaliacao.data }}</td>
-                        <td class="py-2 px-6">
+                        <td :class="['py-2 px-6', { 'rounded-br-lg': index === avaliacoes.length - 1 }]">
                             <div class="flex justify-center gap-4">
                                 <button class="w-6 h-6" @click="toggleCheckbox(index)">
                                     <img :src="avaliacao.checked ? checkedImg : checkboxImg" alt="Checkbox Button" class="w-full h-full object-contain" />
@@ -83,6 +83,22 @@ export default {
 <style scoped>
 .spaced-row {
     margin-bottom: 50px;
+}
+
+table tbody tr:last-child {
+    border-radius: 0 0 50px 0;
+}
+
+table tbody td{
+    background-color: #3E3E3E;
+}
+
+table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
 }
 
 </style>
