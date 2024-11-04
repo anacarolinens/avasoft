@@ -3,6 +3,7 @@ import HomeView from "./views/HomeView.vue";
 import HomePatientView from "./views/HomePatientView.vue";
 import PainelPatient from "./components/PainelPatient.vue";
 import LoginPatientModal from "./components/LoginPatientModal.vue";
+import ConfigPatient from "./components/ConfigPatient.vue";
 
 
 const routes = [
@@ -28,6 +29,12 @@ const routes = [
     path: "/PainelPatient",
     name: "PainelPatient",
     component: PainelPatient,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/patient:id",
+    name: "ConfigPatient",
+    component: ConfigPatient,
     meta: { requiresAuth: true },
   }
 ];

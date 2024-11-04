@@ -14,7 +14,7 @@ exports.authenticateUser = (req, res, next) => {
         console.log('Decoded Token:', decodedToken);
         
         req.userData = { 
-            userId: decodedToken.userId, 
+            userId: decodedToken.id_user, 
             fullName: decodedToken.fullName, 
             role: decodedToken.role 
         };

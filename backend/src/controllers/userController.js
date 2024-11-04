@@ -75,23 +75,6 @@ exports.getUserById = async (req, res, next) => {
     });
 };
 
-exports.getUserInfo = async (req, res) => {
-  const userId = req.userData.userId; 
-  console.log('User ID from token:', userId); 
-  try {
-    const user = await User.findByPk(userId); 
-    if (!user) {
-      console.log('User not found'); 
-      return res.status(404).json({ message: 'User not found' });
-    }
-    console.log('User found:', user); 
-    res.status(200).json({ user });
-  } catch (error) {
-    console.error('Error fetching user info:', error); 
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
 
 // Create user and generate token
 /**
@@ -313,7 +296,7 @@ exports.loginUser = async (req, res, next) => {
     // Generate authentication token
     const token = jwt.sign(
       { 
-        userId: user.id, 
+        userId: user.id_user, 
         fullName: user.fullName,
         role: user.role, 
       },
@@ -327,6 +310,7 @@ exports.loginUser = async (req, res, next) => {
         token,
         name: user.fullName,
         role: user.role,
+        userId: user.id_user,
       },
     });
   } catch (error) {
