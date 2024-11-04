@@ -3,6 +3,8 @@ import HomeView from "./views/HomeView.vue";
 import HomePatientView from "./views/HomePatientView.vue";
 import PainelPatient from "./components/PainelPatient.vue";
 import LoginPatientModal from "./components/LoginPatientModal.vue";
+import ConfigPatient from "./components/ConfigPatient.vue";
+
 
 const routes = [
   {
@@ -27,7 +29,13 @@ const routes = [
     path: "/PainelPatient",
     name: "PainelPatient",
     component: PainelPatient,
-    meta: { showNavbar: true, requiresAuth: true },
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/patient:id",
+    name: "ConfigPatient",
+    component: ConfigPatient,
+    meta: { requiresAuth: true },
   }
 ];
 
@@ -38,9 +46,14 @@ const router = createRouter({
 
 // Guardião de rota para verificar autenticação
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('authToken'); 
-  if (to.meta.requiresAuth && !isAuthenticated) {
-    next({ name: 'LoginPatientModal' });
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      next({ name: "LoginPatientModal" });
+    }
+    else {
+      next();
+    }
   } else {
     next();
   }

@@ -11,7 +11,7 @@
         <div class="mb-4 flex space-x-4">
           <div class="w-1/2">
             <label for="sexo" class="block text-sm font-medium text-gray-700">Sexo</label>
-            <select v-model="sexo" class="mt-1 p-2 w-full border-gray-300 rounded-md">
+            <select v-model="sexo" class="mt-1 p-2 w-full border-gray-300 rounded-md" disabled>
               <option value="" disabled selected>Selecione o sexo</option>
               <option value="masculino">Masculino</option>
               <option value="feminino">Feminino</option>
@@ -19,7 +19,7 @@
           </div>
           <div class="w-1/2">
             <label for="idade" class="block text-sm font-medium text-gray-700">Idade</label>
-            <input v-model="idade" type="number" class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+            <input v-model="idade" type="number" min="9" class="mt-1 p-2 w-full border-gray-300 rounded-md" disabled/>
           </div>
         </div>
 
@@ -27,7 +27,7 @@
         <div class="mb-4 flex space-x-4">
           <div class="w-1/2">
             <label for="peso" class="block text-sm font-medium text-gray-700">Peso (kg)</label>
-            <input v-model="peso" type="number" class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+            <input v-model="peso" type="number" min="0" class="mt-1 p-2 w-full border-gray-300 rounded-md" />
           </div>
           <div class="w-1/2">
             <label for="altura" class="block text-sm font-medium text-gray-700">Altura (cm)</label>
@@ -56,7 +56,7 @@
             <label :for="key" class="block text-sm font-medium">{{ traduzirDobrasCutaneas(key) }}</label>
             <input v-model="skinfoldData[key]" :disabled="!camposNecessarios.includes(key)"
               :class="{ 'disabled-input': !camposNecessarios.includes(key) }" type="number"
-              class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+              class="mt-1 p-2 w-full border-gray-300 rounded-md" min="0" />
           </div>
         </div>
 
@@ -67,7 +67,7 @@
             <label :for="key" class="block text-sm font-medium">{{ traduzirCircunferencia(key) }}</label>
             <input v-model="circumferenceData[key]" :disabled="!camposNecessarios.includes(key)"
               :class="{ 'disabled-input': !camposNecessarios.includes(key) }" type="number"
-              class="mt-1 p-2 w-full border-gray-300 rounded-md" />
+              class="mt-1 p-2 w-full border-gray-300 rounded-md" min="0" />
           </div>
         </div>
 
@@ -140,6 +140,7 @@ export default {
   created() {
     // Obter o id_patient da rota
     this.id_patient = this.$route.params.id_patient;
+    this.buscarDadosPaciente(this.id_patient);
   },
   watch: {
     sexo() {
@@ -147,6 +148,36 @@ export default {
     },
   },
   methods: {
+    async buscarDadosPaciente(id_patient) {
+      try {
+        const response = await axios.get(`http://localhost:3000/patient/${id_patient}`);
+        const paciente = response.data;
+
+        // Verificação e atribuição para o sexo
+        if (paciente.user && paciente.user.gender) {
+          this.sexo = paciente.user.gender.toLowerCase();
+          console.log("Sexo encontrado:", this.sexo);
+        } else {
+          console.warn("Sexo não encontrado nos dados do paciente.");
+        }
+
+        // Verificação e cálculo da idade com base na data de nascimento
+        if (paciente.user && paciente.user.dataNasc) {
+          const dataNasc = new Date(paciente.user.dataNasc);
+          const idade = new Date().getFullYear() - dataNasc.getFullYear();
+          this.idade = idade;
+          console.log("Idade encontrada:", this.idade);
+        } else {
+          console.warn("Data de nascimento não encontrada nos dados do paciente.");
+        }
+
+        // Verificação final para garantir que os valores foram atribuídos
+        console.log("Sexo:", this.sexo, "Idade:", this.idade);
+      } catch (error) {
+        console.error('Erro ao buscar dados do paciente:', error);
+        this.showToastMessage('Erro ao carregar dados do paciente!', 'error');
+      }
+    },
     traduzirCircunferencia(key) {
       const traducoes = {
         neck: 'Pescoço',
@@ -304,6 +335,7 @@ export default {
     }
   },
   mounted() {
+
     // Verifica se a página já foi recarregada
     if (!localStorage.getItem('pageReloaded')) {
       // Marca que a página foi recarregada
@@ -315,7 +347,10 @@ export default {
       localStorage.removeItem('pageReloaded');
     }
     // this.atualizarCamposNecessarios();
+
+    this.buscarDadosPaciente(this.id_patient); 
   },
+
 };
 </script>
 

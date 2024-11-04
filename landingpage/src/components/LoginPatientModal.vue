@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '../plugins/config';
+import { useToast } from 'vue-toastification';
 
 export default {
   props: {
@@ -50,19 +51,26 @@ export default {
       this.$emit('close');
     },
     async handleLogin() {
+      const toast = useToast();
       try {
-        const response = await axios.post('/login', { 
+        const {data:{data}} = await axios.post('/login', { 
           userName: this.userName,
           password: this.password,
-        });
+        });                                                                                                                
+        localStorage.setItem('name', data.name);
+        localStorage.setItem('role', data.role);
+        localStorage.setItem('userId', data.userId);
         this.$router.push('/homePatient');
         this.close();
       } catch (error) {
         if (error.response) {
+          toast.error('Usuário ou senha incorretos. Tente novamente.');
           console.error('Erro ao fazer login:', error.response.data);
         } else if (error.request) {
+          toast.error('Erro ao fazer login: Nenhuma resposta do servidor.');
           console.error('Erro ao fazer login: Nenhuma resposta do servidor');
         } else {
+          toast.error('Erro ao fazer login.');
           console.error('Erro ao fazer login:', error.message);
         }
       }
