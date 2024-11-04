@@ -60,8 +60,8 @@
             Telefone <span class="text-red-500">*</span>
           </label>
           <input type="text" id="phone" placeholder="Digite seu telefone aqui..." v-model="phone"
-            class="w-full p-3 rounded focus:border-orange-500">
-         
+            class="w-full p-3 rounded focus:border-orange-500" @input="validatePhone">
+          <span v-if="phone && phoneError" class="text-red-500 text-sm mt-1">{{ phoneError }}</span>
         </div>
 
         <div class="flex flex-col mx-4">
@@ -201,6 +201,7 @@ export default {
       toastMessage: '',
       toastType: 'success',
       showToast: false,
+      phoneError: ''
     };
   },
   methods: {
@@ -294,6 +295,15 @@ export default {
       return age >= 9;
     },
 
+    validatePhone() {
+      const phonePattern = /^\d{11}$/;
+      if (!phonePattern.test(this.phone)) {
+        this.phoneError = 'O número de telefone conter 11 dígitos.';
+      } else {
+        this.phoneError = '';
+      }
+    },
+
     async handleRegister() {
       // Verificação dos campos obrigatórios
       if (!this.fullName || !this.cpf || !this.dataNasc || !this.gender || !this.phone || !this.email ||
@@ -332,6 +342,11 @@ export default {
         return;
       }
 
+      this.validatePhone();
+      if (this.phoneError) {
+        this.showToastMessage(this.phoneError, 'error');
+        return;
+      }
 
       try {
         await axios.post('http://localhost:3000/register', {
@@ -359,6 +374,9 @@ export default {
           height_ini: this.height_ini,
         });
         this.showToastMessage('Paciente cadastrado com sucesso!', 'success');
+        setTimeout(() => {
+          this.$router.push({ name: 'PatientList' });
+        }, 3000); // Delay de 3 segundos
       } catch (error) {
         console.error('Erro ao cadastrar paciente:', error);
 

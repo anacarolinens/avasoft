@@ -51,7 +51,7 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-neutral-400">
-                  <tr v-for="assessment in assessments" :key="assessment.id_assessment">
+                  <tr v-for="assessment in sortedAssessments" :key="assessment.id_assessment">
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-500">
                       <input type="checkbox" v-model="selectedAssessments" :value="assessment.id_assessment" />
                     </td>
@@ -472,6 +472,9 @@ export default {
     };
   },
   computed: {
+    sortedAssessments() {
+      return this.assessments.slice().sort((a, b) => new Date(b.assessmentDate) - new Date(a.assessmentDate));
+    },
     selectedAssessmentsData() {
       return this.assessments.filter(assessment => this.selectedAssessments.includes(assessment.id_assessment));
     },
