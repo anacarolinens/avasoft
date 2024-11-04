@@ -76,9 +76,25 @@ export default {
   props: {
     assessments: Array,
   },
+  data() {
+    return {
+      chart: null,
+    };
+  },
+  watch: {
+    assessments: {
+      handler() {
+        this.updateChart();
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   mounted() {
     this.$nextTick(() => {
-      this.renderChart();
+      if (this.assessments && this.assessments.length > 0) {
+        this.createChart();
+      }
     });
   },
   methods: {
@@ -86,8 +102,34 @@ export default {
       const date = new Date(dateString);
       return date instanceof Date && !isNaN(date) ? date.toLocaleDateString() : 'Data inválida';
     },
-    renderChart() {
-      const options = {
+    createChart() {
+      // Verifique se o contêiner existe antes de criar o gráfico
+      if (!this.$refs.chartContainer) return;
+
+      const options = this.getChartOptions();
+
+      // Destruir gráfico anterior, se existir
+      if (this.chart) {
+        this.chart.destroy();
+      }
+
+      // Criar novo gráfico
+      this.chart = new ApexCharts(this.$refs.chartContainer, options);
+      this.chart.render();
+    },
+    updateChart() {
+      if (this.chart) {
+        this.chart.updateOptions(this.getChartOptions());
+      } else {
+        this.createChart();
+      }
+    },
+    getChartOptions() {
+      const categories = this.assessments.map(assessment => this.formatDate(assessment.assessmentDate));
+      const weights = this.assessments.map(assessment => assessment.weight);
+      const heights = this.assessments.map(assessment => assessment.height);
+
+      return {
         chart: {
           type: 'bar',
           height: 300,
@@ -96,8 +138,12 @@ export default {
         },
         series: [
           {
-            name: 'Sales',
-            data: [23000, 44000, 55000, 57000, 56000, 61000, 58000, 63000, 60000, 66000, 34000, 78000]
+            name: 'Peso (kg)',
+            data: weights
+          },
+          {
+            name: 'Altura (cm)',
+            data: heights
           }
         ],
         plotOptions: {
@@ -107,7 +153,7 @@ export default {
             borderRadius: 0
           }
         },
-        legend: { show: false },
+        legend: { show: true },
         dataLabels: { enabled: false },
         stroke: {
           show: true,
@@ -115,87 +161,28 @@ export default {
           colors: ['transparent']
         },
         xaxis: {
-          categories: [
-            'January', 'February', 'March', 'April', 'May', 'June', 'July',
-            'August', 'September', 'October', 'November', 'December'
-          ],
+          categories: categories,
           axisBorder: { show: false },
           axisTicks: { show: false },
-          crosshairs: { show: false },
-          labels: {
-            style: {
-              colors: '#9ca3af',
-              fontSize: '13px',
-              fontFamily: 'Inter, ui-sans-serif',
-              fontWeight: 400
-            },
-            offsetX: -2,
-            formatter: (title) => title.slice(0, 3)
-          }
         },
         yaxis: {
           labels: {
-            align: 'left',
-            minWidth: 0,
-            maxWidth: 140,
-            style: {
-              colors: '#9ca3af',
-              fontSize: '13px',
-              fontFamily: 'Inter, ui-sans-serif',
-              fontWeight: 400
-            },
             formatter: (value) => value >= 1000 ? `${value / 1000}k` : value
-          }
-        },
-        states: {
-          hover: {
-            filter: { type: 'darken', value: 0.9 }
           }
         },
         tooltip: {
           y: {
-            formatter: (value) => `$${value >= 1000 ? `${value / 1000}k` : value}`
+            formatter: (value) => `${value}`
           }
         },
-        responsive: [{
-          breakpoint: 568,
-          options: {
-            chart: { height: 300 },
-            plotOptions: { bar: { columnWidth: '14px' } },
-            stroke: { width: 8 },
-            labels: {
-              style: {
-                colors: '#9ca3af',
-                fontSize: '11px',
-                fontFamily: 'Inter, ui-sans-serif',
-                fontWeight: 400
-              },
-              offsetX: -2,
-              formatter: (title) => title.slice(0, 3)
-            },
-            yaxis: {
-              labels: {
-                align: 'left',
-                minWidth: 0,
-                maxWidth: 140,
-                style: {
-                  colors: '#9ca3af',
-                  fontSize: '11px',
-                  fontFamily: 'Inter, ui-sans-serif',
-                  fontWeight: 400
-                },
-                formatter: (value) => value >= 1000 ? `${value / 1000}k` : value
-              }
-            },
-          },
-        }]
       };
-
-      // Utiliza o `this.$refs` para acessar o contêiner
-      const chart = new ApexCharts(this.$refs.chartContainer, options);
-      chart.render();
     },
-
+  },
+  beforeUnmount() {
+    // Destruir o gráfico quando o componente for desmontado
+    if (this.chart) {
+      this.chart.destroy();
+    }
   },
 };
 </script>
