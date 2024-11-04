@@ -14,7 +14,7 @@
             </label>
             <input type="text" id="fullName" placeholder="Digite seu nome completo aqui..." v-model="fullName"
               class="w-full p-3 rounded focus:border-orange-500">
-           
+
           </div>
 
           <div class="flex flex-col mx-4">
@@ -24,7 +24,7 @@
             <input type="text" id="cpf" placeholder="Digite seu CPF aqui..." v-model="cpf"
               class="w-full p-3 rounded focus:border-orange-500">
             <span v-if="cpf && !ValidaCPF(cpf)" class="text-red-500 text-sm mt-1">CPF inválido.</span>
-           
+
           </div>
 
           <div class="flex flex-col mx-4">
@@ -34,7 +34,7 @@
             <input type="date" id="dataNasc" v-model="dataNasc" class="w-full p-3 rounded focus:border-orange-500">
             <span v-if="dataNasc && !isDateValid(dataNasc)" class="text-red-500 text-sm mt-1">Data inválida ou no
               futuro.</span>
-           
+
           </div>
 
           <div class="flex flex-col mx-4">
@@ -46,7 +46,7 @@
               <option value="Masculino">Masculino</option>
               <option value="Feminino">Feminino</option>
             </select>
-            
+
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
             </label>
             <input type="text" id="phone" placeholder="Digite seu telefone aqui..." v-model="phone"
               class="w-full p-3 rounded focus:border-orange-500">
-           
+
           </div>
 
           <div class="flex flex-col mx-4">
@@ -70,7 +70,7 @@
             <input type="email" id="email" placeholder="Digite seu email aqui..." v-model="email"
               class="w-full p-3 rounded focus:border-orange-500">
             <span v-if="email && !ValidaEmail(email)" class="text-red-500 text-sm mt-1">Email inválido.</span>
-           
+
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
             <input type="text" id="cep" placeholder="Digite seu CEP aqui..." v-model="cep"
               class="w-full p-3 rounded focus:border-orange-500">
             <span v-if="cep && !ValidaCEP(cep)" class="text-red-500 text-sm mt-1">CEP inválido.</span>
-           
+
           </div>
 
           <div class="flex flex-col mx-4">
@@ -94,7 +94,7 @@
             </label>
             <input type="text" id="street" placeholder="Digite sua rua aqui..." v-model="street"
               class="w-full p-3 rounded focus:border-orange-500">
-            
+
           </div>
 
           <div class="flex flex-col mx-4">
@@ -103,7 +103,7 @@
             </label>
             <input type="number" id="number" placeholder="Digite o número aqui..." v-model="number"
               class="w-full p-3 rounded focus:border-orange-500">
-            
+
           </div>
 
           <div class="flex flex-col mx-4">
@@ -112,7 +112,7 @@
             </label>
             <input type="text" id="district" placeholder="Digite seu bairro aqui..." v-model="district"
               class="w-full p-3 rounded focus:border-orange-500">
-           
+
           </div>
 
           <div class="flex flex-col mx-4">
@@ -121,7 +121,7 @@
             </label>
             <input type="text" id="city" placeholder="Digite sua cidade aqui..." v-model="city"
               class="w-full p-3 rounded focus:border-orange-500">
-           
+
           </div>
 
           <div class="flex flex-col mx-4">
@@ -130,7 +130,7 @@
             </label>
             <input type="text" id="state" placeholder="Digite seu estado aqui..." v-model="state"
               class="w-full p-3 rounded focus:border-orange-500">
-            
+
           </div>
 
           <div class="flex flex-col mx-4 col-span-2">
@@ -150,7 +150,7 @@
             </label>
             <input type="text" id="userName" placeholder="Digite seu nome de usuário aqui..." v-model="userName"
               class="w-full p-3 rounded focus:border-orange-500">
-            
+
           </div>
 
           <div class="flex flex-col mx-4">
@@ -159,7 +159,10 @@
             </label>
             <input :type="showPassword ? 'text' : 'password'" id="password" placeholder="Digite sua senha aqui..."
               v-model="password" class="w-full p-3 rounded focus:border-orange-500">
-           
+            <span v-if="password && !ValidaSenha(password)" class="text-red-500 text-sm mt-1">
+              A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres
+              especiais.
+            </span>
             <div class="flex items-center mt-2">
               <input type="checkbox" id="showPassword" v-model="showPassword" class="mr-2">
               <label for="showPassword" class="text-sm">Mostrar Senha</label>
@@ -170,7 +173,7 @@
             <input :type="showPassword ? 'text' : 'password'" id="confirmPassword"
               placeholder="Confirme sua senha aqui..." v-model="confirmPassword"
               class="w-full p-3 rounded focus:border-orange-500">
-           
+
           </div>
         </div>
       </div>
@@ -181,7 +184,7 @@
           <button type="button" class="bg-gray-300 p-3 mb-3 hover:bg-gray-400 rounded">Voltar</button>
         </router-link>
         <button type="submit" class="bg-orange-500 p-3 mb-3 hover:bg-orange-600 rounded">Cadastrar</button>
-        
+
       </div>
     </form>
     <!-- Modal de Sucesso -->
@@ -322,13 +325,26 @@ export default {
       // Verifica se a idade é menor que 15 anos
       return age >= 18;
     },
+    ValidaSenha(senha) {
+      // A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      return regex.test(senha);
+    },
     async handleRegister() {
       // Verificação dos campos obrigatórios
       if (!this.fullName || !this.cpf || !this.dataNasc || !this.gender || !this.phone || !this.email ||
         !this.street || !this.number || !this.district || !this.city || !this.state || !this.cep ||
         !this.userName || !this.password || !this.confirmPassword) {
         this.showToastMessage('Por favor, preencha todos os campos onrigatórios', 'error');
-        return; 
+        return;
+      }
+      // Verificação da robustez da senha
+      if (!this.ValidaSenha(this.password)) {
+        this.showToastMessage(
+          'A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.',
+          'error'
+        );
+        return;
       }
 
 
