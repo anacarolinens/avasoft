@@ -1,6 +1,6 @@
 <template>
   <div ref="pdfSelectedAssessments">
-    <div ref="chartContainer"></div>
+    <div id="chartContainer" ref="chartContainer"></div>
 
     <div v-for="assessment in assessments" :key="assessment.id_assessment"
       :data-assessment-id="assessment.id_assessment" class="min-h-screen p-8 font-sans">
@@ -125,9 +125,12 @@ export default {
       }
     },
     getChartOptions() {
-      const categories = this.assessments.map(assessment => this.formatDate(assessment.assessmentDate));
-      const weights = this.assessments.map(assessment => assessment.weight);
-      const heights = this.assessments.map(assessment => assessment.height);
+      // Ordenar as avaliações por data
+      const sortedAssessments = this.assessments.slice().sort((a, b) => new Date(b.assessmentDate) - new Date(a.assessmentDate));
+
+      const categories = sortedAssessments.map(assessment => this.formatDate(assessment.assessmentDate));
+      const weights = sortedAssessments.map(assessment => assessment.weight);
+      const heights = sortedAssessments.map(assessment => assessment.height);
 
       return {
         chart: {
