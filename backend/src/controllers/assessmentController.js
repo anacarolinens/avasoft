@@ -63,13 +63,6 @@ exports.getAssessmentById = async (req, res) => {
         model: Patient,
         as: 'patient',
         attributes: ['id_patient', 'weigth_ini', 'height_ini'],
-        include: [
-        {
-          model: User,
-          as: 'user',
-          attributes: ['user_id']
-        }
-        ]
       },
       {
         model: Circumference,
