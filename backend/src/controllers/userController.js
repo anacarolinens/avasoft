@@ -584,7 +584,7 @@ exports.resetPasswordRequest = async (req, res, next) => {
       from: 'avasoft8@gmail.com',
       subject: 'Password Reset',
       text: `Você solicitou a mudança de senha?\n\n
-      http://${frontendUrl}/reset-password-confirm/${resetToken}\n\n
+      ${frontendUrl}/#/reset-password-confirm/${resetToken}\n\n
       caso não tenha ignore este e-mail.\n`
     };
 
