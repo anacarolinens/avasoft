@@ -59,30 +59,29 @@ exports.getAssessmentById = async (req, res) => {
     const assessment = await Assessment.findOne({
       where: { id_assessment: req.params.id },
       include: [
-        {
-          model: Patient,
-          as: 'patient',
-          attributes: ['id_patient', 'weigth_ini', 'height_ini'],
-        },
-        {
-          model: Circumference,
-          as: 'circumference',
-          attributes: ['id_assessment', 'neck', 'thorax', 'shoulderBlade', 'waist', 'abdomen', 'hip', 'leftWrist', 'rightWrist', 'leftArm', 'rightArm', 'leftContractedArm', 'rightContractedArm', 'leftForearm', 'rightForearm', 'leftGlutealThigh', 'rightGlutealThigh', 'leftMedialThigh', 'rightMedialThigh', 'leftLeg', 'rightLeg', 'leftAnkle', 'rightAnkle'],
-        },
-        {
-          model: Skinfold,
-          as: 'skinfold',
-          attributes: ['id_assessment', 'triceps', 'axillary', 'abdominal', 'thigh', 'calf', 'subscapular', 'suprailiac', 'pectoral', 'bicep'],
-        },
-        {
-          model: Bmi,
-          as: 'bmi',
-        },
-        {
-          model: BodyComposition,
-          as: 'bodyComposition',
-        },
-        
+      {
+        model: Patient,
+        as: 'patient',
+        attributes: ['id_patient', 'weigth_ini', 'height_ini'],
+      },
+      {
+        model: Circumference,
+        as: 'circumference',
+        attributes: ['id_assessment', 'neck', 'thorax', 'shoulderBlade', 'waist', 'abdomen', 'hip', 'leftWrist', 'rightWrist', 'leftArm', 'rightArm', 'leftContractedArm', 'rightContractedArm', 'leftForearm', 'rightForearm', 'leftGlutealThigh', 'rightGlutealThigh', 'leftMedialThigh', 'rightMedialThigh', 'leftLeg', 'rightLeg', 'leftAnkle', 'rightAnkle'],
+      },
+      {
+        model: Skinfold,
+        as: 'skinfold',
+        attributes: ['id_assessment', 'triceps', 'axillary', 'abdominal', 'thigh', 'calf', 'subscapular', 'suprailiac', 'pectoral', 'bicep'],
+      },
+      {
+        model: Bmi,
+        as: 'bmi',
+      },
+      {
+        model: BodyComposition,
+        as: 'bodyComposition',
+      },
       ],
     });
 
