@@ -77,6 +77,7 @@ exports.getAssessmentById = async (req, res) => {
       {
         model: Bmi,
         as: 'bmi',
+        attributes: ['id_assessment', 'bmiValue', 'classification'],
       },
       {
         model: BodyComposition,
@@ -117,10 +118,6 @@ exports.getAssessmentsByPatientId = async (req, res) => {
           model: Skinfold,
           as: 'skinfold',
           attributes: ['id_assessment', 'triceps', 'axillary', 'abdominal', 'thigh', 'calf', 'subscapular', 'suprailiac', 'pectoral', 'bicep'],
-        },
-        {
-          model: Bmi,
-          as: 'bmi',
         },
         {
           model: BodyComposition,
