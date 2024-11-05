@@ -599,12 +599,15 @@ export default {
 
         // Adicionar a página do gráfico de comparação
         await this.$nextTick();
-        const chartElement = this.$refs.pdfSelectedAssessments.$el.querySelector('#hs-single-bar-chart');
+        const chartElement = this.$refs.pdfSelectedAssessments.$el.querySelector('#chartContainer');
+        if (!chartElement) {
+          throw new Error('Elemento do gráfico não encontrado');
+        }
         const chartCanvas = await html2canvas(chartElement, { scale: 2 });
         const chartImgData = chartCanvas.toDataURL('image/png');
         const chartPageWidth = pdf.internal.pageSize.getWidth();
         const chartPageHeight = pdf.internal.pageSize.getHeight();
-        const chartImgWidth = chartPageWidth - 20; // ajuste de margem lateral
+        const chartImgWidth = chartPageWidth - -30; // ajuste de margem lateral
         const chartImgHeight = (chartCanvas.height * chartImgWidth) / chartCanvas.width;
         const chartPositionY = (chartPageHeight - chartImgHeight) / 2; // centralizar verticalmente
         const chartPositionX = (chartPageWidth - chartImgWidth) / 2; // centralizar horizontalmente
@@ -614,15 +617,17 @@ export default {
 
         // Adicionar as páginas das avaliações
         for (const assessment of this.selectedAssessmentsData) {
-          this.selectedAssessment = assessment;
           await this.$nextTick();
           const pdfElement = this.$refs.pdfSelectedAssessments.$el.querySelector(`[data-assessment-id="${assessment.id_assessment}"]`);
+          if (!pdfElement) {
+            throw new Error(`Elemento da avaliação com ID ${assessment.id_assessment} não encontrado`);
+          }
           const canvas = await html2canvas(pdfElement, { scale: 2 });
           const imgData = canvas.toDataURL('image/png');
 
           const pageWidth = pdf.internal.pageSize.getWidth();
           const pageHeight = pdf.internal.pageSize.getHeight();
-          const imgWidth = pageWidth - -150; // ajuste de margem lateral
+          const imgWidth = pageWidth - -120; // ajuste de margem lateral
           const imgHeight = (canvas.height * imgWidth) / canvas.width;
           const positionY = (pageHeight - imgHeight) / 2; // centralizar verticalmente
           const positionX = (pageWidth - imgWidth) / 2; // centralizar horizontalmente
