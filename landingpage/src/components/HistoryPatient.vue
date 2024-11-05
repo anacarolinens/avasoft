@@ -21,7 +21,7 @@
                                     <img :src="viewImg" alt="View Button" class="w-full h-full object-contain" />
                                 </button>
                                 <button class="w-5 h-5">
-                                    <img :src="downloadImg" alt="Download Button" class="w-full h-full object-contain" @click="generatePdf(avaliacao.idPatient)"/>
+                                    <img :src="downloadImg" alt="Download Button" class="w-full h-full object-contain" @click="generatePdf(avaliacao.id_assessment)"/>
                                 </button>
                                 <button class="w-5 h-5" @click="toggleCheckbox(index)"  @change="toggleSelectAll" >
                                     <img :src="avaliacao.checked ? checkedImg : checkboxImg" alt="Checkbox Button" class="w-full h-full object-contain" />
@@ -38,12 +38,14 @@
             <button type="button" class="w-full sm:w-auto min-w-[200px] h-12 px-4 py-3 bg-transparent text-white border border-white rounded">
                 Cancelar
             </button>
-            <button type="button" @click="generatePdf(selectedPatientId)" class="w-full sm:w-auto min-w-[200px] h-12 bg-[#FF8139] text-white p-3 rounded">
+            <button type="button" @click="generateComparisonPdf" class="w-full sm:w-auto min-w-[200px] h-12 bg-[#FF8139] text-white p-3 rounded">
                 Download
             </button>
         </div> 
         <!-- Componente PdfAssessment com ref -->
         <PdfAssessment ref="pdfContent" :selectedAssessment="selectedAssessment" />   
+        <!-- Componente PdfSelectedAssessments com ref -->
+        <PdfselectedAssessments ref="pdfSelectedAssessments" :assessments="selectedAssessmentsData" />
     </div>
 </template>
 
@@ -86,12 +88,13 @@ export default {
                 if (patientId) {
                     const assessmentsResponse = await axios.get(`/assessments/patient/${patientId}`);
                     const assessments = assessmentsResponse.data;
+                    this.assessments = assessments;
                     this.avaliacoes = assessments.map((assessment, index) => {
                         return {
                             nome: `Avaliação ${index + 1}`, 
                             data: new Date(assessment.assessmentDate).toLocaleDateString(),
                             checked: false,
-                            idPatient: assessment.patient?.id_patient || '',
+                            id_assessment: assessment.id_assessment,
                         };
                     });
                 } else {
@@ -112,17 +115,27 @@ export default {
     methods: {
         toggleCheckbox(index) {
             this.avaliacoes[index].checked = !this.avaliacoes[index].checked;
+            if (this.avaliacoes[index].checked) {
+                this.selectedAssessments.push(this.avaliacoes[index].id_assessment);
+            } else {
+                const idx = this.selectedAssessments.indexOf(this.avaliacoes[index].id_assessment);
+                if (idx > -1) {
+                    this.selectedAssessments.splice(idx, 1);
+                }
+            }
         },
         toggleSelectAll(event) {
             if (event.target.checked) {
                 this.selectedAssessments = this.assessments.map(assessment => assessment.id_assessment);
+                this.avaliacoes.forEach(avaliacao => avaliacao.checked = true);
             } else {
                 this.selectedAssessments = [];
+                this.avaliacoes.forEach(avaliacao => avaliacao.checked = false);
             }
         },
-        async generatePdf(patientId) {
+        async generatePdf(assessmentId) {
             try {
-                const assessment = this.assessments.find(a => a.id_assessment === patientId);
+                const assessment = this.assessments.find(a => a.id_assessment === assessmentId);
                 this.selectedAssessment = assessment;
 
                 // Espera até que o DOM seja atualizado
@@ -140,12 +153,42 @@ export default {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF('portrait', 'mm', 'a4');
                 const pageWidth = pdf.internal.pageSize.getWidth();
-                const imgWidth = pageWidth - 50; 
+                const imgWidth = pageWidth - -100; 
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
                 const positionY = (pdf.internal.pageSize.getHeight() - imgHeight) / 2; 
                 const positionX = (pageWidth - imgWidth) / 2; 
                 pdf.addImage(imgData, 'PNG', positionX, positionY, imgWidth, imgHeight);
-                pdf.save(`Paciente_${patientId}_Avaliacao.pdf`);
+                pdf.save(`Paciente_${assessmentId}_Avaliacao.pdf`);
+            } catch (error) {
+                console.error('Erro ao gerar PDF:', error);
+            }
+        },
+        async generateComparisonPdf() {
+            try {
+                const pdf = new jsPDF('portrait', 'mm', 'a4');
+
+                // Adicionar as páginas das avaliações
+                for (const assessment of this.selectedAssessmentsData) {
+                    await this.$nextTick();
+                    const pdfElement = this.$refs.pdfSelectedAssessments.$el.querySelector(`[data-assessment-id="${assessment.id_assessment}"]`);
+                    if (!pdfElement) {
+                        throw new Error(`Elemento da avaliação com ID ${assessment.id_assessment} não encontrado`);
+                    }
+                    const canvas = await html2canvas(pdfElement, { scale: 2 });
+                    const imgData = canvas.toDataURL('image/png');
+
+                    const pageWidth = pdf.internal.pageSize.getWidth();
+                    const pageHeight = pdf.internal.pageSize.getHeight();
+                    const imgWidth = pageWidth - 20; // ajuste de margem lateral
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                    const positionY = (pageHeight - imgHeight) / 2; // centralizar verticalmente
+                    const positionX = (pageWidth - imgWidth) / 2; // centralizar horizontalmente
+
+                    pdf.addImage(imgData, 'PNG', positionX, positionY, imgWidth, imgHeight);
+                    pdf.addPage();
+                }
+                pdf.deletePage(pdf.getNumberOfPages()); // Remove a última página em branco
+                pdf.save(`Paciente_${this.selectedPatientId}_Comparacao.pdf`);
             } catch (error) {
                 console.error('Erro ao gerar PDF:', error);
             }

@@ -1,5 +1,6 @@
 <template>
   <div ref="pdfSelectedAssessments">
+
     <div v-for="assessment in assessments" :key="assessment.id_assessment"
       :data-assessment-id="assessment.id_assessment" class="min-h-screen p-8 font-sans">
       <div class="card-container max-w-3xl mx-auto bg-white shadow-lg">
@@ -77,15 +78,7 @@ export default {
       chart: null,
     };
   },
-  watch: {
-    assessments: {
-      handler() {
-        this.updateChart();
-      },
-      immediate: true,
-      deep: true,
-    },
-  },
+
   mounted() {
     this.$nextTick(() => {
       if (this.assessments && this.assessments.length > 0) {

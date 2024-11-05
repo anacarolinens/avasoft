@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen p-8 font-sans">
     <div v-if="selectedAssessment" class="card-container max-w-3xl mx-auto bg-white shadow-lg">
-      <div class="card-header bg-gradient-to-r from-orange-500 to-orange-200 text-white p-4">
+      <div class="card-header bg-orange-500 text-white p-4">
         <h1 class="text-2xl font-bold">Avaliação Antropométrica</h1>
         <p class="text-sm opacity-90">Data da Avaliação: {{ formatDate(selectedAssessment.assessmentDate) }}</p>
       </div>
@@ -10,7 +10,7 @@
           <div>
             <h2 class="text-lg font-semibold text-gray-700 mb-2">Informações Básicas</h2>
             <div class="grid grid-cols-2 gap-4">
-              <p>ID: {{ selectedAssessment.id }}</p>
+              <p>ID: {{ selectedAssessment.id_assessment }}</p>
               <p>Peso: {{ selectedAssessment.weight }} kg</p>
               <p>Altura: {{ selectedAssessment.height }} cm</p>
               <p>Método: {{ selectedAssessment.method }}</p>
