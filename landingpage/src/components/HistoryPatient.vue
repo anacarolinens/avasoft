@@ -17,7 +17,7 @@
                         <td class="py-3 px-6 text-white">{{ avaliacao.data }}</td>
                         <td :class="['py-3 px-6', { 'rounded-br-lg': index === avaliacoes.length - 1 }]">
                             <div class="flex justify-center gap-4">
-                                <button class="w-6 h-6">
+                                <button class="w-6 h-6" @click="viewAssessment(avaliacao.id_assessment)">
                                     <img :src="viewImg" alt="View Button" class="w-full h-full object-contain" />
                                 </button>
                                 <button class="w-5 h-5">
@@ -132,6 +132,10 @@ export default {
                 this.selectedAssessments = [];
                 this.avaliacoes.forEach(avaliacao => avaliacao.checked = false);
             }
+        },
+        viewAssessment(assessmentId) {
+            const assessment = this.assessments.find(a => a.id_assessment === assessmentId);
+            this.selectedAssessment = assessment;
         },
         async generatePdf(assessmentId) {
             try {
