@@ -14,7 +14,7 @@ Você pode ver uma pequena landing page de apresentação do sistema e fazer o d
 
 <div  align="center">
   
-  [Landing page ](https://anacarolinens.github.io/avasoft/)
+  [Landing page ](https://avasoft-landingpage.netlify.app/)
   
 </div>
 <br>
