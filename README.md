@@ -77,10 +77,10 @@ Veja os protótipos na íntegra [neste link do Figma](https://www.figma.com/file
 
 ## 🔄	Atualizações no sistema
   &nbsp; &nbsp; ✅ Necessidade: Registrar informações essenciais dos pacientes.<br>
-  &nbsp; &nbsp; ❌ Necessidade: Armazenar dados precisos das medidas corporais para cálculos futuros.<br>
-  &nbsp; &nbsp; ❌ Necessidade: Realizar automaticamente cálculos antropométricos.<br>
-  &nbsp; &nbsp; ❌ Necessidade: Criar relatórios personalizados e abrangentes.<br>
-  &nbsp; &nbsp; ❌ Necessidade: Apresentar visualizações gráficas das medidas, como dashboards.<br>
+  &nbsp; &nbsp; ✅ Necessidade: Armazenar dados precisos das medidas corporais para cálculos futuros.<br>
+  &nbsp; &nbsp; ✅ Necessidade: Realizar automaticamente cálculos antropométricos.<br>
+  &nbsp; &nbsp; ✅ Necessidade: Criar relatórios personalizados e abrangentes.<br>
+  &nbsp; &nbsp; ✅ Necessidade: Apresentar visualizações gráficas das medidas, como dashboards.<br>
 
 
 ## 💡🐛 Issues
